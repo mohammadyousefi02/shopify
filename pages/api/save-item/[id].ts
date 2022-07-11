@@ -1,6 +1,6 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 
-import { savedItemHandler } from '../../../controllers/savedItemsController';
+import { savedItemHandler } from '../../../controllers/savedItems';
 
 import connectToDb from '../../../utils/coonectToDb';
 

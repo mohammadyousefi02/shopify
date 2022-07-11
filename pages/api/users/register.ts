@@ -1,6 +1,6 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 
-import { signUp } from '../../../controllers/userControl';
+import { signUp } from '../../../controllers/user';
 
 import connectToDb from '../../../utils/coonectToDb';
 

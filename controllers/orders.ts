@@ -6,7 +6,7 @@ import _ from 'lodash';
 import { IcartItem } from '../interfaces/cartInterface';
 import { IdecodedToken } from '../interfaces/decodedTokenInterface';
 
-import Orders from "../models/ordersModal";
+import Orders from "../models/ordersModel";
 import Users from '../models/userModal';
 
 

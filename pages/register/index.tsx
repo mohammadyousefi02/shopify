@@ -1,13 +1,11 @@
 import React, { FormEvent, useState } from 'react'
-import MyButton from '../../src/components/MyButton'
-import MyInput from '../../src/components/MyInput'
-import MainLayout from '../../src/layout/MainLayout'
+import Button from '../../src/components/Button'
+import Input from '../../src/components/Input'
+import MainLayout from '../../src/layouts/MainLayout'
 import axios, { AxiosError, AxiosResponse } from 'axios'
 import { server } from '../../config/server'
 import { useRouter } from "next/router"
 import useAuthUserToken from '../../hooks/useAuthUserToken'
-import {useDispatch} from "react-redux"
-import {setUser} from "../../redux/reducers/userReducer"
 
 function SignIn() {
     const [token,setToken] = useAuthUserToken()
@@ -25,33 +23,22 @@ function SignIn() {
                 setUsername('')
                 setEmail('')
                 setPassword('')
-                // const resObj = await res.json()
                 setToken(res.data.token)
                 router.push('/')
             }
         }catch(e){
                 const error = e as AxiosError
-                // const resObj = await res.json()
-                // setError(error.response?.data.error)
                 const data:any = error.response?.data
                 setError(data.error)
         }
-        // const res = await fetch(`${server}/api/users/register`, {
-        //     method:'POST',
-        //     headers:{
-        //         'Content-Type' : 'application/json'
-        //     },
-        //     body:JSON.stringify(newUser)
-        // })
-        
     }
   return (
    <MainLayout title='Sign In'>
        <div className='h-full flex flex-col justify-center items-center gap-4 px-4'>
-            <MyInput value={username} onChange={(e:FormEvent<HTMLInputElement>)=>setUsername(e.currentTarget.value)} name='username' placeholder='enter your username' />
-            <MyInput value={email} onChange={(e:FormEvent<HTMLInputElement>)=>setEmail(e.currentTarget.value)} name='email' placeholder='enter your email'/>
-            <MyInput value={password} onChange={(e:FormEvent<HTMLInputElement>)=>setPassword(e.currentTarget.value)} name='password' type='password' placeholder='enter your password'/>
-            <MyButton onClick={registerHandler} title='Sign In' className='bg-green-700 w-full my-2' />
+            <Input value={username} onChange={(e:FormEvent<HTMLInputElement>)=>setUsername(e.currentTarget.value)} name='username' placeholder='enter your username' />
+            <Input value={email} onChange={(e:FormEvent<HTMLInputElement>)=>setEmail(e.currentTarget.value)} name='email' placeholder='enter your email'/>
+            <Input value={password} onChange={(e:FormEvent<HTMLInputElement>)=>setPassword(e.currentTarget.value)} name='password' type='password' placeholder='enter your password'/>
+            <Button onClick={registerHandler} title='Sign In' className='bg-green-700 w-full my-2' />
             <p>{error}</p>
         </div>
    </MainLayout>

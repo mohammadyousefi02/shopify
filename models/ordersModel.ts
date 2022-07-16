@@ -21,8 +21,14 @@ const ordersSchema = new mongoose.Schema({
             total:Number,
             createdAt:Number
         }
-    }
+    },
+    delivered:Boolean
 })
+
+ordersSchema.methods.changeDeliveryStatus = function(){
+    this.delivered = true;
+    return this.save()
+}
 
 // {quantity:Number,product:Object,total:Number}
 const Orders = mongoose.models.Orders || mongoose.model("Orders",ordersSchema)

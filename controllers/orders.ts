@@ -8,6 +8,7 @@ import { IdecodedToken } from '../interfaces/decodedTokenInterface';
 
 import Orders from "../models/ordersModel";
 import Users from '../models/userModal';
+import Products from '../models/productModel';
 
 
 const sendOrders = async(req:NextApiRequest, res:NextApiResponse)=>{
@@ -16,7 +17,9 @@ const sendOrders = async(req:NextApiRequest, res:NextApiResponse)=>{
         const token = <string>req.headers['x-auth-token']
         const decoded = <IdecodedToken>jwt.verify(token, process.env.jwtPrivateKey!)
         const user = await Users.findById(decoded._id).populate("cart.items.product")
-        const items = user.cart.items.map((i:IcartItem)=>{
+        const items = user.cart.items.map(async(i:IcartItem)=>{
+            const product = await Products.findById(i.product._id)
+            await product.decreaseQuantity(i.size, i.quantity)
             return {...i,total:i.quantity * Number(i.product.price)}
         })
         const newOrders = new Orders({
@@ -28,7 +31,8 @@ const sendOrders = async(req:NextApiRequest, res:NextApiResponse)=>{
                 items: [...items],
                 createdAt:new Date(),
                 total:_.sumBy(items,"total")
-            }
+            },
+            delivered:false
         })
         await newOrders.save()
         await user.clearCart()
@@ -49,5 +53,21 @@ const getOrder = async(req:NextApiRequest, res:NextApiResponse) => {
     }
 }
 
+const changeDeliveryStatus = async(req:NextApiRequest, res:NextApiResponse) => {
+    try {
+        const token = <string>req.headers['x-auth-token']
+        const decoded = <IdecodedToken>jwt.verify(token, process.env.jwtPrivateKey!)
+        const { id } = req.query
+        if(decoded.isAdmin){
+            const order = await Orders.findById(id)
+            await order.changeDeliveryStatus()
+            res.status(200).send("changed")
+        }else{
+            res.status(403).send({error: 'access denied'})
+        }
+    } catch (error) {
+        res.status(400).send({error})
+    }
+}
 
-export {sendOrders, getOrder}
+export {sendOrders, getOrder, changeDeliveryStatus}

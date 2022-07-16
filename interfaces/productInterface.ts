@@ -1,9 +1,13 @@
+export interface Isize {
+    size:string,
+    colors:string[]
+}
+
 export interface Iproduct {
     _id:string,
     name:string,
-    image:string,
+    images:string[],
     price:string,
-    sizes:string[],
-    colors:string[],
+    sizes:Isize[],
     postedAt:number
 }

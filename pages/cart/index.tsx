@@ -22,7 +22,7 @@ function Cart() {
         <div className='px-4 flex flex-col gap-4 pb-[90px]'>
           <div className='grid grid-cols-1 md:grid-cols-3 gap-4'>
             {items?.map((p:IcartItem)=>(
-              <CartCard url={p.product.image} price={p.product.price} key={p._id} title={p.product.name} color={p.color} size={p.size} _id={p.product._id} quantity={p.quantity}/>
+              <CartCard images={p.product.images} price={p.product.price} key={p._id} title={p.product.name} color={p.color} size={p.size} _id={p.product._id} quantity={p.quantity}/>
             ))}
           </div>
               <Link href={'/payment'}>

@@ -53,7 +53,7 @@ const Home = ({products}:Props) => {
           </div>
           <div className='grid grid-cols-1 md:grid-cols-3 gap-4'>
             {filteredProducts?.map((p:Iproduct)=>(
-              <ProductCart url={p.image} price={p.price} title={p.name} _id={p._id} key={p._id}/>
+                <ProductCart images={p.images} price={p.price} title={p.name} _id={p._id} key={p._id}/>
             ))}
           </div>
         </div>

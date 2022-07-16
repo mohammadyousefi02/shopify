@@ -11,14 +11,14 @@ import {useDispatch, useSelector} from "react-redux"
 import {addSavedItem,removeSavedItem,setSavedItems} from "../../../redux/slices/savedItemsReducer"
 
 interface Iprops {
-    url:string,
+    images:string[],
     title:string,
     price:string,
     _id:string,
     secondBtnTitle?:string
 }
 
-function ProductCart({url,title,price,_id,secondBtnTitle="Save"}:Iprops) {
+function ProductCart({images,title,price,_id,secondBtnTitle="Save"}:Iprops) {
     const [isSaved,setIsSave] = useState(false)
     const {items} = useSelector((store:any)=>store.savedItems)
     useEffect(()=>{
@@ -42,7 +42,7 @@ function ProductCart({url,title,price,_id,secondBtnTitle="Save"}:Iprops) {
         if(token){
             setIsSave(true)
             const copySavedItems = [...items]
-            dispatch(addSavedItem({item:{product:{image:url,name:title,price,_id}}}))
+            dispatch(addSavedItem({item:{product:{images,name:title,price,_id}}}))
             try {
                 await axios.post(`${server}/api/save-item/${_id}`,null,{
                     headers:{
@@ -73,7 +73,7 @@ function ProductCart({url,title,price,_id,secondBtnTitle="Save"}:Iprops) {
   return (
     <div className='bg-white pt-2 flex flex-col gap-2 justify-between shadow-md'>
         <div className='relative h-56'>
-            <Image src={url} layout="fill" objectFit='contain' alt="aks"/>
+            <Image src={images[0]} layout="fill" objectFit='contain' alt="aks"/>
         </div>
         <div className='px-2 text-center flex flex-col gap-1'>
             <h1 className='font-semibold'>{title}</h1>       

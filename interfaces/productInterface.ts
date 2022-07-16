@@ -9,5 +9,6 @@ export interface Iproduct {
     images:string[],
     price:string,
     sizes:Isize[],
-    postedAt:number
+    postedAt:number,
+    number:number
 }

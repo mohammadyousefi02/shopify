@@ -1,6 +1,9 @@
+import jwt from 'jsonwebtoken';
+import { IdecodedToken } from './../interfaces/decodedTokenInterface';
 import { NextApiRequest, NextApiResponse } from "next"
 
 import Products from "../models/productModel"
+import Category from "../models/categoryModel"
 
 const getAllProduct = async(req: NextApiRequest,res: NextApiResponse) => {
     try{
@@ -13,10 +16,18 @@ const getAllProduct = async(req: NextApiRequest,res: NextApiResponse) => {
 
 const createProduct = async(req:NextApiRequest, res:NextApiResponse) => {
     try{
-        const {name,image,price,size} = req.body;
-        let newProduct = new Products({name,image,price,size,postedAt:new Date()})
-        newProduct = await newProduct.save()
-        res.status(200).json(newProduct)
+        const token:string = <string>req.headers["x-auth-token"]
+        const decoded:IdecodedToken = <IdecodedToken>jwt.verify(token, process.env.jwtPrivateKey!);
+        if(decoded.isAdmin){
+            const {name,images,price,sizes,category} = req.body;
+            let newProduct = new Products({name,images,price,sizes,category,postedAt:new Date()})
+            newProduct = await newProduct.save()
+            const categoryDoc = await Category.findOne({name:category})
+            await categoryDoc.addProduct(newProduct._id)
+            res.status(200).json(newProduct)
+        }else{
+            res.status(403).send({error:'access denied'})
+        }
        }catch(error){
         res.status(400).send({error})
        }

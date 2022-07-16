@@ -17,7 +17,6 @@ function useGetUserData(secondCondition:boolean = true) {
   useEffect(()=>{
     if(decodedToken._id && addSecondCondition()){
       axios.get(`${server}/api/users/${decodedToken._id}`).then(res=>{
-        console.log("console",res.data)
         const {username,email,_id,cart,saved} = res.data
         dispatch(setUser({user:{username,email,_id}}))
         dispatch(setCart({items:cart.items}))

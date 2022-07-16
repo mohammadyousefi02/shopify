@@ -5,6 +5,7 @@ import { NextApiRequest, NextApiResponse } from "next"
 import Products from "../models/productModel"
 import Category from "../models/categoryModel"
 
+
 const getAllProduct = async(req: NextApiRequest,res: NextApiResponse) => {
     try{
         const products = await Products.find()
@@ -33,6 +34,39 @@ const createProduct = async(req:NextApiRequest, res:NextApiResponse) => {
        }
 }
 
+const editProduct = async(req:NextApiRequest, res:NextApiResponse) => {
+    try{
+        const token:string = <string>req.headers["x-auth-token"]
+        const decoded:IdecodedToken = <IdecodedToken>jwt.verify(token, process.env.jwtPrivateKey!);
+        const { id } = req.query
+        if(decoded.isAdmin){
+            const {name,images,price,sizes,category} = req.body;
+            const product = await Products.findByIdAndUpdate(id,{name,images,price,sizes,category},{new:true})
+            res.status(200).json(product)
+        }else{
+            res.status(403).send({error:'access denied'})
+        }
+       }catch(error){
+        res.status(400).send({error})
+       }
+}
+
+const deleteProduct = async(req:NextApiRequest, res:NextApiResponse) => {
+    try{
+        const token:string = <string>req.headers["x-auth-token"]
+        const decoded:IdecodedToken = <IdecodedToken>jwt.verify(token, process.env.jwtPrivateKey!);
+        if(decoded.isAdmin){
+            const {id} = req.query;
+            const product = await Products.findByIdAndDelete(id)
+            res.status(200).json(product)
+        }else{
+            res.status(403).send({error:'access denied'})
+        }
+       }catch(error){
+        res.status(400).send({error})
+       }
+}
+
 const getOneProduct = async (req:NextApiRequest, res:NextApiResponse) => {
     try{
         const {id} = req.query
@@ -44,4 +78,4 @@ const getOneProduct = async (req:NextApiRequest, res:NextApiResponse) => {
     }
 }
 
-export { getAllProduct, createProduct, getOneProduct }
+export { getAllProduct, createProduct, getOneProduct, editProduct, deleteProduct }

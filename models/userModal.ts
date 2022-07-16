@@ -9,6 +9,7 @@ const userSchema = new mongoose.Schema({
     username:String,
     email:String,
     password:String,
+    isAdmin:Boolean,
    cart:{
     items:[
         {
@@ -36,7 +37,7 @@ orders:[Object]
 })
 
 userSchema.methods.generateAuthToken = function() { 
-    const token = jwt.sign(_.pick(this,['_id']), process.env.jwtPrivateKey!);
+    const token = jwt.sign(_.pick(this,['_id', 'isAdmin']), process.env.jwtPrivateKey!);
     return token;
 }
 

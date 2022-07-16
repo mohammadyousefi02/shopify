@@ -1,6 +1,7 @@
 export interface Isize {
     size:string,
-    colors:string[]
+    colors:string[],
+    quantity:number
 }
 
 export interface Iproduct {

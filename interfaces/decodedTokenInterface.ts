@@ -1,4 +1,5 @@
 export interface IdecodedToken {
     _id:string,
-    iat?:number
+    iat?:number,
+    isAdmin?:boolean
 }

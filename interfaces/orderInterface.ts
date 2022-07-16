@@ -19,5 +19,6 @@ export interface Iorder extends Icart {
 export interface Iorders {
     _id:string,
     customer:Icustomer,
-    order:Iorder
+    order:Iorder,
+    delivered:boolean
 }

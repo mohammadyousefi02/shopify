@@ -12,5 +12,6 @@ export interface Iuser {
     saved:{
         items:[{product:Iproduct}]
     },
-    orders:Iorder[]
+    orders:Iorder[],
+    isAdmin?:boolean
 }

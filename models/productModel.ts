@@ -7,7 +7,8 @@ const productSchema = new mongoose.Schema({
     postedAt:Number,
     sizes:[{
         size:String,
-        colors:[String]
+        colors:[String],
+        quantity:Number
     }],
     category:String
 })

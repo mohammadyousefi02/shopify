@@ -8,7 +8,7 @@ import { addToCart, setCart, decreaseItemQuantity } from '../../../redux/slices/
 import Button from '../Button'
 
 interface Iprops {
-    url:string,
+    images:string[],
     title:string,
     price:string,
     _id:string,
@@ -18,14 +18,14 @@ interface Iprops {
 }
 
 
-function CartCard({url,title,price,_id,quantity,size,color}:Iprops) {
+function CartCard({images,title,price,_id,quantity,size,color}:Iprops) {
     const [token] = useAuthUserToken()
 
     const dispatch = useDispatch()
     const {items} = useSelector((store:any)=>store.cart)
     const increaseQuantity = async() => {
         const copyCartItems = [...items]
-        dispatch(addToCart({item:{color,size,product:{image:url,name:title,price,_id}}}))
+        dispatch(addToCart({item:{color,size,product:{images,name:title,price,_id}}}))
         try {
             await axios.post(`${server}/api/add-to-cart/${_id}`,{size,color},{
                 headers:{
@@ -55,7 +55,7 @@ function CartCard({url,title,price,_id,quantity,size,color}:Iprops) {
   return (
     <div className='bg-white pt-2 flex flex-col gap-2 justify-between shadow-md'>
         <div className='relative h-56'>
-            <Image src={url} layout="fill" objectFit='contain' alt="aks"/>
+            <Image src={images[0]} layout="fill" objectFit='contain' alt="aks"/>
         </div>
         <div className='px-2 text-center flex flex-col gap-1'>
             <h1 className='font-semibold'>{title}</h1>       

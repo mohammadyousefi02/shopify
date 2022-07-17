@@ -16,7 +16,7 @@ function SingleOrder({order}:Props) {
         <div className='px-4 flex flex-col gap-4 pb-[90px]'>
           <h1>total: ${order.total}</h1>
           {order.items.map((i)=>(
-            <OrderCard key={i._id} color={i.color} quantity={i.quantity} size={i.size} title={i.product.name} url={i.product.image} price={i.product.price}/>
+            <OrderCard key={i._id} color={i.color} quantity={i.quantity} size={i.size} title={i.product.name} image={i.product.images[0]} price={i.product.price}/>
           ))}
         </div>
     </MainLayout>

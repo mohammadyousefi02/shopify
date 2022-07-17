@@ -5,7 +5,7 @@ import ProductCart from '../src/components/ProductCard'
 function Component() {
   return (
     <div className='p-4 flex flex-col gap-4'>
-        <ProductCart/>
+        <ProductCart _id='1' images={['/images/dress1.jpg']} price="20" title='test'/>
         <Button title='test' color='blue'/>
         <Button title='test' color='blue' outline={true}/>
         <Button title='test' color='green'/>

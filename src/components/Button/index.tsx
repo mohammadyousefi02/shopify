@@ -8,7 +8,7 @@ interface Iprops {
 
 function MyButton({title,className="",onClick}:Iprops) {
   return (
-    <button onClick={onClick} className={`p-2 rounded text-white ${className}`}>{title}</button>
+    <button onClick={onClick} className={`px-2 py-3 rounded text-white ${className}`}>{title}</button>
   )
 }
 

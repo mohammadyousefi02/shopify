@@ -5,6 +5,7 @@ import connectToDb from "../../../utils/coonectToDb";
 import { createCategory, getAllCategories } from "../../../controllers/category";
 
 
+
 export default async function handler(req: NextApiRequest,res: NextApiResponse) {
 
     await connectToDb()

@@ -2,10 +2,11 @@ import mongoose from "mongoose"
 
 const categorySchema = new mongoose.Schema({
     name:String,
-    products:{
-        type:[mongoose.Schema.Types.ObjectId],
-        red:'Products'
-    }
+    products:[{
+            type:mongoose.Schema.Types.ObjectId,
+            ref:'Products'
+        }
+    ],
 })
 
 categorySchema.methods.addProduct = function(id:mongoose.Schema.Types.ObjectId){
@@ -13,6 +14,6 @@ categorySchema.methods.addProduct = function(id:mongoose.Schema.Types.ObjectId){
     return this.save()
 }
 
-const Category = mongoose.models.Categories || mongoose.model('Categories', categorySchema)
+const Category = mongoose.models.Categories || mongoose.model("Categories", categorySchema)
 
 export default Category

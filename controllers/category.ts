@@ -1,7 +1,10 @@
+import { NextApiRequest, NextApiResponse } from 'next';
+
 import jwt from 'jsonwebtoken';
 import { IdecodedToken } from './../interfaces/decodedTokenInterface';
-import { NextApiRequest, NextApiResponse } from 'next';
+
 import Category from "../models/categoryModel";
+import Products from '../models/productModel';
 
 
 const createCategory = async(req:NextApiRequest, res:NextApiResponse) => {
@@ -56,7 +59,8 @@ const deleteCategory = async(req:NextApiRequest, res:NextApiResponse) => {
 
 const getAllCategories = async(req:NextApiRequest, res:NextApiResponse) => {
     try {
-        const categories = await Category.find().populate('products')
+        await Products.find()
+        const categories = await Category.find().populate("products")
         res.status(200).send(categories)
     } catch (error) {
         res.status(400).send({error})
@@ -66,6 +70,7 @@ const getAllCategories = async(req:NextApiRequest, res:NextApiResponse) => {
 const getOneCategory = async(req:NextApiRequest, res:NextApiResponse) => {
     try {
         const { id } = req.query
+        await Products.find()
         const category = await Category.findById(id).populate('products')
         res.status(200).send(category)
     } catch (error) {

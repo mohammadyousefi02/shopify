@@ -16,7 +16,8 @@ body {
 
 body{
   background-color: #F6F6F6;
-  background-image:url('/images/bg12.png')
+  background-image:url('/images/bg12.png');
+  font-size:14px;
 }
 
 a {

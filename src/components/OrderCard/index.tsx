@@ -3,7 +3,7 @@ import React from 'react'
 
 
 interface Iprops {
-    url:string,
+    image:string,
     title:string,
     price:string,
     quantity:number,
@@ -12,12 +12,12 @@ interface Iprops {
 }
 
 
-function OrderCard({url,title,price,quantity,size,color}:Iprops) {
+function OrderCard({image,title,price,quantity,size,color}:Iprops) {
 
   return (
     <div className='bg-white py-2 flex flex-col gap-2 justify-between shadow-md'>
         <div className='relative h-56'>
-            <Image src={url} layout="fill" objectFit='contain' alt="aks"/>
+            <Image src={image} layout="fill" objectFit='contain' alt="aks"/>
         </div>
         <div className='px-2 text-center flex flex-col gap-1'>
             <h1 className='font-semibold'>{title}</h1>       

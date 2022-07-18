@@ -10,7 +10,7 @@ import { ChangeEvent, useEffect } from 'react'
 import { server } from '../config/server'
 import { Iproduct } from '../interfaces/productInterface'
 import { setProducts, filterProducts, setFilterByNameValue } from "../redux/slices/productsReducer"
-import Header from '../src/components/Header'
+import Header from '../src/components/Header/index'
 
 interface Props {
   products: Iproduct[]
@@ -43,10 +43,8 @@ const Home = ({products}:Props) => {
       </Head>
       <MainLayout>
         <div className='pb-[90px]'>
-          <div className='pb-8'>
-            <Header inpValue={filterByNameValue} onChange={changeFilteredValueHandler}/>
-          </div>
-          <div className='flex justify-center'>
+        <Header inpValue={filterByNameValue} onChange={changeFilteredValueHandler}/>
+          <div className='flex justify-center mt-4'>
             <div className='grid grid-cols-1 px-4 md:grid-cols-3 gap-4'>
               {filteredProducts?.map((p:Iproduct)=>(
                   <ProductCart images={p.images} price={p.price} title={p.name} _id={p._id} key={p._id}/>

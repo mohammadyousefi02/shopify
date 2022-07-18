@@ -1,6 +1,6 @@
 import React from 'react'
 import Button from '../src/components/Button'
-import Header from '../src/components/Header'
+import Header from '../src/components/Header/index'
 import Input from '../src/components/Input'
 import ProductCart from '../src/components/ProductCard'
 

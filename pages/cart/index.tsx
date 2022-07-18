@@ -18,7 +18,7 @@ function Cart() {
   const {items} = useSelector((store:any)=>store.cart)
   return (
     <>
-        <MainLayout title='cart'>
+        <MainLayout>
         <div className='px-4 flex flex-col gap-4 pb-[90px]'>
           <div className='grid grid-cols-1 md:grid-cols-3 gap-4'>
             {items?.map((p:IcartItem)=>(

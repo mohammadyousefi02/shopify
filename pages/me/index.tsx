@@ -9,7 +9,7 @@ import { Store } from 'redux'
 function Me() {
   const {user} = useSelector((store:any)=>store.user)
   return (
-    <MainLayout title='Info'>
+    <MainLayout>
         <div className='flex flex-col gap-4 px-4'>
             <Input name='username' disabled value={user?.username} className={'bg-white text-gray-500 font-bold'} />
             <Input name='email' disabled value={user?.email} className={'bg-white text-gray-500 font-bold'} />

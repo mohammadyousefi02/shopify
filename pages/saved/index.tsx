@@ -33,11 +33,11 @@ function Saved() {
 
   return (
     <>
-        <MainLayout title='saved products'>
+        <MainLayout>
           <div className='px-4 pb-[90px]'>
           <div className='grid grid-cols-1 md:grid-cols-3 gap-4'>
             {items?.map((p:{product:Iproduct})=>(
-              <ProductCart images={p.product.images} price={p.product.price} key={p.product._id} title={p.product.name} _id={p.product._id} secondBtnTitle="Remove"/>
+              <ProductCart images={p.product.images} price={p.product.price} key={p.product._id} title={p.product.name} _id={p.product._id}/>
             ))}
           </div>
           </div>

@@ -29,7 +29,7 @@ function Payment() {
     }
 
   return (
-    <MainLayout title='payment'>
+    <MainLayout>
         <div className='px-4 flex flex-col gap-4'>
             <Input value={name} onChange={(e)=>setName(e.target.value)} name='name'/>
             <Input value={province} onChange={(e)=>setProvince(e.target.value)} name='province'/>

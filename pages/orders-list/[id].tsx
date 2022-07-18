@@ -12,7 +12,7 @@ interface Props {
 
 function SingleOrder({order}:Props) {
   return (
-    <MainLayout title={order.createdAt.toString()}>
+    <MainLayout>
         <div className='px-4 flex flex-col gap-4 pb-[90px]'>
           <h1>total: ${order.total}</h1>
           {order.items.map((i)=>(

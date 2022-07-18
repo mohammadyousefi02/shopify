@@ -33,7 +33,7 @@ function SignIn() {
         }
     }
   return (
-   <MainLayout title='Sign In'>
+   <MainLayout>
        <div className='h-full flex flex-col justify-center items-center gap-4 px-4'>
             <Input value={username} onChange={(e:FormEvent<HTMLInputElement>)=>setUsername(e.currentTarget.value)} name='username' placeholder='enter your username' />
             <Input value={email} onChange={(e:FormEvent<HTMLInputElement>)=>setEmail(e.currentTarget.value)} name='email' placeholder='enter your email'/>

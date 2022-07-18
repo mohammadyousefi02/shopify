@@ -25,3 +25,6 @@ export { FaShippingFast } from "react-icons/fa"
 
 //profile icon 
 export {BiUserCircle} from "react-icons/bi"
+
+//login sign up 
+export { BiUser, BiUserPlus } from "react-icons/bi"

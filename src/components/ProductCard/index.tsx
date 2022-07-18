@@ -98,7 +98,7 @@ function ProductCart({images,title,price,_id}:Iprops) {
                         </div>
                     </>
                 )}
-                <Image src={images[0]} layout="fill" objectFit='contain' alt={title}/>
+                <Image src={images[0]} layout="fill" objectFit='contain' alt={title} className="hover:scale-150 transition duration-75"/>
             </div>
             <p className='break-words text-center'>{title}</p>
         </div>

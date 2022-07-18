@@ -33,7 +33,7 @@ function Saved() {
 
   return (
     <>
-        <MainLayout title='saved products'>
+        <MainLayout>
           <div className='px-4 pb-[90px]'>
           <div className='grid grid-cols-1 md:grid-cols-3 gap-4'>
             {items?.map((p:{product:Iproduct})=>(

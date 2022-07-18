@@ -91,7 +91,9 @@ function ProductCart({images,title,price,_id}:Iprops) {
                         </div>
                         <div className='absolute left-2/4 translate-x-[-50%] bottom-12 z-20'>
                             <Link href={{pathname:`/products/[name]`,query:{id:_id}}} as={`/products/${title.split(" ").join("-")}`}>
-                                <Button title='انتخاب گزینه ها' color='green' className='px-8 py-1'/>
+                                <a>
+                                    <Button title='انتخاب گزینه ها' color='green' className='px-8 py-1'/>
+                                </a>
                             </Link>
                         </div>
                     </>

@@ -17,7 +17,7 @@ function OrdersList() {
       }
   },[])
   return (
-    <MainLayout title='Orders'>
+    <MainLayout>
         <div className='px-4 flex flex-col gap-4 pb-[90px]'>
             {user?.orders?.map((o)=>(
               <Link key={o._id} href={`/orders-list/${o._id}`}>

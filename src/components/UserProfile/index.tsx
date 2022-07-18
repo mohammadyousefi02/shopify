@@ -14,7 +14,7 @@ function UserProfile({user} : Props) {
     const [token,setToken, removeToken] = useAuthUserToken()
 
   return (
-    <MainLayout title='user profile'>
+    <MainLayout>
         <div className='px-4 flex flex-col gap-4'>
             <h1 className='text-center font-bold'>dear {user?.username}</h1>
             <ListItem color='blue' title='profile info' Icon={BiUserCircle} href="/me" />

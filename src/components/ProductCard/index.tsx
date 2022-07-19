@@ -81,7 +81,7 @@ function ProductCart({images,title,price,_id}:Iprops) {
         }
     }
   return (
-    <div ref={divElem} className='md:w-[297px] md:h-[406px] w-[194px] h-[303px] shadow cursor-pointer flex flex-col justify-between items-center rounded-lg p-2 bg-white'>
+    <div ref={divElem} className=' md:h-[406px] h-[303px] shadow cursor-pointer flex flex-col justify-between items-center rounded-lg p-2 bg-white'>
         <div className='w-full h-[70%] flex flex-col gap-2'>
             <div className='h-[90%] bg-slate-400 rounded-lg relative'>
                 {mouseOver && (

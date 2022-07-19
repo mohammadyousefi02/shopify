@@ -11,12 +11,15 @@ import { server } from '../config/server'
 import { Iproduct } from '../interfaces/productInterface'
 import { setProducts, filterProducts, setFilterByNameValue } from "../redux/slices/productsReducer"
 import Header from '../src/components/Header/index'
+import { Icategory } from '../interfaces/categoryInterface'
+import CategoryCard from '../src/components/CategoryCard'
 
 interface Props {
-  products: Iproduct[]
+  products: Iproduct[],
+  categories: Icategory[]
 }
 
-const Home = ({products}:Props) => {
+const Home = ({products, categories}:Props) => {
   const decodedToken = useGetUserId()
 
   const dispatch = useDispatch()
@@ -45,11 +48,16 @@ const Home = ({products}:Props) => {
         <div className='pb-[90px]'>
         <Header inpValue={filterByNameValue} onChange={changeFilteredValueHandler}/>
           <div className='flex justify-center mt-4'>
-            <div className='grid grid-cols-1 px-4 md:grid-cols-3 gap-4'>
+            <div className='container mx-auto flex flex-col gap-4'>
+              {categories.map(c=>(
+                <CategoryCard key={c._id} title={c.name} products={c.products}/>
+              ))}
+            </div>
+            {/* <div className='grid grid-cols-1 px-4 md:grid-cols-3 gap-4'>
               {filteredProducts?.map((p:Iproduct)=>(
                   <ProductCart images={p.images} price={p.price} title={p.name} _id={p._id} key={p._id}/>
               ))}
-            </div>
+            </div> */}
           </div>
         </div>
       </MainLayout>
@@ -62,9 +70,12 @@ export default Home
 export async function getServerSideProps(){
   const res = await axios.get(`${server}/api/products`)
   const products:Iproduct[] = res.data
+  const categoryRes = await axios.get(`${server}/api/categories`)
+  const categories:Icategory[] = categoryRes.data
   return {
     props:{
-      products
+      products,
+      categories
     }
   }
 }

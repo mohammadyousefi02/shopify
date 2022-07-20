@@ -3,6 +3,7 @@ import Button from '../src/components/Button'
 import Header from '../src/components/Header/index'
 import Input from '../src/components/Input'
 import ProductCart from '../src/components/ProductCard'
+import ProductMiniCard from '../src/components/ProductMiniCard'
 
 function Component() {
   return (
@@ -16,6 +17,7 @@ function Component() {
         <Button title='test' color="red"/>
         <Button title='test' color='gray'/>
         <Button title='test' rounded='normal'/>
+        <ProductMiniCard image='/images/dress-8.jpg' title='مانتو' price='270000'/>
     </div>
   )
 }

@@ -16,9 +16,10 @@ interface Iprops {
     title:string,
     price:string,
     _id:string,
+    code?:number
 }
 
-function ProductCart({images,title,price,_id}:Iprops) {
+function ProductCart({images,title,price,_id,code}:Iprops) {
     const [isSaved,setIsSave] = useState(false)
     const [mouseOver,setMouseOver] = useState(false)
     const {items} = useSelector((store:any)=>store.savedItems)
@@ -81,7 +82,7 @@ function ProductCart({images,title,price,_id}:Iprops) {
         }
     }
   return (
-    <div ref={divElem} className='md:w-[297px] md:h-[406px] w-[194px] h-[303px] shadow cursor-pointer flex flex-col justify-between items-center rounded-lg p-2 bg-white'>
+    <div ref={divElem} className=' md:h-[406px] h-[303px] shadow cursor-pointer flex flex-col justify-between items-center rounded-lg p-2 bg-white'>
         <div className='w-full h-[70%] flex flex-col gap-2'>
             <div className='h-[90%] bg-slate-400 rounded-lg relative'>
                 {mouseOver && (
@@ -100,7 +101,7 @@ function ProductCart({images,title,price,_id}:Iprops) {
                 )}
                 <Image src={images[0]} layout="fill" objectFit='contain' alt={title} className="hover:scale-150 transition duration-75"/>
             </div>
-            <p className='break-words text-center'>{title}</p>
+            <p className='break-words text-center'>{title} - کد {code}</p>
         </div>
         <span className='text-[#56B261]'>277,000T</span>
     </div>

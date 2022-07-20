@@ -23,7 +23,7 @@ function Header({inpValue, onChange}:Props) {
         <div className='container mx-auto px-4'>
             <div className='flex flex-col gap-2'>
               <div className='flex justify-between items-center w-full'>
-                <Image src='/images/logo.png' width={180} height={180} className="translate-x-14" objectFit="contain" alt="logo"/>
+                <Image src='/images/logo.png' width={180} height={120} className="translate-x-14" objectFit='contain' alt="logo"/>
                 <div className='w-[500px] translate-x-6'>
                   <Input placeholder='جستجو در محصولات...' value={inpValue} onChange={onChange}/>
                 </div>

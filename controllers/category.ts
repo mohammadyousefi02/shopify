@@ -60,7 +60,7 @@ const deleteCategory = async(req:NextApiRequest, res:NextApiResponse) => {
 const getAllCategories = async(req:NextApiRequest, res:NextApiResponse) => {
     try {
         await Products.find()
-        const categories = await Category.find().populate("products")
+        const categories = await Category.find().populate({path:"products", options: { sort:{postedAt:-1}, limit: 4 }})
         res.status(200).send(categories)
     } catch (error) {
         res.status(400).send({error})

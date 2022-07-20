@@ -11,5 +11,6 @@ export interface Iproduct {
     price:string,
     sizes:Isize[],
     postedAt:number,
-    number:number
+    number:number,
+    category:string
 }

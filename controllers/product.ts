@@ -20,8 +20,8 @@ const createProduct = async(req:NextApiRequest, res:NextApiResponse) => {
         const token:string = <string>req.headers["x-auth-token"]
         const decoded:IdecodedToken = <IdecodedToken>jwt.verify(token, process.env.jwtPrivateKey!);
         if(decoded.isAdmin){
-            const {name,images,price,sizes,category} = req.body;
-            let newProduct = new Products({name,images,price,sizes,category,postedAt:new Date()})
+            const {name,images,price,sizes,category,number} = req.body;
+            let newProduct = new Products({name,images,price,sizes,category,number,postedAt:new Date()})
             newProduct = await newProduct.save()
             const categoryDoc = await Category.findOne({name:category})
             await categoryDoc.addProduct(newProduct._id)
@@ -40,8 +40,8 @@ const editProduct = async(req:NextApiRequest, res:NextApiResponse) => {
         const decoded:IdecodedToken = <IdecodedToken>jwt.verify(token, process.env.jwtPrivateKey!);
         const { id } = req.query
         if(decoded.isAdmin){
-            const {name,images,price,sizes,category} = req.body;
-            const product = await Products.findByIdAndUpdate(id,{name,images,price,sizes,category},{new:true})
+            const {name,images,price,sizes,category,number} = req.body;
+            const product = await Products.findByIdAndUpdate(id,{name,images,price,sizes,category,number},{new:true})
             res.status(200).json(product)
         }else{
             res.status(403).send({error:'access denied'})

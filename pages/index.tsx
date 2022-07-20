@@ -48,9 +48,9 @@ const Home = ({products, categories}:Props) => {
         <div className='pb-[90px]'>
         <Header inpValue={filterByNameValue} onChange={changeFilteredValueHandler}/>
           <div className='flex justify-center mt-4'>
-            <div className='container mx-auto flex flex-col gap-4'>
+            <div className='container mx-auto px-4 flex flex-col gap-4'>
               {categories.map(c=>(
-                <CategoryCard key={c._id} title={c.name} products={c.products}/>
+                <CategoryCard key={c._id} id={c._id} title={c.name} products={c.products}/>
               ))}
             </div>
             {/* <div className='grid grid-cols-1 px-4 md:grid-cols-3 gap-4'>

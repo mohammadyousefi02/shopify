@@ -1,14 +1,19 @@
 import Link from 'next/link'
 import React from 'react'
 
+import { UrlObject } from 'url';
+
+declare type Url = string | UrlObject;
+
 interface Props {
-    href?:string,
     children:React.ReactNode
+    href?:Url,
+    as?:Url
 }
 
-function Li({href="#",children}:Props) {
+function Li({href="#",children,as=""}:Props) {
   return (
-    <Link href={href}>
+    <Link href={href} as={as || href}>
         <a>{children}</a>
     </Link>
   )

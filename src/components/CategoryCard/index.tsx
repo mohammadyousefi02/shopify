@@ -1,16 +1,22 @@
+import Link from 'next/link'
 import React from 'react'
 import { Iproduct } from '../../../interfaces/productInterface'
 import ProductCart from '../ProductCard'
 
 interface Props {
     title:string,
-    products: Iproduct[]
+    products: Iproduct[],
+    id:string
 }
 
-function CategoryCard({title, products}:Props) {
+function CategoryCard({title, products, id}:Props) {
   return (
-    <div className='w-full flex flex-col gap-2'>
-        <h1 className="text-4xl text-[#1E73BE]">{title}</h1>
+    <div className='w-full flex flex-col items-start gap-2'>
+        <Link href={{ pathname:'/category/[name]', query:{id} }} as={`/category/${title.split(" ").join("-")}`}>
+            <a>
+                <h1 className="text-4xl text-[#1E73BE]">{title}</h1>
+            </a>
+        </Link>
         <div className='flex items-center w-full'>
             <div className='grid grid-cols-1 px-4 w-full md:grid-cols-4 gap-4'>
                 {products?.map((p:Iproduct)=>(

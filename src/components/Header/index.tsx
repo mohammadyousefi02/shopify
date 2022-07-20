@@ -6,6 +6,7 @@ import Badge from '../Badge'
 import { useSelector } from 'react-redux'
 import Li from '../Li'
 import useAuthUserToken from '../../../hooks/useAuthUserToken'
+import { Icategory } from '../../../interfaces/categoryInterface'
 
 interface Props {
   inpValue?:string,
@@ -15,6 +16,7 @@ interface Props {
 function Header({inpValue, onChange}:Props) {
   const {items:savedItems} = useSelector((store:any)=>store.savedItems)
   const {items:cartItems} = useSelector((store:any)=>store.cart)
+  const {categories} = useSelector((store:any)=>store.category)
   const [ token ] = useAuthUserToken()
   return (
     <>
@@ -57,6 +59,9 @@ function Header({inpValue, onChange}:Props) {
           <div className='flex items-center gap-4'>
             <Li href='/'>صفحه اصلی</Li>
             <Li>ارتباط با ما</Li>
+            {categories.map((category:Icategory)=>(
+              <Li key={category._id} href={{pathname:'/category/[name]',query:{id:category._id}}} as={`/category/${category.name.split(" ").join("-")}`}>{category.name}</Li>
+            ))}
           </div>
           <div className='flex items-center gap-4'>
             <Li href='/saved'>

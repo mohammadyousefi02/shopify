@@ -10,6 +10,7 @@ import { ChangeEvent, useEffect } from 'react'
 import { server } from '../config/server'
 import { Iproduct } from '../interfaces/productInterface'
 import { setProducts, filterProducts, setFilterByNameValue } from "../redux/slices/productsReducer"
+import { setCategories } from "../redux/slices/category"
 import Header from '../src/components/Header/index'
 import { Icategory } from '../interfaces/categoryInterface'
 import CategoryCard from '../src/components/CategoryCard'
@@ -25,6 +26,7 @@ const Home = ({products, categories}:Props) => {
   const dispatch = useDispatch()
   useEffect(()=>{
     dispatch(setProducts({ products }))
+    dispatch(setCategories(categories))
     dispatch(filterProducts())
   },[])
   

@@ -9,9 +9,12 @@ import useAuthUserToken from '../../../hooks/useAuthUserToken'
 import { Icategory } from '../../../interfaces/categoryInterface'
 import SearchBarDropDown from '../SearchBarDropDown'
 import { filterProducts, setFilterByNameValue } from '../../../redux/slices/productsReducer'
+import { useRouter } from 'next/router'
 
 
 function Header() {
+  const router = useRouter()
+
   const dispatch = useDispatch()
   const [showSearchBarDropDown, setShowSearchBarDropDown] = useState(false)
   const changeFilteredValueHandler = (e:ChangeEvent<HTMLInputElement>) => {
@@ -70,7 +73,9 @@ function Header() {
             <Li href='/'>صفحه اصلی</Li>
             <Li>ارتباط با ما</Li>
             {categories.map((category:Icategory)=>(
-              <Li key={category._id} href={{pathname:'/category/[name]',query:{id:category._id}}} as={`/category/${category.name.split(" ").join("-")}`}>{category.name}</Li>
+              <Li key={category._id} href={{pathname:'/category/[name]',query:{id:category._id}}} as={`/category/${category.name.split(" ").join("-")}`}>
+                <span className={router.query.name === category.name.split(" ").join("-") ? 'text-[#1E73BE] font-bold' : ''}>{category.name}</span>
+              </Li>
             ))}
           </div>
           <div className='flex items-center gap-4'>

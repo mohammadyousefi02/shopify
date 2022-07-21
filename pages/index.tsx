@@ -48,11 +48,6 @@ const Home = ({products, categories}:Props) => {
                 <CategoryCard key={c._id} id={c._id} title={c.name} products={c.products}/>
               ))}
             </div>
-            {/* <div className='grid grid-cols-1 px-4 md:grid-cols-3 gap-4'>
-              {filteredProducts?.map((p:Iproduct)=>(
-                  <ProductCart images={p.images} price={p.price} title={p.name} _id={p._id} key={p._id}/>
-              ))}
-            </div> */}
           </div>
         </div>
       </MainLayout>

@@ -109,7 +109,7 @@ function ProductCart({images,title,price,_id,code}:Iprops) {
             </div>
             <p className='break-words text-center'>{title} - کد {code}</p>
         </div>
-        <span className='text-[#56B261]'>277,000T</span>
+        <span className='text-[#56B261]'>{price} تومان</span>
     </div>
   )
 }

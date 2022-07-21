@@ -23,7 +23,7 @@ function Category() {
                 <div className='flex justify-center mt-4'>
                   <div className='grid grid-cols-1 px-4 w-full md:grid-cols-4 gap-4'>
                       {productsByCategory?.map((p:Iproduct)=>(
-                          <ProductCart images={p.images} price={p.price} title={p.name} _id={p._id} key={p._id}/>
+                          <ProductCart images={p.images} code={p.number} price={p.price} title={p.name} _id={p._id} key={p._id}/>
                       ))}
                 </div>
                 </div>

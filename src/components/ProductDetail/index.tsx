@@ -115,7 +115,7 @@ function ProductDetail({images,title,price,sizes,_id,code,category}:Iprops) {
                 </div>
                 {size ? <p>{quantity} در انبار</p> : <p>یک سایز را انتخاب کنید</p>}
                 <div className='pt-4 flex items-center justify-between gap-4'>
-                    <div>
+                    <div className="flex gap-2">
                         {images.map(i=>(
                             <Image key={i} onClick={()=>setImage(i)} src={i} width={75} height={75} alt={""} className="rounded-lg cursor-pointer"/>
                         ))}

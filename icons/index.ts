@@ -28,3 +28,6 @@ export {BiUserCircle} from "react-icons/bi"
 
 //login sign up 
 export { BiUser, BiUserPlus } from "react-icons/bi"
+
+//chevron
+export { FiChevronLeft } from "react-icons/fi"

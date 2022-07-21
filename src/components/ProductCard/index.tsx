@@ -7,6 +7,7 @@ import { server } from '../../../config/server'
 import useAuthUserToken from '../../../hooks/useAuthUserToken'
 import Button from '../Button'
 import { FaRegHeart, FaHeart } from "../../../icons"
+import { toast } from 'react-toastify';
 
 import {useDispatch, useSelector} from "react-redux"
 import {addSavedItem,removeSavedItem,setSavedItems} from "../../../redux/slices/savedItemsReducer"
@@ -69,6 +70,7 @@ function ProductCart({images,title,price,_id,code}:Iprops) {
             } catch (error) {
                 setIsSave(false)
                 dispatch(setSavedItems({items:copySavedItems}))
+                toast.error("خطایی رخ داده است")
             }
         }
     }
@@ -85,6 +87,7 @@ function ProductCart({images,title,price,_id,code}:Iprops) {
         } catch (error) {
             setIsSave(false)   
             dispatch(setSavedItems({items:copySavedItems}))
+            toast.error("خطایی رخ داده است")
         }
     }
   return (

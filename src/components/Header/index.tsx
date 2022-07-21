@@ -1,5 +1,5 @@
 import Image from 'next/image'
-import React from 'react'
+import React, { useState } from 'react'
 import Input from '../Input'
 import { BiUser, BiUserPlus, IoCartOutline, FaRegHeart } from "../../../icons"
 import Badge from '../Badge'
@@ -7,6 +7,7 @@ import { useSelector } from 'react-redux'
 import Li from '../Li'
 import useAuthUserToken from '../../../hooks/useAuthUserToken'
 import { Icategory } from '../../../interfaces/categoryInterface'
+import SearchBarDropDown from '../SearchBarDropDown'
 
 interface Props {
   inpValue?:string,
@@ -14,6 +15,8 @@ interface Props {
 }
 
 function Header({inpValue, onChange}:Props) {
+  const [showSearchBarDropDown, setShowSearchBarDropDown] = useState(false)
+
   const {items:savedItems} = useSelector((store:any)=>store.savedItems)
   const {items:cartItems} = useSelector((store:any)=>store.cart)
   const {categories} = useSelector((store:any)=>store.category)
@@ -21,13 +24,16 @@ function Header({inpValue, onChange}:Props) {
   return (
     <>
     
-    <div className="bg-white">
+    <div className="bg-white" onClick={()=>setShowSearchBarDropDown(false)}>
         <div className='container mx-auto px-4'>
             <div className='flex flex-col gap-2'>
               <div className='flex justify-between items-center w-full'>
                 <Image src='/images/logo.png' width={180} height={120} className="translate-x-14" objectFit='contain' alt="logo"/>
-                <div className='w-[500px] translate-x-6'>
-                  <Input placeholder='جستجو در محصولات...' value={inpValue} onChange={onChange}/>
+                <div className='w-[500px] translate-x-6 flex flex-col relative z-[999]'>
+                  <div className='relative'>
+                    <Input placeholder='جستجو در محصولات...' onInput={()=>setShowSearchBarDropDown(true)} value={inpValue} onChange={onChange}/>
+                    {showSearchBarDropDown && <SearchBarDropDown className='bg-[#f2f2f2] shadow-lg absolute mt-1 z-[999]'/>}
+                  </div>
                 </div>
                 <div className='flex items-center gap-2'>
                   {!token ? (

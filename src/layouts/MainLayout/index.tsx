@@ -12,7 +12,7 @@ function MainLayout({ children }:Props) {
   return (
     <>
         <div className='h-full'>
-          {/* <Header/> */}
+          <Header/>
             <main className='pb-[90px] h-full'>
                 {children}
             </main>

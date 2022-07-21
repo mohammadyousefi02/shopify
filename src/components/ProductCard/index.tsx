@@ -20,15 +20,21 @@ interface Iprops {
 }
 
 function ProductCart({images,title,price,_id,code}:Iprops) {
+    const [image, setImage] = useState('')
     const [isSaved,setIsSave] = useState(false)
     const [mouseOver,setMouseOver] = useState(false)
     const {items} = useSelector((store:any)=>store.savedItems)
     const divElem = useRef<HTMLDivElement>(null)
     useEffect(()=>{
+        setImage(images[0])
         divElem.current?.addEventListener('mouseover',()=>{
+            if(images[1]){
+                setImage(images[1])
+            }
             setMouseOver(true)
         })
         divElem.current?.addEventListener('mouseout',()=>{
+            setImage(images[0])
             setMouseOver(false)
         })
     },[])
@@ -99,7 +105,7 @@ function ProductCart({images,title,price,_id,code}:Iprops) {
                         </div>
                     </>
                 )}
-                <Image src={images[0]} layout="fill" objectFit='cover' alt={title} className="hover:scale-150 transition duration-75"/>
+                <Image src={image || images[0]} layout="fill" objectFit='cover' alt={title} className="hover:scale-150 transition duration-75"/>
             </div>
             <p className='break-words text-center'>{title} - کد {code}</p>
         </div>

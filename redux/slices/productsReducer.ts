@@ -24,7 +24,7 @@ const productsSlice = createSlice({
             state.filterByNameValue = action.payload
         },
         filterProducts:(state)=>{
-            if(!state.filterByNameValue)state.filteredProducts = state.products
+            if(!state.filterByNameValue)state.filteredProducts = []
             else{
                 state.filteredProducts = []
                 state.products.map(p=>{

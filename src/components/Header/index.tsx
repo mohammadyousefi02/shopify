@@ -1,21 +1,28 @@
 import Image from 'next/image'
-import React, { useState } from 'react'
+import React, { ChangeEvent, useState } from 'react'
 import Input from '../Input'
 import { BiUser, BiUserPlus, IoCartOutline, FaRegHeart } from "../../../icons"
 import Badge from '../Badge'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import Li from '../Li'
 import useAuthUserToken from '../../../hooks/useAuthUserToken'
 import { Icategory } from '../../../interfaces/categoryInterface'
 import SearchBarDropDown from '../SearchBarDropDown'
+import { filterProducts, setFilterByNameValue } from '../../../redux/slices/productsReducer'
+import { useRouter } from 'next/router'
 
-interface Props {
-  inpValue?:string,
-  onChange?:React.ChangeEventHandler
-}
 
-function Header({inpValue, onChange}:Props) {
+function Header() {
+  const router = useRouter()
+
+  const dispatch = useDispatch()
   const [showSearchBarDropDown, setShowSearchBarDropDown] = useState(false)
+  const changeFilteredValueHandler = (e:ChangeEvent<HTMLInputElement>) => {
+    dispatch(setFilterByNameValue(e.target.value))
+    dispatch(filterProducts())
+  }
+
+  const { filterByNameValue } = useSelector((store:any)=>store.products)
 
   const {items:savedItems} = useSelector((store:any)=>store.savedItems)
   const {items:cartItems} = useSelector((store:any)=>store.cart)
@@ -31,7 +38,7 @@ function Header({inpValue, onChange}:Props) {
                 <Image src='/images/logo.png' width={180} height={120} className="translate-x-14" objectFit='contain' alt="logo"/>
                 <div className='w-[500px] translate-x-6 flex flex-col relative z-[999]'>
                   <div className='relative'>
-                    <Input placeholder='جستجو در محصولات...' onInput={()=>setShowSearchBarDropDown(true)} value={inpValue} onChange={onChange}/>
+                    <Input placeholder='جستجو در محصولات...' onInput={()=>setShowSearchBarDropDown(true)} value={filterByNameValue} onChange={changeFilteredValueHandler}/>
                     {showSearchBarDropDown && <SearchBarDropDown className='bg-[#f2f2f2] shadow-lg absolute mt-1 z-[999]'/>}
                   </div>
                 </div>
@@ -66,7 +73,9 @@ function Header({inpValue, onChange}:Props) {
             <Li href='/'>صفحه اصلی</Li>
             <Li>ارتباط با ما</Li>
             {categories.map((category:Icategory)=>(
-              <Li key={category._id} href={{pathname:'/category/[name]',query:{id:category._id}}} as={`/category/${category.name.split(" ").join("-")}`}>{category.name}</Li>
+              <Li key={category._id} href={{pathname:'/category/[name]',query:{id:category._id}}} as={`/category/${category.name.split(" ").join("-")}`}>
+                <span className={router.query.name === category.name.split(" ").join("-") ? 'text-[#1E73BE] font-bold' : ''}>{category.name}</span>
+              </Li>
             ))}
           </div>
           <div className='flex items-center gap-4'>

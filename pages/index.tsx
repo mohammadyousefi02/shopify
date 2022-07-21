@@ -9,7 +9,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { ChangeEvent, useEffect } from 'react'
 import { server } from '../config/server'
 import { Iproduct } from '../interfaces/productInterface'
-import { setProducts, filterProducts, setFilterByNameValue } from "../redux/slices/productsReducer"
+import { setProducts, filterProducts } from "../redux/slices/productsReducer"
 import { setCategories } from "../redux/slices/category"
 import Header from '../src/components/Header/index'
 import { Icategory } from '../interfaces/categoryInterface'
@@ -30,12 +30,6 @@ const Home = ({products, categories}:Props) => {
     dispatch(filterProducts())
   },[])
   
-  const changeFilteredValueHandler = (e:ChangeEvent<HTMLInputElement>) => {
-    dispatch(setFilterByNameValue(e.target.value))
-    dispatch(filterProducts())
-  }
-
-  const { filteredProducts, filterByNameValue } = useSelector((store:any)=>store.products)
 
   const {user} = useSelector((store:any)=>store.user)
   
@@ -48,18 +42,12 @@ const Home = ({products, categories}:Props) => {
       </Head>
       <MainLayout>
         <div className='pb-[90px]'>
-        <Header inpValue={filterByNameValue} onChange={changeFilteredValueHandler}/>
           <div className='flex justify-center mt-4'>
             <div className='container mx-auto px-4 flex flex-col gap-4'>
               {categories.map(c=>(
                 <CategoryCard key={c._id} id={c._id} title={c.name} products={c.products}/>
               ))}
             </div>
-            {/* <div className='grid grid-cols-1 px-4 md:grid-cols-3 gap-4'>
-              {filteredProducts?.map((p:Iproduct)=>(
-                  <ProductCart images={p.images} price={p.price} title={p.name} _id={p._id} key={p._id}/>
-              ))}
-            </div> */}
           </div>
         </div>
       </MainLayout>

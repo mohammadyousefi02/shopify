@@ -14,6 +14,8 @@ import { Isize } from "../../../interfaces/productInterface"
 import { isPending } from '@reduxjs/toolkit'
 import { FiChevronLeft } from "../../../icons"
 
+import { toast } from 'react-toastify';
+
 interface Iprops {
     images:string[],
     title:string,
@@ -76,8 +78,9 @@ function ProductDetail({images,title,price,sizes,_id,code,category}:Iprops) {
                     })
                 } catch (error) {
                     dispatch(setCart({items:copyCartItems}))
+                    toast.error("خطایی رخ داده است")
                 }
-            }else setError("choose size and color")
+            }else toast.error("سایز و رنگ را انتخاب کنید")
         }else{
             router.push('/profile')
         }
@@ -128,25 +131,6 @@ function ProductDetail({images,title,price,sizes,_id,code,category}:Iprops) {
             </div>
         </div>
     </div>
-    // <div className='bg-white pt-2 flex flex-col gap-2 justify-between shadow-md'>
-    //     <div className='relative h-56'>
-    //         <Image src={images[0]} layout="fill" objectFit='contain' alt="aks"/>
-    //     </div>
-    //     <div className='px-2 text-center flex flex-col gap-1'>
-    //         <h1 className='font-semibold'>{title}</h1>       
-    //         <span className={`text-indigo-500 font-black`}>Price: ${price}</span> 
-    //     </div>
-    //     <div className='px-4 mt-4'>
-    //         <label htmlFor="">select a size</label>
-    //         <Select onChange={(value)=>setSize(value!.value)} options={sizeOptions}/>
-    //     </div>
-    //     <div className='px-4 my-4'>
-    //         <label htmlFor="">select a color</label>
-    //         <Select onChange={(value)=>setColor(value!.value)} options={colorOptions}/>
-    //     </div>
-    //     <Button title="Add To Cart" onClick={addToCartHandler} className='bg-indigo-500 text-white py-1 flex-1 rounded-none'/>
-    //     <p className='text-center py-1'>{error}</p>
-    // </div>
   )
 }
 

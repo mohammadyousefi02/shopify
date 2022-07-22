@@ -14,7 +14,7 @@ function CategoryCard({title, products, id}:Props) {
     <div className='w-full flex flex-col items-start gap-2'>
         <Link href={{ pathname:'/category/[name]', query:{id} }} as={`/category/${title.split(" ").join("-")}`}>
             <a>
-                <h1 className="text-4xl text-[#1E73BE]">{title}</h1>
+                <h1 className="text-4xl">{title}</h1>
             </a>
         </Link>
         <div className='flex items-center w-full'>

@@ -74,7 +74,7 @@ function Header() {
             <Li>ارتباط با ما</Li>
             {categories.map((category:Icategory)=>(
               <Li key={category._id} href={{pathname:'/category/[name]',query:{id:category._id}}} as={`/category/${category.name.split(" ").join("-")}`}>
-                <span className={router.query.name === category.name.split(" ").join("-") ? 'text-[#1E73BE] font-bold' : ''}>{category.name}</span>
+                <span className={router.query.name === category.name.split(" ").join("-") ? 'text-primary font-bold' : ''}>{category.name}</span>
               </Li>
             ))}
           </div>

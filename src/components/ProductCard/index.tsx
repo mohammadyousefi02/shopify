@@ -91,29 +91,25 @@ function ProductCart({images,title,price,_id,code}:Iprops) {
         }
     }
   return (
-    <div ref={divElem} className=' md:h-[406px] h-[303px] shadow cursor-pointer flex flex-col justify-between items-center rounded-lg p-2 bg-white'>
-        <div className='w-full h-[70%] flex flex-col gap-2'>
-            <div className='h-[90%] bg-slate-400 rounded-lg relative'>
-                {mouseOver && (
-                    <>
-                        <div className='bg-white absolute left-4 top-4 p-2 text-[16px] rounded-lg z-20' onClick={ isSaved ? removeSavedItemHandler : addToSave }>
-                            {isSaved ? <FaHeart color='#1E73EE'/> : <FaRegHeart/>}
-                        </div>
-                        <div className='absolute left-2/4 translate-x-[-50%] bottom-12 z-20'>
-                            <Link href={{pathname:`/products/[name]`,query:{id:_id}}} as={`/products/${title.split(" ").join("-")}`}>
-                                <a>
-                                    <Button title='انتخاب گزینه ها' color='green' className='px-8 py-1'/>
-                                </a>
-                            </Link>
-                        </div>
-                    </>
-                )}
-                <Image src={image || images[0]} layout="fill" objectFit='cover' alt={title} className="hover:scale-150 transition duration-75"/>
+    <Link href={{pathname:`/products/[name]`,query:{id:_id}}} as={`/products/${title.split(" ").join("-")}`}>
+    {/* <Link href={{pathname:`/products/[...slug]`}} as={`/products/${code?.toString()}/${title.split(" ").join("-")}`}> */}
+        <a>
+            <div ref={divElem} className=' md:h-[406px] h-[303px] shadow cursor-pointer flex flex-col justify-between items-center rounded-lg p-2 bg-white'>
+                <div className='w-full h-[70%] flex flex-col gap-2'>
+                    <div className='h-[90%] bg-slate-400 rounded-lg relative'>
+                        {mouseOver && (  
+                            <div className='bg-white absolute left-4 top-4 p-2 text-[16px] rounded-lg z-20' onClick={ isSaved ? removeSavedItemHandler : addToSave }>
+                                {isSaved ? <FaHeart className='text-primary'/> : <FaRegHeart/>}
+                            </div>
+                        )}
+                        <Image src={image || images[0]} layout="fill" objectFit='cover' alt={title} className="hover:scale-150 transition duration-75"/>
+                    </div>
+                    <p className='break-words text-center'>{title} - کد {code}</p>
+                </div>
+                <span className='text-primary '>{price} تومان</span>
             </div>
-            <p className='break-words text-center'>{title} - کد {code}</p>
-        </div>
-        <span className='text-[#56B261]'>{price} تومان</span>
-    </div>
+        </a>
+    </Link>
   )
 }
 

@@ -94,20 +94,20 @@ function ProductDetail({images,title,price,sizes,_id,code,category}:Iprops) {
             </div>
             <div className='flex flex-col gap-2 flex-1 pr-4 pl-3'>
                 <div className='flex items-center gap-2 text-[32px] pb-1 w-full border-b'>
-                    <FiChevronLeft color='#1E73BE'/>
+                    <FiChevronLeft className='text-primary'/>
                     <h1>{title}</h1>
                 </div>
                 <div className='flex w-full'>
                     <div className='flex-1 flex gap-2'>
                         <span>کد محصول:</span>
-                        <span className='text-[#1E73BE]'>{code}</span>
+                        <span className='text-primary'>{code}</span>
                     </div>
                     <div className='flex-1 flex gap-2'>
                         <span>دسته بندی:</span>
-                        <span className='text-[#1E73BE]'>{category}</span>
+                        <span className='text-primary'>{category}</span>
                     </div>
                 </div>
-                <h1 className='text-[#56B261] text-[36px]'>{price} تومان</h1>
+                <h1 className='text-primary text-[36px]'>{price} تومان</h1>
                 <div className=' flex flex-col gap-2 w-[200px]'>
                     <label htmlFor="">انتخاب سایز:</label>
                     <Select onChange={(value)=>setSize(value!.value)} options={sizeOptions}/>
@@ -125,7 +125,7 @@ function ProductDetail({images,title,price,sizes,_id,code,category}:Iprops) {
                     </div>
                 </div>
                 <div className='flex-1 mt-4'>
-                    <Button title='افزودن به سبد خرید' onClick={addToCartHandler} color='green' className='py-3 w-full' rounded='normal'/>
+                    <Button title='افزودن به سبد خرید' onClick={addToCartHandler} color='pink' className='py-3 w-full' rounded='normal'/>
                     <p className='text-center py-1'>{error}</p>
                 </div>
             </div>

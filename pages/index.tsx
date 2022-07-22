@@ -43,7 +43,7 @@ const Home = ({products, categories}:Props) => {
       <MainLayout>
         <div className='pb-[90px]'>
           <div className='flex justify-center mt-4'>
-            <div className='container mx-auto px-4 flex flex-col gap-4'>
+            <div className='container mx-auto px-4 flex flex-col gap-8'>
               {categories.map(c=>(
                 <CategoryCard key={c._id} id={c._id} title={c.name} products={c.products}/>
               ))}

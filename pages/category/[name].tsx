@@ -13,7 +13,8 @@ function Category() {
   const router = useRouter()
   const dispatch = useDispatch()
   useEffect(()=>{
-    dispatch(setProductsByCategory(router.query.name))
+    const name:string = router.query.name as string;
+    dispatch(setProductsByCategory(name.split('-').join(' ')))
   },[router.query.name])
   const { productsByCategory } = useSelector((store:any)=>store.products)
   return (

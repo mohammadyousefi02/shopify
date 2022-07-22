@@ -6,7 +6,7 @@ interface Iprops {
     title:string,
     className?:string,
     onClick?:()=>void,
-    color?: 'blue' | 'green' | 'red' | 'gray',
+    color?: 'blue' | 'green' | 'red' | 'gray' | 'pink',
     outline?:boolean,
     rounded?: 'normal' | 'large'
 }
@@ -20,6 +20,7 @@ function Button({title,className="",color="blue",outline=false,rounded="large",o
     color === "red" ? 'bg-red-400 hover:bg-red-500' : '',
     color === "gray" ? 'bg-gray-400 hover:bg-gray-500' : '',
     rounded === "large" ? 'rounded-[24px]' : 'rounded-[12px]', 
+    color === "pink" ? 'bg-[#EE384E]' : '' ,
     className
   )
   return (

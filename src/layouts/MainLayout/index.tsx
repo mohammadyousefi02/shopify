@@ -14,10 +14,10 @@ function MainLayout({ children }:Props) {
   useGetUserData()
   return (
     <>
-        <div className='h-full'>
+        <div>
           <ToastContainer/>
           <Header/>
-            <main className='pb-[90px] h-full'>
+            <main>
                 {children}
             </main>
             <Footer/>

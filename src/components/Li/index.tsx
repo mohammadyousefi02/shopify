@@ -8,13 +8,14 @@ declare type Url = string | UrlObject;
 interface Props {
     children:React.ReactNode
     href?:Url,
-    as?:Url
+    as?:Url,
+    className?:string
 }
 
-function Li({href="#",children,as=""}:Props) {
+function Li({href="#",children,as="",className=""}:Props) {
   return (
     <Link href={href} as={as || href}>
-        <a>{children}</a>
+        <a className={className}>{children}</a>
     </Link>
   )
 }

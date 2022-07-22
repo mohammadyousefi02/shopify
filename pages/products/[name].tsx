@@ -13,7 +13,7 @@ interface Props {
 function SingleProduct({product}:Props) {
   return (
     <MainLayout>
-        <div className='container mx-auto px-24 mt-9'>
+        <div className='container mx-auto px-24 mt-9 pb-[90px]'>
             <ProductDetail _id={product._id} code={product.number} category={product.category} price={product.price} title={product.name} sizes={product.sizes} images={product.images}/>
         </div>
     </MainLayout>

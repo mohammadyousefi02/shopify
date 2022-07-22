@@ -70,8 +70,8 @@ const deleteProduct = async(req:NextApiRequest, res:NextApiResponse) => {
 const getOneProduct = async (req:NextApiRequest, res:NextApiResponse) => {
     try{
         const {id} = req.query
-        const post = await Products.findById(id)
-        if(post) res.status(200).json(post)
+        const product = await Products.findById(id)
+        if(product) res.status(200).json(product)
         else res.status(404).send({error:"the entered id is not found"})
     }catch(error){
         res.status(400).send({error})

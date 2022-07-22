@@ -31,3 +31,7 @@ export { BiUser, BiUserPlus } from "react-icons/bi"
 
 //chevron
 export { FiChevronLeft } from "react-icons/fi"
+
+//social medias
+export { FiTwitter, FiInstagram } from "react-icons/fi"
+export { TbBrandTelegram } from "react-icons/tb"

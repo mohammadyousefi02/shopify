@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import useAuthUserToken from '../../hooks/useAuthUserToken'
-import LogInSignIn from '../../src/components/LogInSignIn'
+import LogInSignUp from '../../src/components/LogInSignUp'
 import UserProfile from '../../src/components/UserProfile'
 import axios from 'axios'
 import { server } from '../../config/server'
@@ -22,7 +22,7 @@ function Profile() {
 
   return (
     <>
-       {!token ? <LogInSignIn/> : <UserProfile user={user!}/> }
+       {!token ? <LogInSignUp/> : <UserProfile user={user!}/> }
     </>
   )
 }

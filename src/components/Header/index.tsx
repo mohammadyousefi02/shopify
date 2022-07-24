@@ -34,15 +34,17 @@ function Header() {
     <div className="bg-white" onClick={()=>setShowSearchBarDropDown(false)}>
         <div className='container mx-auto px-4'>
             <div className='flex flex-col gap-2'>
-              <div className='flex justify-between items-center w-full'>
-                <Image src='/images/logo.png' width={180} height={120} className="translate-x-14" objectFit='contain' alt="logo"/>
-                <div className='w-[500px] translate-x-6 flex flex-col relative z-[999]'>
-                  <div className='relative'>
+              <div className='flex flex-col justify-between items-center w-full py-8 md:p-0 md:flex-row'>
+                <div className='hidden md:block'>
+                  <Image src='/images/logo.png' width={180} height={120} objectFit='contain' alt="logo"/>
+                </div>
+                <div className='w-full md:max-w-[500px] flex-1  flex flex-col relative z-[999]'>
+                  <div className='relative md:translate-x-6'>
                     <Input placeholder='جستجو در محصولات...' onInput={()=>setShowSearchBarDropDown(true)} value={filterByNameValue} onChange={changeFilteredValueHandler}/>
                     {showSearchBarDropDown && <SearchBarDropDown className='bg-[#f2f2f2] shadow-lg absolute mt-1 z-[999]'/>}
                   </div>
                 </div>
-                <div className='flex items-center gap-2'>
+                <div className='hidden md:flex items-center gap-2'>
                   {!token ? (
                     <>
                       <div className='flex items-center gap-1'>
@@ -66,7 +68,7 @@ function Header() {
             </div>
         </div>
     </div>
-    <div className='bg-white sticky top-0 py-4 z-50'>
+    <div className='bg-white sticky top-0 py-4 z-50 hidden md:block'>
       <div className='container mx-auto px-4'>
         <div className='flex justify-between items-center w-full'>
           <div className='flex items-center gap-4'>

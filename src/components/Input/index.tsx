@@ -7,14 +7,16 @@ interface Iprops extends React.DetailedHTMLProps<React.InputHTMLAttributes<HTMLI
     placeholder?:string,
     type?:string,
     className?:string,
-    label?:false | string
+    label?:false | string,
+    rounded?: 'normal' | 'large'
 }
 
-function Input({id="",label=false,type="text",className="",...attr}:Iprops) {
+function Input({id="",label=false,type="text",className="",rounded="large",...attr}:Iprops) {
 
   const inputClasses = classNames(
-    'px-3 py-2 rounded-full outline-0 bg-[#EBEBEB]',
+    'px-3 py-2 outline-0 bg-[#EBEBEB]',
     'placeholder:text-[#84777D] text-[#58585A]',
+    rounded==="large" ? 'rounded-[24px]' : 'rounded-[12px]',
     className
   )
     

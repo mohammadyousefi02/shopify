@@ -44,7 +44,7 @@ function Header() {
                     {showSearchBarDropDown && <SearchBarDropDown className='bg-[#f2f2f2] shadow-lg absolute mt-1 z-[999]'/>}
                   </div>
                 </div>
-                <div className='hidden md:flex items-center gap-2'>
+                <Li href='/profile' className='hidden md:flex items-center gap-2' >
                   {!token ? (
                     <>
                       <div className='flex items-center gap-1'>
@@ -57,13 +57,13 @@ function Header() {
                         <span className='whitespace-nowrap'>ثبت نام</span>
                       </div>
                     </>
-                  ):<Li href='/profile'>
+                  ):<>
                       <div className='flex items-center gap-2'>
                         <BiUser/>
                         <span className='whitespace-nowrap'>حساب کاربری</span>
                       </div>
-                    </Li>}
-                </div>
+                    </>}
+                </Li>
               </div>
             </div>
         </div>

@@ -5,7 +5,7 @@ import Header from '../../components/Header'
 
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css'
-import ButtomMenu from '../../components/ButtomMenu';
+import BottomMenu from '../../components/BottomMenu';
 import SideBarMenu from '../../components/SideBarMenu';
 
 interface Props {
@@ -24,7 +24,7 @@ function MainLayout({ children }:Props) {
                 {children}
             </main>
             <Footer/>
-            <ButtomMenu setShowSideBar={setShowSideBar}/>
+            <BottomMenu setShowSideBar={setShowSideBar}/>
             {showSideBar && <SideBarMenu setShowSideBar={setShowSideBar} />}
         </div>
     </>

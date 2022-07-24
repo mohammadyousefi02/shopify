@@ -1,5 +1,6 @@
 //home
 export {RiHome2Line, RiHome2Fill} from "react-icons/ri"
+export {VscHome} from "react-icons/vsc"
 
 //category
 export {MdOutlineCategory, MdCategory} from "react-icons/md"
@@ -35,3 +36,6 @@ export { FiChevronLeft } from "react-icons/fi"
 //social medias
 export { FiTwitter, FiInstagram } from "react-icons/fi"
 export { TbBrandTelegram } from "react-icons/tb"
+
+//menu
+export { MdMenu } from "react-icons/md"

@@ -31,7 +31,7 @@ export {BiUserCircle} from "react-icons/bi"
 export { BiUser, BiUserPlus } from "react-icons/bi"
 
 //chevron
-export { FiChevronLeft } from "react-icons/fi"
+export { FiChevronLeft, FiChevronDown } from "react-icons/fi"
 
 //social medias
 export { FiTwitter, FiInstagram } from "react-icons/fi"
@@ -39,3 +39,9 @@ export { TbBrandTelegram } from "react-icons/tb"
 
 //menu
 export { MdMenu } from "react-icons/md"
+
+//sort 
+export { BsSortUpAlt } from "react-icons/bs"
+
+//check
+export { BsCheck2 } from "react-icons/bs"

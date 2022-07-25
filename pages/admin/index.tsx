@@ -12,14 +12,13 @@ function Admin() {
     useEffect(()=>{
         if(token){
             const decoded:IdecodedToken = jwtDecode(token)
-            if(!decoded.isAdmin) router.push('/')
+            if(decoded.isAdmin) router.push('/admin/categories');
+            else router.push('/')
         }
     },[])
   return (
-    <div>
-        {!token ? <div className='flex justify-center items-center bg-white h-full'><AuthForm endpoint='admins'/></div> : 
-            <AdminPanelLayout>hi</AdminPanelLayout>
-        }
+    <div className='flex justify-center items-center bg-white h-full'>
+        <AuthForm endpoint='admins'/>
     </div>
   )
 }

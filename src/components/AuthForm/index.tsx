@@ -13,10 +13,12 @@ import { useRouter } from 'next/router'
 import useAuthUserToken from '../../../hooks/useAuthUserToken'
 
 interface Props {
-  signUpForm?:boolean
+  signUpForm?:boolean,
+  className?:string,
+  endpoint?:'users' | 'admins'
 }
 
-function AuthForm({signUpForm=false}:Props) {
+function AuthForm({signUpForm=false, className="",endpoint="users"}:Props) {
   const [token, setToken] = useAuthUserToken()
   const router = useRouter()
   const [error, setError] = useState('')
@@ -32,9 +34,9 @@ function AuthForm({signUpForm=false}:Props) {
     onSubmit: async(values) => {
       try {
         const user = {email: values.email, password:values.password}
-        const res = await axios.post(`${server}/api/users/auth`,user)
+        const res = await axios.post(`${server}/api/${endpoint}/auth`,user)
         setToken(res.data.token)
-        router.push('/')
+        endpoint === "users" && router.push('/')
         logInFormik.resetForm()
     } catch (error) {
         const err:any = error as AxiosError
@@ -71,7 +73,7 @@ function AuthForm({signUpForm=false}:Props) {
     }
   })
   return (
-    <div className='flex-[0.3] flex flex-col'>
+    <div className={`flex-[0.3] flex flex-col ${className}`}>
         <div className='flex gap-2 items-center self-center text-lg'>
             {signUpForm ?
             <>

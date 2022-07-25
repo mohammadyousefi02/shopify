@@ -5,13 +5,13 @@ import classNames from "classnames"
 interface Iprops {
     title:string,
     className?:string,
-    onClick?:()=>void,
+    onClick?:React.MouseEventHandler,
     color?: 'blue' | 'green' | 'red' | 'gray' | 'pink',
     outline?:boolean,
     rounded?: 'normal' | 'large'
 }
 
-function Button({title,className="",color="blue",outline=false,rounded="large",onClick}:Iprops) {
+function Button({title,className="",color="blue",outline=false,rounded="normal",onClick}:Iprops) {
   const btnClasses = classNames(
     `px-2 py-3 text-white transition duration-75`,
     color === "blue" && !outline ? 'bg-[#1E73EE] hover:bg-[#1E73BE]':'',

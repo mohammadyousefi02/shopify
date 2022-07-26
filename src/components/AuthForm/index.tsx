@@ -88,7 +88,7 @@ function AuthForm({signUpForm=false, className="",endpoint="users"}:Props) {
             }
         </div>
         <div className='border flex flex-col gap-4 px-4 py-9 mt-2 rounded-lg'>
-        <div className='flex flex-col gap-4'>
+        <form onSubmit={signUpForm ? signUpFormik.handleSubmit : logInFormik.handleSubmit} className='flex flex-col gap-4'>
             {signUpForm && (
               <div className='flex flex-col gap-2'>
                 <Input label="نام کاربری" rounded='normal' id='username' name='username' onInput={()=>setError('')} onChange={signUpFormik.handleChange} value={signUpFormik.values.username}/>
@@ -104,8 +104,8 @@ function AuthForm({signUpForm=false, className="",endpoint="users"}:Props) {
               <span className='text-primary'>{signUpForm ? signUpFormik.errors.password : logInFormik.errors.password}</span>
               {error && <span className='text-primary'>{error}</span>}
             </div>
-            <Button title={signUpForm ? 'ثبت نام' : 'ورود'} onClick={signUpForm ? signUpFormik.handleSubmit : logInFormik.handleSubmit} color='pink' className='w-full' rounded='normal'/>
-        </div>
+            <Button title={signUpForm ? 'ثبت نام' : 'ورود'} color='pink' className='w-full' rounded='normal'/>
+        </form>
         </div>
     </div>
   )

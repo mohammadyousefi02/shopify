@@ -1,13 +1,20 @@
 import React, { useState } from 'react'
 
-import { FiChevronDown, BsCheck2 } from "../../../icons"
+import { FiChevronDown, BsCheck2, MdClose } from "../../../icons"
 
 import Switch from "react-switch"
 import RangeInput from '../RangeInput'
+import { GetServerSideProps } from 'next'
+import axios from 'axios'
+import { server } from '../../../config/server'
+import { Icategory } from '../../../interfaces/categoryInterface'
+import { useDispatch, useSelector } from "react-redux"
+import { changeFilterByCategoryValue, filterProducts } from "../../../redux/slices/productsReducer"
 
 interface LiProps{
     title:string,
-    children?:React.ReactNode
+    children?:React.ReactNode,
+    onClick?:()=>void,
 }
 const Li = ({title, children}:LiProps) => (
     <div className='flex flex-col py-4 border-b border-gray border-opacity-30 '>
@@ -19,8 +26,8 @@ const Li = ({title, children}:LiProps) => (
     </div>
 )
 
-const SubLi = ({title, children}:LiProps) => (
-    <div className='flex justify-between border-b border-gray border-opacity-30 py-3 items-center'>
+const SubLi = ({title, children, onClick}:LiProps) => (
+    <div onClick={onClick} className='flex justify-between border-b cursor-pointer border-gray border-opacity-30 py-3 items-center'>
         <div className='flex items-center gap-2'>
             <FiChevronDown fontSize={18}/>
             <span className='text-base'>{title}</span>
@@ -29,21 +36,42 @@ const SubLi = ({title, children}:LiProps) => (
     </div>
 )
 
-function FilterMenu() {
+interface Props {
+    closeFunction:()=>void
+}
+
+function FilterMenu({closeFunction}:Props) {
+    const dispatch = useDispatch()
+    const { categories } = useSelector((store: any) => store.category) 
+    const { filterByCategoryValue } = useSelector((store: any) => store.products) 
     const [checked, setChecked] = useState(false)
     const checkHandler = (check:boolean) => {
       setChecked(check)
     }
 
+    const changeFilterValue = (value:string) => {
+        dispatch(changeFilterByCategoryValue(value))
+        dispatch(filterProducts())
+    }
+
+    const categoriesOption:string[] = ['همه کالاها', ...categories.map((c:Icategory)=>{
+        return c.name
+    })]
+
   return (
     <div className='w-[300px] fixed top-1/2 shadow -translate-y-1/2 right-2 rounded-lg py-4 px-5 bg-white z-[9999999] border border-gray'>
-              <h1 className='text-xl font-bold'>فیلتر ها</h1>
+              <div className='flex justify-between items-center'>
+                <h1 className='text-xl font-bold'>فیلتر ها</h1>
+                <MdClose fontSize={24} className="cursor-pointer" onClick={closeFunction}/>
+              </div>
               <div className='pt-4'>
                 <Li  title='دسته بندی'>
                     <div className='pt-4 flex flex-col gap-4 pr-4'>
-                        <SubLi title='همه کالاها'><BsCheck2 fontSize={24} className="text-primary"/></SubLi>
-                        <SubLi title='لباس'/>
-                        <SubLi title='کیف و کفش'/>
+                        {categoriesOption?.map(category=>(
+                            <SubLi onClick={()=>changeFilterValue(category)} key={category} title={category}>
+                                {filterByCategoryValue === category && <BsCheck2 fontSize={24} className="text-primary"/>}
+                            </SubLi>
+                        ))}
                     </div>
                 </Li>
                 <Li title='محدوده قیمت'>
@@ -61,3 +89,13 @@ function FilterMenu() {
 }
 
 export default FilterMenu
+
+export const getServerSideProps:GetServerSideProps = async()=>{
+    const categories = await axios.get(`${server}/api/categories`)
+    console.log(categories.data)
+    return {
+        props:{
+            categories:categories.data
+        }
+    }
+}

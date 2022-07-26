@@ -15,7 +15,7 @@ function Admin() {
             if(decoded.isAdmin) router.push('/admin/categories');
             else router.push('/')
         }
-    },[])
+    },[token])
   return (
     <div className='flex justify-center items-center bg-white h-full'>
         <AuthForm endpoint='admins'/>

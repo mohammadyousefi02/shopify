@@ -45,3 +45,6 @@ export { BsSortUpAlt } from "react-icons/bs"
 
 //check
 export { BsCheck2 } from "react-icons/bs"
+
+//actions
+export { MdDelete, MdEdit, MdVisibility } from "react-icons/md"

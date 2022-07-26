@@ -1,0 +1,15 @@
+.c-table {
+    border-collapse: collapse;
+    border-spacing: 0;
+    border: 1px solid #ddd;
+    font-size: 12px;
+    line-height: 1.42857;
+    margin-bottom: 20px;
+    width: 100%;
+}
+
+th, td {
+    padding: 8px;
+    text-align: right;
+    vertical-align: top;
+}

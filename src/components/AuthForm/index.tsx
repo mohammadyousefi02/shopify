@@ -13,10 +13,12 @@ import { useRouter } from 'next/router'
 import useAuthUserToken from '../../../hooks/useAuthUserToken'
 
 interface Props {
-  signUpForm?:boolean
+  signUpForm?:boolean,
+  className?:string,
+  endpoint?:'users' | 'admins'
 }
 
-function AuthForm({signUpForm=false}:Props) {
+function AuthForm({signUpForm=false, className="",endpoint="users"}:Props) {
   const [token, setToken] = useAuthUserToken()
   const router = useRouter()
   const [error, setError] = useState('')
@@ -32,9 +34,9 @@ function AuthForm({signUpForm=false}:Props) {
     onSubmit: async(values) => {
       try {
         const user = {email: values.email, password:values.password}
-        const res = await axios.post(`${server}/api/users/auth`,user)
+        const res = await axios.post(`${server}/api/${endpoint}/auth`,user)
         setToken(res.data.token)
-        router.push('/')
+        endpoint === "users" && router.push('/')
         logInFormik.resetForm()
     } catch (error) {
         const err:any = error as AxiosError
@@ -71,7 +73,7 @@ function AuthForm({signUpForm=false}:Props) {
     }
   })
   return (
-    <div className='flex-[0.3] flex flex-col'>
+    <div className={`flex-[0.3] flex flex-col ${className}`}>
         <div className='flex gap-2 items-center self-center text-lg'>
             {signUpForm ?
             <>
@@ -86,7 +88,7 @@ function AuthForm({signUpForm=false}:Props) {
             }
         </div>
         <div className='border flex flex-col gap-4 px-4 py-9 mt-2 rounded-lg'>
-        <div className='flex flex-col gap-4'>
+        <form onSubmit={signUpForm ? signUpFormik.handleSubmit : logInFormik.handleSubmit} className='flex flex-col gap-4'>
             {signUpForm && (
               <div className='flex flex-col gap-2'>
                 <Input label="نام کاربری" rounded='normal' id='username' name='username' onInput={()=>setError('')} onChange={signUpFormik.handleChange} value={signUpFormik.values.username}/>
@@ -102,8 +104,8 @@ function AuthForm({signUpForm=false}:Props) {
               <span className='text-primary'>{signUpForm ? signUpFormik.errors.password : logInFormik.errors.password}</span>
               {error && <span className='text-primary'>{error}</span>}
             </div>
-            <Button title={signUpForm ? 'ثبت نام' : 'ورود'} onClick={signUpForm ? signUpFormik.handleSubmit : logInFormik.handleSubmit} color='pink' className='w-full' rounded='normal'/>
-        </div>
+            <Button title={signUpForm ? 'ثبت نام' : 'ورود'} color='pink' className='w-full' rounded='normal'/>
+        </form>
         </div>
     </div>
   )

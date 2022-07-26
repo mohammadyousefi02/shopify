@@ -18,7 +18,7 @@ function Header() {
             <div className='flex flex-col justify-between'>
                 <div className='flex justify-between items-center'>
                     <h1 className='font-bold'>پنل مدیریتی</h1>
-                    <Button onClick={deleteToken} title='خروج' color='pink' rounded='normal' className='w-16'/>
+                    <Button onClick={()=>deleteToken()} title='خروج' color='pink' rounded='normal' className='w-16'/>
                 </div>
                 <div className='flex items-center gap-4 pt-4 pb-2'>
                     {headerLinks.map(({title, link}) => (

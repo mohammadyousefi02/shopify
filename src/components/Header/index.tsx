@@ -8,7 +8,7 @@ import Li from '../Li'
 import useAuthUserToken from '../../../hooks/useAuthUserToken'
 import { Icategory } from '../../../interfaces/categoryInterface'
 import SearchBarDropDown from '../SearchBarDropDown'
-import { filterProducts, setFilterByNameValue } from '../../../redux/slices/productsReducer'
+import { setProductsBySearch, setFilterByNameValue } from '../../../redux/slices/productsReducer'
 import { useRouter } from 'next/router'
 
 
@@ -19,7 +19,7 @@ function Header() {
   const [showSearchBarDropDown, setShowSearchBarDropDown] = useState(false)
   const changeFilteredValueHandler = (e:ChangeEvent<HTMLInputElement>) => {
     dispatch(setFilterByNameValue(e.target.value))
-    dispatch(filterProducts())
+    dispatch(setProductsBySearch())
   }
 
   const { filterByNameValue } = useSelector((store:any)=>store.products)

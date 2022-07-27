@@ -7,7 +7,7 @@ import { useSelector, useDispatch } from 'react-redux'
 import { Iproduct } from '../../interfaces/productInterface'
 import ProductCart from '../../src/components/ProductCard'
 
-import { changeSortValue, filterProducts } from "../../redux/slices/productsReducer"
+import { changeSortValue, filterSearchedProducts } from "../../redux/slices/productsReducer"
 
 function Products() {
     const [showFilterMenu, setShowFilterMenu] = useState(false)
@@ -16,7 +16,7 @@ function Products() {
     const sortValues = ['جدید ترین', 'ارزان ترین', 'گران ترین']
     const changeSortValueHandler = (value: string) => {
         dispatch(changeSortValue(value))
-        dispatch(filterProducts())
+        dispatch(filterSearchedProducts())
     }
   return (
     <MainLayout>

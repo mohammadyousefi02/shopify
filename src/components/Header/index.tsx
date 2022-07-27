@@ -8,7 +8,7 @@ import Li from '../Li'
 import useAuthUserToken from '../../../hooks/useAuthUserToken'
 import { Icategory } from '../../../interfaces/categoryInterface'
 import SearchBarDropDown from '../SearchBarDropDown'
-import { filterProducts, setFilterByNameValue } from '../../../redux/slices/productsReducer'
+import { setProductsBySearch, setFilterByNameValue } from '../../../redux/slices/productsReducer'
 import { useRouter } from 'next/router'
 
 
@@ -19,7 +19,7 @@ function Header() {
   const [showSearchBarDropDown, setShowSearchBarDropDown] = useState(false)
   const changeFilteredValueHandler = (e:ChangeEvent<HTMLInputElement>) => {
     dispatch(setFilterByNameValue(e.target.value))
-    dispatch(filterProducts())
+    dispatch(setProductsBySearch())
   }
 
   const { filterByNameValue } = useSelector((store:any)=>store.products)
@@ -40,7 +40,7 @@ function Header() {
                 </div>
                 <div className='w-full md:max-w-[500px] flex-1  flex flex-col relative z-[999]'>
                   <div className='relative md:translate-x-6'>
-                    <Input placeholder='جستجو در محصولات...' onInput={()=>setShowSearchBarDropDown(true)} value={filterByNameValue} onChange={changeFilteredValueHandler}/>
+                    <Input placeholder='جستجو در محصولات...' onKeyDown={(e)=>e.keyCode === 13 && router.push('/products')} onInput={()=>setShowSearchBarDropDown(true)} value={filterByNameValue} onChange={changeFilteredValueHandler}/>
                     {showSearchBarDropDown && <SearchBarDropDown className='bg-[#f2f2f2] shadow-lg absolute mt-1 z-[999]'/>}
                   </div>
                 </div>

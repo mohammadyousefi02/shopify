@@ -7,6 +7,7 @@ interface Istate {
     products:Iproduct[],
     filterByNameValue:string,
     sort:'جدید ترین'|'گران ترین'|'ارزان ترین',
+    categorySort:'جدید ترین'|'گران ترین'|'ارزان ترین',
     filterByCategoryValue:string,
     filteredProducts:Iproduct[],
     productsByCategory:Iproduct[]
@@ -18,6 +19,7 @@ const initialState:Istate = {
     filteredProducts:[],
     productsByCategory:[],
     sort:'جدید ترین',
+    categorySort:'جدید ترین',
     filterByCategoryValue:"همه کالاها"
 }
 
@@ -34,30 +36,41 @@ const productsSlice = createSlice({
         changeSortValue:(state,action) => {
             state.sort = action.payload
         },
+        changeCategorySortValue:(state,action) => {
+            state.categorySort = action.payload
+        },
         changeFilterByCategoryValue:(state, action) => {
             state.filterByCategoryValue = action.payload
         },
-        filterProducts:(state)=>{
+        setProductsBySearch:(state)=>{
             if(!state.filterByNameValue)state.filteredProducts = []
             else{
+                state.sort = 'جدید ترین'
                 state.filteredProducts = []
                 state.products.map(p=>{
                     p.name.includes(state.filterByNameValue) ? state.filteredProducts = [...state.filteredProducts,p] : false
                 })
-                state.filteredProducts = _.orderBy(state.filteredProducts,[state.sort === 'جدید ترین' ? "createdAt" : 'price'],[state.sort === 'ارزان ترین' ? 'asc' : 'desc']);
-                !(state.filterByCategoryValue === "همه کالاها") ? state.filteredProducts = state.filteredProducts.filter(p=>p.category === state.filterByCategoryValue) : false
+                state.filteredProducts = _.orderBy(state.filteredProducts, ['postedAt'], ['desc'])
             }
+        },
+        filterSearchedProducts:(state)=>{
+            state.filteredProducts = _.orderBy(state.filteredProducts,[state.sort === 'جدید ترین' ? "postedAt" : 'price'],[state.sort === 'ارزان ترین' ? 'asc' : 'desc']);
+            !(state.filterByCategoryValue === "همه کالاها") ? state.filteredProducts = state.filteredProducts.filter(p=>p.category === state.filterByCategoryValue) : false
         },
         setProductsByCategory:(state,action)=>{
             const products:Iproduct[] = []
+            state.categorySort = 'جدید ترین'
             state.products.forEach(p=>{
                 if(p.category === action.payload)products.push(p)
             })
-            state.productsByCategory = [...products]
+            state.productsByCategory = _.orderBy(products, ['postedAt'], ['desc']);
+        },
+        sortProductsByCategory:(state) => {
+            state.productsByCategory = _.orderBy(state.productsByCategory,[state.categorySort === 'جدید ترین' ? "postedAt" : 'price'],[state.categorySort === 'ارزان ترین' ? 'asc' : 'desc']);
         }
     }
 })
 
-export const { setProducts, setFilterByNameValue, filterProducts, setProductsByCategory, changeSortValue, changeFilterByCategoryValue } = productsSlice.actions
+export const { setProducts, setFilterByNameValue, setProductsBySearch, filterSearchedProducts, setProductsByCategory, changeSortValue, changeCategorySortValue, changeFilterByCategoryValue, sortProductsByCategory} = productsSlice.actions
 
 export default productsSlice.reducer

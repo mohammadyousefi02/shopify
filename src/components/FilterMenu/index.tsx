@@ -9,7 +9,7 @@ import axios from 'axios'
 import { server } from '../../../config/server'
 import { Icategory } from '../../../interfaces/categoryInterface'
 import { useDispatch, useSelector } from "react-redux"
-import { changeFilterByCategoryValue, filterProducts } from "../../../redux/slices/productsReducer"
+import { changeFilterByCategoryValue, filterSearchedProducts } from "../../../redux/slices/productsReducer"
 
 interface LiProps{
     title:string,
@@ -51,7 +51,7 @@ function FilterMenu({closeFunction}:Props) {
 
     const changeFilterValue = (value:string) => {
         dispatch(changeFilterByCategoryValue(value))
-        dispatch(filterProducts())
+        dispatch(filterSearchedProducts())
     }
 
     const categoriesOption:string[] = ['همه کالاها', ...categories.map((c:Icategory)=>{

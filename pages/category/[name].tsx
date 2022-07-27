@@ -7,7 +7,7 @@ import { BsSortUpAlt, FiChevronDown, BsCheck2 } from "../../icons"
 
 import { useSelector, useDispatch } from 'react-redux'
 
-import { setProductsByCategory } from '../../redux/slices/productsReducer'
+import { setProductsByCategory, sortProductsByCategory, changeCategorySortValue } from '../../redux/slices/productsReducer'
 import { Iproduct } from '../../interfaces/productInterface'
 import ProductCart from '../../src/components/ProductCard'
 import Switch from "react-switch"
@@ -20,7 +20,12 @@ function Category() {
     const name:string = router.query.name as string;
     dispatch(setProductsByCategory(name.split('-').join(' ')))
   },[router.query.name])
-  const { productsByCategory } = useSelector((store:any)=>store.products)
+  const { productsByCategory, categorySort} = useSelector((store:any)=>store.products)
+  const sortOptions = ['جدید ترین', 'ارزان ترین', 'گران ترین']
+  const changeSortValueHandler = (value: string) => {
+    dispatch(changeCategorySortValue(value))
+    dispatch(sortProductsByCategory())
+}
   return (
     <div>
         <MainLayout>
@@ -29,13 +34,12 @@ function Category() {
                   <div className='flex justify-between items-center bg-white h-[48px] w-full rounded-lg px-3'>
                       <div className='flex items-center gap-4'>
                         <BsSortUpAlt fontSize={24}/>
-                        <span className='text-white cursor-pointer bg-primary p-1 rounded-lg'>جدید ترین</span>
-                        <span className='cursor-pointer'>ارزان ترین</span>
-                        <span className='cursor-pointer'>گران ترین</span>
+                        {sortOptions.map(sortValue=>(
+                          <span key={sortValue} onClick={()=>changeSortValueHandler(sortValue)} className={`cursor-pointer p-1 rounded-lg ${categorySort === sortValue ? 'bg-primary text-white' : ''}`}>{sortValue}</span>
+                        ))}
                       </div>
                       <span>نمایش 1–12 از 1671 نتیجه</span>
                   </div>
-                  <FilterMenu/>
                   <div className='grid grid-cols-1 w-full md:grid-cols-6 gap-4'>
                       {productsByCategory?.map((p:Iproduct)=>(
                           <ProductCart images={p.images} code={p.number} price={p.price} title={p.name} _id={p._id} key={p._id}/>

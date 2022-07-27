@@ -107,7 +107,7 @@ function ProductDetail({images,title,price,sizes,_id,code,category}:Iprops) {
                         <span className='text-primary'>{category}</span>
                     </div>
                 </div>
-                <h1 className='text-primary text-[36px]'>{price} تومان</h1>
+                <h1 className='text-primary text-[36px]'>{Number(price).toLocaleString('fa')} تومان</h1>
                 <div className=' flex flex-col gap-2 w-[200px]'>
                     <label htmlFor="">انتخاب سایز:</label>
                     <Select onChange={(value)=>setSize(value!.value)} options={sizeOptions}/>

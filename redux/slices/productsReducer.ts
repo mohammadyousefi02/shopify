@@ -9,6 +9,7 @@ interface Istate {
     sort:'جدید ترین'|'گران ترین'|'ارزان ترین',
     categorySort:'جدید ترین'|'گران ترین'|'ارزان ترین',
     filterByCategoryValue:string,
+    searchedProducts:Iproduct[],
     filteredProducts:Iproduct[],
     productsByCategory:Iproduct[]
 }
@@ -18,6 +19,7 @@ const initialState:Istate = {
     filterByNameValue:"",
     filteredProducts:[],
     productsByCategory:[],
+    searchedProducts:[],
     sort:'جدید ترین',
     categorySort:'جدید ترین',
     filterByCategoryValue:"همه کالاها"
@@ -46,16 +48,18 @@ const productsSlice = createSlice({
             if(!state.filterByNameValue)state.filteredProducts = []
             else{
                 state.sort = 'جدید ترین'
+                state.filterByCategoryValue = "همه کالاها"
                 state.filteredProducts = []
                 state.products.map(p=>{
                     p.name.includes(state.filterByNameValue) ? state.filteredProducts = [...state.filteredProducts,p] : false
                 })
+                state.searchedProducts = state.filteredProducts
                 state.filteredProducts = _.orderBy(state.filteredProducts, ['postedAt'], ['desc'])
             }
         },
         filterSearchedProducts:(state)=>{
+            !(state.filterByCategoryValue === "همه کالاها") ? state.filteredProducts = state.searchedProducts.filter(p=>p.category === state.filterByCategoryValue) :  state.filteredProducts = state.searchedProducts
             state.filteredProducts = _.orderBy(state.filteredProducts,[state.sort === 'جدید ترین' ? "postedAt" : 'price'],[state.sort === 'ارزان ترین' ? 'asc' : 'desc']);
-            !(state.filterByCategoryValue === "همه کالاها") ? state.filteredProducts = state.filteredProducts.filter(p=>p.category === state.filterByCategoryValue) : false
         },
         setProductsByCategory:(state,action)=>{
             const products:Iproduct[] = []

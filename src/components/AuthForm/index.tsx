@@ -40,7 +40,6 @@ function AuthForm({signUpForm=false, className="",endpoint="users"}:Props) {
         logInFormik.resetForm()
     } catch (error) {
         const err:any = error as AxiosError
-        console.log(error)
         setError(err.response?.data.error)
     }
     }

@@ -5,6 +5,7 @@ import { useDispatch } from 'react-redux'
 import { server } from '../../../config/server'
 import useAuthUserToken from '../../../hooks/useAuthUserToken'
 import { Icategory } from '../../../interfaces/categoryInterface'
+import { Iproduct } from '../../../interfaces/productInterface'
 import { setPage } from '../../../redux/slices/pagination'
 import CategoryModal from '../../../src/components/adminPanel/CategoryModal'
 import Section from '../../../src/components/adminPanel/Section'
@@ -13,7 +14,7 @@ import AdminPanelLayout from '../../../src/layouts/AdminPanelLayout'
 function Products() {
   const dispatch = useDispatch()
   const [token] = useAuthUserToken()
-  const [products, setProducts] = useState<Icategory[]>()
+  const [products, setProducts] = useState<Iproduct[]>()
   const [productId , setProductId] = useState('')
   const [showProductModal, setShowProductModal] = useState(false)
   const [ inpValue, setInpValue ] = useState('')
@@ -23,10 +24,10 @@ function Products() {
     getProducts()
     dispatch(setPage(1))
   },[])
-  const ths = ['نام', 'عملکردها']
+  const ths = ['نام', 'دسته بندی', 'قیمت', 'عملکردها']
   const tbody = {
     data:products!,
-    by:'name'
+    by:['name', 'category', 'price']
   }
   const hideCategoryModal = () => {
     setShowProductModal(false);

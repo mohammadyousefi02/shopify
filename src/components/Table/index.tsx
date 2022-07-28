@@ -7,7 +7,7 @@ import {setPage} from "../../../redux/slices/pagination";
 
 interface Props {
     th:string[],
-    tbody:{data:any[], by:string},
+    tbody:{data:any[], by:string[]},
     onDelete?:(id: string) => void,
     onEdit?:(id: string, name: string) => void
 }
@@ -29,13 +29,15 @@ function Table({th, tbody, onEdit, onDelete}:Props) {
         <tbody>
             {data.map(d=>(
                 <tr key={d._id}>
-                    <td>{d[tbody.by]}</td>
+                    {tbody.by.map(b=>(
+                        <td key={d._id + `-${b}`}>{b === "price" ? Number(d[b]).toLocaleString('fa') : d[b]}</td>
+                    ))}
                     <td>
                         <div className='flex gap-1 text-base'>
-                            <div className='bg-primary p-1 rounded' onClick={()=>onEdit!(d._id, d[tbody.by])}>
+                            <div className='bg-primary cursor-pointer p-1 rounded' onClick={()=>onEdit!(d._id, d[tbody.by[0]])}>
                                 <MdEdit color='#fff'/>
                             </div>
-                            <div className='bg-primary p-1 rounded' onClick={()=>onDelete!(d._id)}>
+                            <div className='bg-primary cursor-pointer p-1 rounded' onClick={()=>onDelete!(d._id)}>
                                 <MdDelete color='#fff'/>
                             </div>
                         </div>

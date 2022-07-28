@@ -29,7 +29,7 @@ function Categories() {
   const ths = ['دسته بندی', 'عملکردها']
   const tbody = {
     data:categories!,
-    by:'name'
+    by:['name']
   }
   const hideCategoryModal = () => {
     setShowCategoryModal(false);

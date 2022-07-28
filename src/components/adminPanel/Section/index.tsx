@@ -5,7 +5,7 @@ import Table from '../../Table'
 interface Props {
     title:string,
     th:string[],
-    tbody:{data:any[], by:string},
+    tbody:{data:any[], by:string[]},
     onDelete?:(id: string) => void,
     onEdit?:(id: string, name: string) => void,
     onAdd?:React.MouseEventHandler

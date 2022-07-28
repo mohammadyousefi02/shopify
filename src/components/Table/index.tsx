@@ -1,6 +1,9 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 
 import { MdDelete, MdEdit } from "../../../icons"
+import { useDispatch, useSelector } from 'react-redux'
+import usePagination from '../../../hooks/usePagination'
+import {setPage} from "../../../redux/slices/pagination";
 
 interface Props {
     th:string[],
@@ -10,8 +13,12 @@ interface Props {
 }
 
 function Table({th, tbody, onEdit, onDelete}:Props) {
+    const dispatch = useDispatch()
+    const { totalPage, page } = useSelector((state:any) => state.pagination)
+    const [data, paginationButtons] = usePagination(tbody.data, 5, page)
   return (
-    <table className='w-full'>
+    <div>
+        <table className='w-full'>
         <thead className="border-b border-gray">
             <tr>
                 {th.map(t=>(
@@ -20,8 +27,8 @@ function Table({th, tbody, onEdit, onDelete}:Props) {
             </tr>
         </thead>
         <tbody>
-            {tbody.data.map(d=>(
-                <tr key={d[tbody.by]}>
+            {data.map(d=>(
+                <tr key={d._id}>
                     <td>{d[tbody.by]}</td>
                     <td>
                         <div className='flex gap-1 text-base'>
@@ -36,7 +43,11 @@ function Table({th, tbody, onEdit, onDelete}:Props) {
             </tr>
             ))}
         </tbody>
-    </table>
+        </table>
+        <div className='flex justify-center items-center gap-1 mt-4 py-2'>
+              {paginationButtons}
+        </div>
+    </div>
   )
 }
 

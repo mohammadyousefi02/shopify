@@ -13,7 +13,7 @@ interface Props {
 
 function Section({title, th, tbody, onDelete, onEdit, onAdd}:Props) {
   return (
-    <div className='container mx-auto'>
+    <div className='container mx-auto px-4'>
         <div className='bg-white mt-4 px-4 rounded-lg'>
             <div className='flex justify-between items-center border-b border-gray py-2'>
                 <h1>{title}</h1>

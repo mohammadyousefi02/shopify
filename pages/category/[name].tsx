@@ -12,6 +12,8 @@ import { Iproduct } from '../../interfaces/productInterface'
 import ProductCart from '../../src/components/ProductCard'
 import Switch from "react-switch"
 import FilterMenu from '../../src/components/FilterMenu'
+import { setPage } from '../../redux/slices/pagination'
+import usePagination from '../../hooks/usePagination'
 
 function Category() {
   const router = useRouter()
@@ -26,10 +28,15 @@ function Category() {
     dispatch(changeCategorySortValue(value))
     dispatch(sortProductsByCategory())
 }
+
+useEffect(()=>{
+  dispatch(setPage(1))
+},[])
+const [data, paginationButtons] = usePagination(productsByCategory, 18, 1)
   return (
     <div>
         <MainLayout>
-            <div className='container mx-auto px-4 pb-[90px]'>
+            <div className='container mx-auto px-4 py-4'>
                 <div className='flex flex-col gap-4 items-center mt-4'>
                   <div className='flex justify-between items-center bg-white h-[48px] w-full rounded-lg px-3'>
                       <div className='flex items-center gap-4'>
@@ -41,10 +48,13 @@ function Category() {
                       <span>نمایش 1–12 از 1671 نتیجه</span>
                   </div>
                   <div className='grid grid-cols-1 w-full md:grid-cols-6 gap-4'>
-                      {productsByCategory?.map((p:Iproduct)=>(
+                      {data?.map((p:Iproduct)=>(
                           <ProductCart images={p.images} code={p.number} price={p.price} title={p.name} _id={p._id} key={p._id}/>
                       ))}
                 </div>
+                  <div>
+                    {paginationButtons}
+                  </div>
                 </div>
             </div>
             

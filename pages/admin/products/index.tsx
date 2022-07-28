@@ -1,14 +1,17 @@
 import axios from 'axios'
 import { GetServerSideProps } from 'next'
 import React, { useLayoutEffect, useState } from 'react'
+import { useDispatch } from 'react-redux'
 import { server } from '../../../config/server'
 import useAuthUserToken from '../../../hooks/useAuthUserToken'
 import { Icategory } from '../../../interfaces/categoryInterface'
+import { setPage } from '../../../redux/slices/pagination'
 import CategoryModal from '../../../src/components/adminPanel/CategoryModal'
 import Section from '../../../src/components/adminPanel/Section'
 import AdminPanelLayout from '../../../src/layouts/AdminPanelLayout'
 
 function Products() {
+  const dispatch = useDispatch()
   const [token] = useAuthUserToken()
   const [products, setProducts] = useState<Icategory[]>()
   const [productId , setProductId] = useState('')
@@ -18,6 +21,7 @@ function Products() {
   const getProducts = () => axios.get(`${server}/api/products`).then(e=>setProducts(e.data)).catch(e=>console.log(e))
   useLayoutEffect(() => {
     getProducts()
+    dispatch(setPage(1))
   },[])
   const ths = ['نام', 'عملکردها']
   const tbody = {

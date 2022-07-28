@@ -53,6 +53,15 @@ const getOrder = async(req:NextApiRequest, res:NextApiResponse) => {
     }
 }
 
+const getAllOrders = async(req:NextApiRequest, res:NextApiResponse) => {
+    try {
+        const orders = await Orders.find()
+        res.status(200).send(orders)
+    } catch (error) {
+        res.status(400).send({error})
+    }
+}
+
 const changeDeliveryStatus = async(req:NextApiRequest, res:NextApiResponse) => {
     try {
         const token = <string>req.headers['x-auth-token']
@@ -70,4 +79,4 @@ const changeDeliveryStatus = async(req:NextApiRequest, res:NextApiResponse) => {
     }
 }
 
-export {sendOrders, getOrder, changeDeliveryStatus}
+export {sendOrders, getAllOrders, getOrder, changeDeliveryStatus}

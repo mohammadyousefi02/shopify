@@ -22,6 +22,13 @@ function Header() {
     dispatch(setProductsBySearch())
   }
 
+  const enterEventHandler = (e:React.KeyboardEvent<HTMLInputElement>) => {
+    if(e.keyCode === 13){
+      router.push('/products')
+      dispatch(setFilterByNameValue(""))
+    }
+  }
+
   const { filterByNameValue } = useSelector((store:any)=>store.products)
 
   const {items:savedItems} = useSelector((store:any)=>store.savedItems)
@@ -40,7 +47,7 @@ function Header() {
                 </div>
                 <div className='w-full md:max-w-[500px] flex-1  flex flex-col relative z-[999]'>
                   <div className='relative md:translate-x-6'>
-                    <Input placeholder='جستجو در محصولات...' onKeyDown={(e)=>e.keyCode === 13 && router.push('/products')} onInput={()=>setShowSearchBarDropDown(true)} value={filterByNameValue} onChange={changeFilteredValueHandler}/>
+                    <Input placeholder='جستجو در محصولات...' onKeyDown={enterEventHandler} onInput={()=>setShowSearchBarDropDown(true)} value={filterByNameValue} onChange={changeFilteredValueHandler}/>
                     {showSearchBarDropDown && <SearchBarDropDown className='bg-[#f2f2f2] shadow-lg absolute mt-1 z-[999]'/>}
                   </div>
                 </div>

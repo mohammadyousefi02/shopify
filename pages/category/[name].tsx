@@ -3,7 +3,7 @@ import MainLayout from '../../src/layouts/MainLayout'
 
 import { useRouter } from 'next/router'
 
-import { BsSortUpAlt, FiChevronDown, BsCheck2 } from "../../icons"
+import { BsSortUpAlt, FiChevronDown, BsCheck2, GiSettingsKnobs } from "../../icons"
 
 import { useSelector, useDispatch } from 'react-redux'
 
@@ -16,6 +16,7 @@ import { setPage } from '../../redux/slices/pagination'
 import usePagination from '../../hooks/usePagination'
 
 function Category() {
+  const [showFilterMenu, setShowFilterMenu] = useState(false)
   const router = useRouter()
   const dispatch = useDispatch()
   useEffect(()=>{
@@ -23,6 +24,7 @@ function Category() {
     dispatch(setProductsByCategory(name.split('-').join(' ')))
   },[router.query.name])
   const { productsByCategory, categorySort} = useSelector((store:any)=>store.products)
+  const { page } = useSelector((store:any)=>store.pagination)
   const sortOptions = ['جدید ترین', 'ارزان ترین', 'گران ترین']
   const changeSortValueHandler = (value: string) => {
     dispatch(changeCategorySortValue(value))
@@ -32,7 +34,7 @@ function Category() {
 useEffect(()=>{
   dispatch(setPage(1))
 },[])
-const [data, paginationButtons] = usePagination(productsByCategory, 18, 1)
+const [data, paginationButtons] = usePagination(productsByCategory, 18, page)
   return (
     <div>
         <MainLayout>
@@ -44,9 +46,14 @@ const [data, paginationButtons] = usePagination(productsByCategory, 18, 1)
                         {sortOptions.map(sortValue=>(
                           <span key={sortValue} onClick={()=>changeSortValueHandler(sortValue)} className={`cursor-pointer p-1 rounded-lg ${categorySort === sortValue ? 'bg-primary text-white' : ''}`}>{sortValue}</span>
                         ))}
+                      <div onClick={()=>setShowFilterMenu(!showFilterMenu)} className={`flex gap-2 items-center cursor-pointer ${showFilterMenu ? 'text-primary' : ''}`}>
+                            <GiSettingsKnobs/>
+                            <span>فیلتر</span>
+                        </div>
                       </div>
-                      <span>نمایش 1–12 از 1671 نتیجه</span>
+                      <span>نمایش {((page - 1) * 18)+1}–{page*18 > productsByCategory.length ? productsByCategory.length : page*18} از {productsByCategory.length} نتیجه</span>
                   </div>
+                  {showFilterMenu && <FilterMenu categoryFilter={false} closeFunction={()=>setShowFilterMenu(false)}/>}
                   <div className='grid grid-cols-1 w-full md:grid-cols-6 gap-4'>
                       {data?.map((p:Iproduct)=>(
                           <ProductCart images={p.images} code={p.number} price={p.price} title={p.name} _id={p._id} key={p._id}/>

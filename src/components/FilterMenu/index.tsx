@@ -9,7 +9,8 @@ import axios from 'axios'
 import { server } from '../../../config/server'
 import { Icategory } from '../../../interfaces/categoryInterface'
 import { useDispatch, useSelector } from "react-redux"
-import { changeFilterByCategoryValue, filterSearchedProducts } from "../../../redux/slices/productsReducer"
+import { changeFilterByCategoryValue, filterSearchedProducts, changeCategoryPriceRange, sortProductsByCategory, changesearchPriceRange } from "../../../redux/slices/productsReducer"
+
 
 interface LiProps{
     title:string,
@@ -37,13 +38,14 @@ const SubLi = ({title, children, onClick}:LiProps) => (
 )
 
 interface Props {
-    closeFunction:()=>void
+    closeFunction:()=>void,
+    categoryFilter?:Boolean
 }
 
-function FilterMenu({closeFunction}:Props) {
+function FilterMenu({closeFunction, categoryFilter=true}:Props) {
     const dispatch = useDispatch()
     const { categories } = useSelector((store: any) => store.category) 
-    const { filterByCategoryValue } = useSelector((store: any) => store.products) 
+    const { filterByCategoryValue, categoryMinPrice, categoryMaxPrice, searchMinPrice, searchMaxPrice } = useSelector((store: any) => store.products) 
     const [checked, setChecked] = useState(false)
     const checkHandler = (check:boolean) => {
       setChecked(check)
@@ -58,6 +60,24 @@ function FilterMenu({closeFunction}:Props) {
         return c.name
     })]
 
+    const onMinChange = (value:string) => {
+        if(categoryFilter){
+            dispatch(changesearchPriceRange({min:value}))
+            dispatch(filterSearchedProducts())
+        }else{
+            dispatch(changeCategoryPriceRange({min:value}))
+            dispatch(sortProductsByCategory())
+        }
+    }
+    const onMaxChange = (value:string) => {
+        if(categoryFilter){
+            dispatch(changesearchPriceRange({max:value}))
+            dispatch(filterSearchedProducts())
+        }else{
+            dispatch(changeCategoryPriceRange({max:value}))
+            dispatch(sortProductsByCategory())
+        }
+    }
   return (
     <div className='w-[300px] fixed top-1/2 shadow -translate-y-1/2 right-2 rounded-lg py-4 px-5 bg-white z-[9999999] border border-gray'>
               <div className='flex justify-between items-center'>
@@ -65,18 +85,25 @@ function FilterMenu({closeFunction}:Props) {
                 <MdClose fontSize={24} className="cursor-pointer" onClick={closeFunction}/>
               </div>
               <div className='pt-4'>
-                <Li  title='دسته بندی'>
-                    <div className='pt-4 flex flex-col gap-4 pr-4'>
-                        {categoriesOption?.map(category=>(
-                            <SubLi onClick={()=>changeFilterValue(category)} key={category} title={category}>
-                                {filterByCategoryValue === category && <BsCheck2 fontSize={24} className="text-primary"/>}
-                            </SubLi>
-                        ))}
-                    </div>
-                </Li>
+                {categoryFilter && (
+                    <Li  title='دسته بندی'>
+                        <div className='pt-4 flex flex-col gap-4 pr-4'>
+                            {categoriesOption?.map(category=>(
+                                <SubLi onClick={()=>changeFilterValue(category)} key={category} title={category}>
+                                    {filterByCategoryValue === category && <BsCheck2 fontSize={24} className="text-primary"/>}
+                                </SubLi>
+                            ))}
+                        </div>
+                    </Li>
+                )}
                 <Li title='محدوده قیمت'>
-                    <div className='w-full flex justify-center items-center'>
-                        <RangeInput/>
+                    <div className='w-full py-1 flex justify-center items-center'>
+                        <RangeInput max={500000}
+                            minValue={categoryFilter ? searchMinPrice : categoryMinPrice}
+                            maxValue={categoryFilter ? searchMaxPrice : categoryMaxPrice}
+                            onMinChange={onMinChange}
+                            onMaxChange={onMaxChange}
+                        />
                     </div>
                 </Li>
                 <div className='flex py-4 justify-between items-center border-opacity-30'>
@@ -92,7 +119,6 @@ export default FilterMenu
 
 export const getServerSideProps:GetServerSideProps = async()=>{
     const categories = await axios.get(`${server}/api/categories`)
-    console.log(categories.data)
     return {
         props:{
             categories:categories.data

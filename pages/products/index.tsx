@@ -40,7 +40,7 @@ function Products() {
                             <span>فیلتر</span>
                         </div>
                       </div>
-                      <span>نمایش 1–12 از 1671 نتیجه</span>
+                      <span>نمایش {((page - 1) * 18)+1}–{page*18 > filteredProducts.length ? filteredProducts.length : page*18} از {filteredProducts.length} نتیجه</span>
                   </div>
                   {showFilterMenu && <FilterMenu closeFunction={()=>setShowFilterMenu(false)}/>}
                   <div className='grid grid-cols-1 w-full md:grid-cols-6 gap-4'>

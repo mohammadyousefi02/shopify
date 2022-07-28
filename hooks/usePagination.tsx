@@ -7,7 +7,6 @@ import { setPage, setTotalPage } from "../redux/slices/pagination";
 export default function usePagination(arr:any[],row:number,page:number){
     const dispatch = useDispatch();
     const [currentData,setCurrentData] = useState<any[]>([]);
-    // const paginationButtons:any[] = []
     const [paginationButtons, setPaginationButtons] = useState<any[]>([]);
     
    

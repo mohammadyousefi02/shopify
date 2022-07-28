@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import MainLayout from '../../src/layouts/MainLayout'
 
 import { BsSortUpAlt, GiSettingsKnobs } from "../../icons"
@@ -8,19 +8,26 @@ import { Iproduct } from '../../interfaces/productInterface'
 import ProductCart from '../../src/components/ProductCard'
 
 import { changeSortValue, filterSearchedProducts } from "../../redux/slices/productsReducer"
+import usePagination from '../../hooks/usePagination'
+import { setPage } from '../../redux/slices/pagination'
 
 function Products() {
     const [showFilterMenu, setShowFilterMenu] = useState(false)
     const { filteredProducts, sort } = useSelector((store: any) => store.products)
+    const { page } = useSelector((store: any) => store.pagination)
     const dispatch = useDispatch()
     const sortValues = ['جدید ترین', 'ارزان ترین', 'گران ترین']
     const changeSortValueHandler = (value: string) => {
         dispatch(changeSortValue(value))
         dispatch(filterSearchedProducts())
     }
+    useEffect(()=>{
+        dispatch(setPage(1))
+    },[])
+    const [data, paginationButtons] = usePagination(filteredProducts, 18, page)
   return (
     <MainLayout>
-            <div className='container mx-auto px-4 pb-[90px]'>
+            <div className='container mx-auto px-4 py-4'>
                 <div className='flex flex-col gap-4 items-center mt-4'>
                   <div className='flex justify-between items-center bg-white h-[48px] w-full rounded-lg px-3'>
                       <div className='flex items-center gap-4'>
@@ -37,10 +44,13 @@ function Products() {
                   </div>
                   {showFilterMenu && <FilterMenu closeFunction={()=>setShowFilterMenu(false)}/>}
                   <div className='grid grid-cols-1 w-full md:grid-cols-6 gap-4'>
-                      {filteredProducts?.map((p:Iproduct)=>(
+                      {data?.map((p:Iproduct)=>(
                           <ProductCart images={p.images} code={p.number} price={p.price} title={p.name} _id={p._id} key={p._id}/>
                       ))}
                 </div>
+                    <div className='mt-4'>
+                        {paginationButtons}
+                    </div>
                 </div>
             </div>
             

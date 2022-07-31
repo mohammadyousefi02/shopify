@@ -54,3 +54,9 @@ export {GiSettingsKnobs} from "react-icons/gi"
 
 //close
 export {MdClose} from "react-icons/md"
+
+//star
+export { BsStarFill, BsStarHalf, BsStar } from "react-icons/bs"
+
+//comment
+export {TiPencil} from "react-icons/ti"

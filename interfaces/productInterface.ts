@@ -4,6 +4,14 @@ export interface Isize {
     quantity:number
 }
 
+export interface Icomment {
+    name:string,
+    comment:string,
+    date:number,
+    user?:string,
+    _id:string
+}
+
 export interface Iproduct {
     _id:string,
     name:string,
@@ -12,5 +20,6 @@ export interface Iproduct {
     sizes:Isize[],
     postedAt:number,
     number:number,
-    category:string
+    category:string,
+    comments:Icomment[]
 }

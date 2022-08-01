@@ -11,7 +11,7 @@ interface Iprops {
     rounded?: 'normal' | 'large'
 }
 
-function Button({title,className="",color="blue",outline=false,rounded="normal",onClick}:Iprops) {
+function Button({title,className="",color="pink",outline=false,rounded="normal",onClick}:Iprops) {
   const btnClasses = classNames(
     `px-2 py-3 text-white transition duration-75`,
     color === "blue" && !outline ? 'bg-[#1E73EE] hover:bg-[#1E73BE]':'',

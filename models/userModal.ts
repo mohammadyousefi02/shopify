@@ -98,6 +98,17 @@ userSchema.methods.decreaseCartItemQuantity = function(productId:mongoose.Schema
     return this.save()
 }
 
+userSchema.methods.deleteItemFromCart = function(productId:mongoose.Schema.Types.ObjectId,size:string, color:string){
+    const productIndex = this.cart.items.findIndex((p:IcartProduct)=>p.product.toString() === productId.toString() && p.size === size && p.color === color )
+    let copyCartItems = [...this.cart.items]
+    copyCartItems.splice(productIndex,1)
+    const updatedCart = {
+        items:copyCartItems
+    }
+    this.cart = updatedCart
+    return this.save()
+}
+
 userSchema.methods.clearCart = function(){
     this.cart = {
         items:[]

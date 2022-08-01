@@ -60,3 +60,6 @@ export { BsStarFill, BsStarHalf, BsStar } from "react-icons/bs"
 
 //comment
 export {TiPencil} from "react-icons/ti"
+
+//plus
+export { BiPlus, BiMinus } from "react-icons/bi"

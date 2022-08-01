@@ -17,10 +17,16 @@ const cartHandler = async(req:NextApiRequest, res:NextApiResponse, apiRoute:stri
         const user = await Users.findById(decoded._id)
         if(apiRoute === "add"){
             await user.addToCart(product, size, color)
-            res.status(200).send("ok")  
+            res.status(200).send("increase")  
+        }else if(apiRoute === "remove"){
+            await user.deleteItemFromCart(id, size, color)
+            res.status(200).send("remove")  
+        }else if(apiRoute === "empty"){
+            await user.clearCart()
+            res.status(200).send("empty")  
         }else{
             await user.decreaseCartItemQuantity(id,size, color)
-            res.status(200).send("ok hazf")
+            res.status(200).send("ok decrease")
         }
        } catch (error) {
         res.status(400).send({error})

@@ -63,3 +63,9 @@ export {TiPencil} from "react-icons/ti"
 
 //plus
 export { BiPlus, BiMinus } from "react-icons/bi"
+
+//check
+export { FaCheckCircle } from "react-icons/fa"
+
+//X
+export { IoCloseCircleSharp } from "react-icons/io5"

@@ -21,7 +21,9 @@ const userSchema = new mongoose.Schema({
             size:String,
             color:String
         }
-    ]
+    ],
+    total:Number,
+    discount:Number
 },
 saved:{
    items:[
@@ -62,6 +64,7 @@ userSchema.methods.addToCart = function(product:Iproduct,size:string, color:stri
     const productIndex:number = this.cart.items.findIndex((p:IcartProduct)=>{
         return p.product.toString() === product._id.toString() && p.size === size && p.color === color
     })
+
     let newQuantity = 1;
     const copyCartItems = [...this.cart.items]
     if(productIndex>=0){
@@ -76,7 +79,8 @@ userSchema.methods.addToCart = function(product:Iproduct,size:string, color:stri
         })
     }
     const updatedCart = {
-        items:copyCartItems
+        items:copyCartItems,
+        total: this.cart.total + Number(product.price)
     }
     this.cart = updatedCart
     return this.save()
@@ -92,7 +96,8 @@ userSchema.methods.decreaseCartItemQuantity = function(productId:mongoose.Schema
         copyCartItems[productIndex].quantity = newQuantity
     }
     const updatedCart = {
-        items:copyCartItems
+        items:copyCartItems,
+        total: this.cart.total - Number(this.cart.items[productIndex].product.price)
     }
     this.cart = updatedCart
     return this.save()
@@ -103,7 +108,8 @@ userSchema.methods.deleteItemFromCart = function(productId:mongoose.Schema.Types
     let copyCartItems = [...this.cart.items]
     copyCartItems.splice(productIndex,1)
     const updatedCart = {
-        items:copyCartItems
+        items:copyCartItems,
+        total: this.cart.total - (Number(this.cart.items[productIndex].product.price) * this.cart.items[productIndex].quantity)
     }
     this.cart = updatedCart
     return this.save()
@@ -111,8 +117,15 @@ userSchema.methods.deleteItemFromCart = function(productId:mongoose.Schema.Types
 
 userSchema.methods.clearCart = function(){
     this.cart = {
-        items:[]
+        items:[],
+        total:0,
+        discount:0
     }
+    return this.save()
+}
+
+userSchema.methods.setDiscount = function(discount:number){
+    this.cart.discount = this.cart.total * (discount/100)
     return this.save()
 }
 

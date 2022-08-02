@@ -13,24 +13,23 @@ import Products from '../models/productModel';
 
 const sendOrders = async(req:NextApiRequest, res:NextApiResponse)=>{
     try{
-        const {name,province,city,address} = req.body
+        const {name,province,city,address,zipCode,number} = req.body
         const token = <string>req.headers['x-auth-token']
         const decoded = <IdecodedToken>jwt.verify(token, process.env.jwtPrivateKey!)
         const user = await Users.findById(decoded._id).populate("cart.items.product")
-        const items = user.cart.items.map(async(i:IcartItem)=>{
+        user.cart.items.forEach(async(i:IcartItem)=>{
             const product = await Products.findById(i.product._id)
             await product.decreaseQuantity(i.size, i.quantity)
-            return {...i,total:i.quantity * Number(i.product.price)}
         })
         const newOrders = new Orders({
             customer:{
                 user:user._id,
-                name,province,city,address
+                name,province,city,address,zipCode,number
             },
             order:{
-                items: [...items],
+                items: user.cart.items,
                 createdAt:new Date(),
-                total:_.sumBy(items,"total")
+                total:user.cart.total - user.cart.discount,
             },
             delivered:false
         })

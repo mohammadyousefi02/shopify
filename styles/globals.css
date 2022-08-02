@@ -3,6 +3,7 @@
 @tailwind utilities;
 
 @import url('./table.css');
+@import url('./animations.css');
 
 @font-face {
   font-family: 'shopify';

@@ -10,5 +10,5 @@ export interface IcartItem {
 
 export interface Icart{
     items:IcartItem[],
-    total:0
+    total:number
 }

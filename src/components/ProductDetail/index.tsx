@@ -193,8 +193,9 @@ function ProductDetail({
             <Button
               title="افزودن به سبد خرید"
               onClick={addToCartHandler}
+              disbale={!quantity ? true : false}
               color="pink"
-              className="py-3 w-full"
+              className={`py-3 w-full ${!quantity && "bg-opacity-40"}`}
               rounded="normal"
             />
           </div>

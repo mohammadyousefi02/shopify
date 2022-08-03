@@ -66,7 +66,7 @@ function Comments({ id }: Props) {
             <Input
               placeholder="نام شما"
               background="transparent"
-              className="border  w-[500px]"
+              className="border  md:w-[500px]"
               value={name}
               onChange={(e) => setName(e.target.value)}
             />

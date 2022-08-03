@@ -36,9 +36,9 @@ function Saved() {
       <MainLayout>
         <div className="container mx-auto px-4">
           <div className="w-full flex flex-col items-start gap-2 py-4">
-            <h1 className="text-4xl my-4">محصولات موردعلاقه</h1>
+            <h1 className="text-2xl sm:text-4xl mr-2">محصولات موردعلاقه</h1>
             <div className="flex items-center w-full">
-              <div className="grid grid-cols-1 px-4 w-full md:grid-cols-6 gap-4">
+              <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 px-4 w-full gap-1 sm:gap-2 md:gap-3 lg:gap-4">
                 {items?.map((p: { product: Iproduct }) => (
                   <ProductCart
                     images={p.product.images}

@@ -42,7 +42,7 @@ function Payment() {
   return (
     <MainLayout>
       <div className="container mx-auto pb-[90px] px-4">
-        <div className="bg-white rounded-lg flex gap-8 items-start mt-4 p-4">
+        <div className="bg-white rounded-lg flex flex-col md:flex-row gap-8 items-center mt-4 p-4">
           <InfosFields
             name={name}
             setName={setName}
@@ -57,7 +57,7 @@ function Payment() {
             number={number}
             setNumber={setNumber}
           />
-          <div className="flex-[0.5] flex justify-center">
+          <div className=" w-full flex justify-center">
             <TotalPriceSection onClick={order} discountField={true}/>
           </div>
         </div>

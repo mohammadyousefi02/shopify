@@ -56,7 +56,7 @@ function TotalPriceSection({ onClick = false, discountField = false }: Props) {
     setTotalPrice(total);
   }, [items]);
   return (
-    <div className="bg-[#56B261] rounded shadow bg-opacity-80 p-2  w-[400px]">
+    <div className="bg-[#56B261] rounded shadow bg-opacity-80 p-2 w-full sm:w-[400px]">
       <h1 className="py-2 text-white text-center font-bold">
         مجموع کل سبد خرید
       </h1>

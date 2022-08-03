@@ -28,7 +28,7 @@ function SingleProduct({product}:Props) {
     },[productsByCategory])
   return (
     <MainLayout>
-        <div className='container mx-auto px-24 mt-9 pb-[90px]'>
+        <div className='container mx-auto px-4 mt-9 pb-[90px]'>
             <ProductDetail _id={product._id} code={product.number} category={product.category} price={product.price} title={product.name} sizes={product.sizes} images={product.images}/>
             <RelativeProduct products={relativeProducts}/>
             <Comments id={product._id} />

@@ -18,7 +18,7 @@ interface Props {
 
 function InfosFields({name, setName, province, setProvince, city, setCity, address, setAddress, zipCode, setZipCode, number, setNumber}:Props) {
   return (
-    <div className="flex flex-col flex-[0.5] gap-2">
+    <div className="flex flex-col w-full gap-2">
       <span>جزئیات پرداخت</span>
       <Input label="نام" value={name} onChange={e=>setName(e.target.value)}/>
       <Input label="استان" value={province} onChange={e=>setProvince(e.target.value)}/>

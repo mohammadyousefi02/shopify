@@ -8,7 +8,7 @@ interface Iprops {
     onClick?:React.MouseEventHandler
     color?: 'blue' | 'green' | 'red' | 'gray' | 'pink',
     outline?:boolean,
-    rounded?: 'normal' | 'large',
+    rounded?: 'normal' | 'large' | 'l',
     disbale?:boolean
 }
 
@@ -20,7 +20,7 @@ function Button({title,className="",color="pink",outline=false,rounded="normal",
     color === "green" ? 'bg-[#56B261] hover:bg-[#1E7E34]' : '',
     color === "red" ? 'bg-red-400 hover:bg-red-500' : '',
     color === "gray" ? 'bg-gray' : '',
-    rounded === "large" ? 'rounded-[24px]' : 'rounded-[12px]', 
+    rounded === "large" ? 'rounded-[24px]' : rounded === "l" ? 'rounded-l-xl' : 'rounded-[12px]', 
     color === "pink" ? 'bg-[#EE384E]' : '' ,
     className
   )

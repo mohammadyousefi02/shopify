@@ -72,7 +72,7 @@ function AuthForm({signUpForm=false, className="",endpoint="users"}:Props) {
     }
   })
   return (
-    <div className={`flex-[0.3] flex flex-col ${className}`}>
+    <div className={`w-full flex flex-col ${className}`}>
         <div className='flex gap-2 items-center self-center text-lg'>
             {signUpForm ?
             <>
@@ -99,7 +99,7 @@ function AuthForm({signUpForm=false, className="",endpoint="users"}:Props) {
               <span className='text-primary'>{signUpForm ? signUpFormik.errors.email : logInFormik.errors.email}</span>
             </div>
             <div className='flex flex-col gap-2'>
-              <Input label="گذرواژه" rounded='normal' id='password' name='password' onInput={()=>setError('')} onChange={signUpForm ? signUpFormik.handleChange : logInFormik.handleChange} value={signUpForm ? signUpFormik.values.password : logInFormik.values.password}/>
+              <Input label="گذرواژه" type='password' rounded='normal' id='password' name='password' onInput={()=>setError('')} onChange={signUpForm ? signUpFormik.handleChange : logInFormik.handleChange} value={signUpForm ? signUpFormik.values.password : logInFormik.values.password}/>
               <span className='text-primary'>{signUpForm ? signUpFormik.errors.password : logInFormik.errors.password}</span>
               {error && <span className='text-primary'>{error}</span>}
             </div>

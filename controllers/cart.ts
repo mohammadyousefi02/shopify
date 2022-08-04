@@ -26,7 +26,7 @@ const cartHandler = async(req:NextApiRequest, res:NextApiResponse, apiRoute:stri
             await user.clearCart()
             res.status(200).send("empty")  
         }else{
-            await user.decreaseCartItemQuantity(id,size, color)
+            await user.decreaseCartItemQuantity(product,size, color)
             res.status(200).send("ok decrease")
         }
        } catch (error) {

@@ -86,8 +86,8 @@ userSchema.methods.addToCart = function(product:Iproduct,size:string, color:stri
     return this.save()
 }
 
-userSchema.methods.decreaseCartItemQuantity = function(productId:mongoose.Schema.Types.ObjectId,size:string, color:string){
-    const productIndex = this.cart.items.findIndex((p:IcartProduct)=>p.product.toString() === productId.toString() && p.size === size && p.color === color )
+userSchema.methods.decreaseCartItemQuantity = function(product:Iproduct,size:string, color:string){
+    const productIndex = this.cart.items.findIndex((p:IcartProduct)=>p.product.toString() === product._id.toString() && p.size === size && p.color === color )
     let copyCartItems = [...this.cart.items]
     const newQuantity:number = copyCartItems[productIndex].quantity - 1
     if(newQuantity === 0){
@@ -97,7 +97,7 @@ userSchema.methods.decreaseCartItemQuantity = function(productId:mongoose.Schema
     }
     const updatedCart = {
         items:copyCartItems,
-        total: this.cart.total - Number(this.cart.items[productIndex].product.price)
+        total: this.cart.total - Number(product.price)
     }
     this.cart = updatedCart
     return this.save()

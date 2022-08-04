@@ -10,6 +10,7 @@ import { DateObject } from "react-multi-date-picker";
 import persian from "react-date-object/calendars/persian";
 import persian_fa from "react-date-object/locales/persian_fa";
 import { server } from "../../../../config/server";
+import { BsStarFill, BsStar } from "../../../../icons"
 
 interface Props {
   id: string;
@@ -19,9 +20,24 @@ function Comments({ id }: Props) {
   const [name, setName] = React.useState("");
   const [comment, setComment] = React.useState("");
   const [comments, setComments] = React.useState<Icomment[]>([]);
+  const [star, setStar] = React.useState(4);
+  const [stars, setStars] = React.useState<any[]>([])
   const [token] = useAuthUserToken();
   const router = useRouter();
-
+  const createStars = (star:number, comment:boolean = false) => {
+    const stars:any[]=[]
+    for(let i = 1; i<6; i++){
+      if(i<=star){
+        stars.push(<BsStarFill key={i} className={`text-yellow-500 ${!comment ? "cursor-pointer" : ''}`} onClick={comment ? ()=>{} :()=>setStar(i)}/>)
+      }else{
+        stars.push(<BsStar key={i} className={`text-yellow-500 ${!comment ? "cursor-pointer" : ''}`} onClick={comment ? ()=>{} :()=>setStar(i)}/>)
+      }
+    }
+    return stars
+  }
+  useEffect(()=>{
+    setStars(createStars(star))
+  },[star])
   const getComments = async () => {
     const res = await axios.get(`${server}/api/products/${id}/comments`);
     setComments(res.data);
@@ -39,7 +55,7 @@ function Comments({ id }: Props) {
         try {
           await axios.post(
             `${server}/api/products/${id}/comments`,
-            { name, comment },
+            { name, comment, star },
             {
               headers: {
                 "x-auth-token": token,
@@ -58,18 +74,21 @@ function Comments({ id }: Props) {
     }
   };
   return (
-    <div className="flex flex-col gap-2" id="comments">
+    <div className="flex flex-col gap-2 px-8" id="comments">
       <div className="bg-white rounded-lg shadow p-4 flex flex-col gap-2">
         <span>دیدگاه کاربران</span>
         <div className="flex flex-col gap-4 items-start">
-          <div>
+          <div className="flex gap-2">
             <Input
               placeholder="نام شما"
               background="transparent"
-              className="border  md:w-[500px]"
+              className="border md:w-[500px]"
               value={name}
               onChange={(e) => setName(e.target.value)}
             />
+            <div className="flex">
+              {[stars]}
+            </div>
           </div>
           <textarea
             cols={30}
@@ -103,6 +122,7 @@ function Comments({ id }: Props) {
                   locale: persian_fa,
                 }).format()}
               </span>
+              {createStars(Number(comment.star),true)}
             </div>
             <div>
               <p className="leading-7">{comment.comment}</p>

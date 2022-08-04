@@ -9,7 +9,8 @@ export interface Icomment {
     comment:string,
     date:number,
     user?:string,
-    _id:string
+    _id:string,
+    star:string
 }
 
 export interface Iproduct {
@@ -21,5 +22,6 @@ export interface Iproduct {
     postedAt:number,
     number:number,
     category:string,
-    comments:Icomment[]
+    comments:Icomment[],
+    star:string
 }

@@ -17,10 +17,12 @@ const productSchema = new mongoose.Schema({
             user:{
                 type:mongoose.Schema.Types.ObjectId,
                 ref:'Users'
-            }
+            },
+            star:Number
         }
     ],
-    category:String
+    category:String,
+    star:String
 })
 
 
@@ -30,8 +32,9 @@ productSchema.methods.decreaseQuantity = function(size:string, quantity:number){
     return this.save()
 }
 
-productSchema.methods.addComment = function(name:string, comment:string, date:number, user:mongoose.Schema.Types.ObjectId){
-    this.comments = [...this.comments, {name, comment, date, user}]
+productSchema.methods.addComment = function(name:string, comment:string, date:number, user:mongoose.Schema.Types.ObjectId,star:Number){
+    this.comments = [...this.comments, {name, comment, date, user, star}]
+    this.star = ((Number(this.star)  + Number(star))/2).toFixed(1)
     return this.save()
 }
 

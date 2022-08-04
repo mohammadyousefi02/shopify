@@ -28,6 +28,7 @@ interface Props {
   sizes: Isize[];
   code: number;
   category: string;
+  star:string
 }
 
 function SmProductDetail({
@@ -38,6 +39,7 @@ function SmProductDetail({
   sizes,
   code,
   category,
+  star
 }: Props) {
   const dispatch = useDispatch();
 
@@ -113,7 +115,7 @@ function SmProductDetail({
   return (
     <div className="bg-white flex flex-col md:flex-row gap-2 rounded-lg p-3">
       <div className="flex flex-[0.5] border border-gray border-opacity-50 p-1 flex-col gap-3 items-center">
-        <div className="relative w-full h-[350px]">
+        <div className="relative w-full h-[450px]">
           <Image
             src={image || images[0]}
             layout="fill"
@@ -152,8 +154,8 @@ function SmProductDetail({
         </div>
         <div className="flex items-center justify-between mt-4 text-primary text-[24px]">
           <h1>{Number(price).toLocaleString("fa")} تومان</h1>
-          <div className="flex items-center gap-2 font-bold">
-            <span>{(4.6).toLocaleString("fa")}</span>
+          <div className="flex items-center gap-2 font-bold px-6">
+            <span>{(Number(star)).toLocaleString("fa")}</span>
             <BsStarFill className="text-yellow-400" />
           </div>
         </div>

@@ -21,7 +21,7 @@ const createProduct = async(req:NextApiRequest, res:NextApiResponse) => {
         const decoded:IdecodedToken = <IdecodedToken>jwt.verify(token, process.env.jwtPrivateKey!);
         if(decoded.isAdmin){
             const {name,images,price,sizes,category,number} = req.body;
-            let newProduct = new Products({name,images,price,sizes,category,number,postedAt:new Date(), comments:[]})
+            let newProduct = new Products({name,images,price,sizes,category,number,postedAt:new Date(), comments:[],star:"5"})
             newProduct = await newProduct.save()
             const categoryDoc = await Category.findOne({name:category})
             await categoryDoc.addProduct(newProduct._id)
@@ -83,10 +83,10 @@ const addComment = async(req:NextApiRequest, res:NextApiResponse) => {
         const token:string = <string>req.headers["x-auth-token"]
         const decoded:IdecodedToken = <IdecodedToken>jwt.verify(token, process.env.jwtPrivateKey!);
         const {id} = req.query
-        const {name,comment} = req.body
+        const {name,comment,star} = req.body
         const product = await Products.findById(id)
         if(product){
-            await product.addComment(name,comment,new Date(), decoded._id)
+            await product.addComment(name,comment,new Date(), decoded._id, star)
             res.status(201).json('comment added')
         }else{
             res.status(404).send({error:"the entered id is not found"})

@@ -7,6 +7,7 @@ import savedItemsReducer from "./slices/savedItemsReducer";
 import cartReducer from "./slices/cartReducer";
 import productsReducer from "./slices/productsReducer";
 import categorySlice from "./slices/category";
+import paginationSlice from "./slices/pagination" 
 
 
 
@@ -16,13 +17,14 @@ const rootReducer = combineReducers({
     savedItems:savedItemsReducer,
     cart:cartReducer,
     products:productsReducer,
-    category:categorySlice
+    category:categorySlice,
+    pagination:paginationSlice
 })
 
 const persistConfig = { 
     key:'root',
     storage,
-    blacklist:['user','savedItems','cart','products','category']
+    blacklist:['user','savedItems','cart','products','category','pagination']
 }
 
 const persistedReducer = persistReducer(persistConfig, rootReducer)

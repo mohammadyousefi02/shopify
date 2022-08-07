@@ -23,7 +23,7 @@ function SiteInformation({children, className}:Props) {
             <h1>ثبت نام در خبرنامه شاپیفای</h1>
             <div className='flex w-full'>
                 <input type='text' className='border border-gray rounded-r-xl w-full focus:border-primary outline-none p-2' placeholder='ایمیل خود را وارد کنید'/>
-                <Button title='ثبت' color='pink' className='rounded-none rounded-l-xl'/>
+                <Button title='ثبت' color='pink' rounded='l'/>
             </div>
         </div>
         {children}

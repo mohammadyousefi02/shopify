@@ -1,19 +1,26 @@
 import axios from 'axios'
 import { GetServerSideProps } from 'next'
-import React, { useLayoutEffect, useState } from 'react'
+import React, { useEffect, useLayoutEffect, useState } from 'react'
 import { server } from '../../../config/server'
 import useAuthUserToken from '../../../hooks/useAuthUserToken'
 import { Icategory } from '../../../interfaces/categoryInterface'
 import CategoryModal from '../../../src/components/adminPanel/CategoryModal'
 import Section from '../../../src/components/adminPanel/Section'
 import AdminPanelLayout from '../../../src/layouts/AdminPanelLayout'
+import { setPage } from '../../../redux/slices/pagination'
+import { useDispatch } from 'react-redux'
 
 function Categories() {
+  const dispatch = useDispatch()
   const [token] = useAuthUserToken()
   const [categories, setCategories] = useState<Icategory[]>()
   const [categoryId , setCategoryId] = useState('')
   const [showCategoryModal, setShowCategoryModal] = useState(false)
   const [ inpValue, setInpValue ] = useState('')
+
+  useEffect(()=>{
+    dispatch(setPage(1))
+  },[])
   
   const getCategories = () => axios.get(`${server}/api/categories`).then(e=>setCategories(e.data)).catch(e=>console.log(e))
   useLayoutEffect(() => {
@@ -22,7 +29,7 @@ function Categories() {
   const ths = ['دسته بندی', 'عملکردها']
   const tbody = {
     data:categories!,
-    by:'name'
+    by:['name']
   }
   const hideCategoryModal = () => {
     setShowCategoryModal(false);

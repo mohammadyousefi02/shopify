@@ -13,24 +13,23 @@ import Products from '../models/productModel';
 
 const sendOrders = async(req:NextApiRequest, res:NextApiResponse)=>{
     try{
-        const {name,province,city,address} = req.body
+        const {name,province,city,address,zipCode,number} = req.body
         const token = <string>req.headers['x-auth-token']
         const decoded = <IdecodedToken>jwt.verify(token, process.env.jwtPrivateKey!)
         const user = await Users.findById(decoded._id).populate("cart.items.product")
-        const items = user.cart.items.map(async(i:IcartItem)=>{
+        user.cart.items.forEach(async(i:IcartItem)=>{
             const product = await Products.findById(i.product._id)
             await product.decreaseQuantity(i.size, i.quantity)
-            return {...i,total:i.quantity * Number(i.product.price)}
         })
         const newOrders = new Orders({
             customer:{
                 user:user._id,
-                name,province,city,address
+                name,province,city,address,zipCode,number
             },
             order:{
-                items: [...items],
+                items: user.cart.items,
                 createdAt:new Date(),
-                total:_.sumBy(items,"total")
+                total:user.cart.total - user.cart.discount,
             },
             delivered:false
         })
@@ -53,6 +52,15 @@ const getOrder = async(req:NextApiRequest, res:NextApiResponse) => {
     }
 }
 
+const getAllOrders = async(req:NextApiRequest, res:NextApiResponse) => {
+    try {
+        const orders = await Orders.find()
+        res.status(200).send(orders)
+    } catch (error) {
+        res.status(400).send({error})
+    }
+}
+
 const changeDeliveryStatus = async(req:NextApiRequest, res:NextApiResponse) => {
     try {
         const token = <string>req.headers['x-auth-token']
@@ -70,4 +78,4 @@ const changeDeliveryStatus = async(req:NextApiRequest, res:NextApiResponse) => {
     }
 }
 
-export {sendOrders, getOrder, changeDeliveryStatus}
+export {sendOrders, getAllOrders, getOrder, changeDeliveryStatus}

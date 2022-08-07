@@ -1,7 +1,7 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 
-import { deleteProduct, editProduct, getOneProduct } from '../../../controllers/product';
-import connectToDb from '../../../utils/coonectToDb';
+import { deleteProduct, editProduct, getOneProduct } from '../../../../controllers/product';
+import connectToDb from '../../../../utils/coonectToDb';
 
 export default async function getProductById( req: NextApiRequest,res: NextApiResponse ){
 

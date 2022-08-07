@@ -54,3 +54,18 @@ export {GiSettingsKnobs} from "react-icons/gi"
 
 //close
 export {MdClose} from "react-icons/md"
+
+//star
+export { BsStarFill, BsStarHalf, BsStar } from "react-icons/bs"
+
+//comment
+export {TiPencil} from "react-icons/ti"
+
+//plus
+export { BiPlus, BiMinus } from "react-icons/bi"
+
+//check
+export { FaCheckCircle } from "react-icons/fa"
+
+//X
+export { IoCloseCircleSharp } from "react-icons/io5"

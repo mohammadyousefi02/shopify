@@ -11,7 +11,7 @@ const signUp = async(req:NextApiRequest,res:NextApiResponse) => {
         const {username,email,password} = req.body;
         let user = await Users.findOne({ email });
         if (user) return res.status(400).send({error:'قبلا با این ایمیل ثبت نام شده است'});
-        let newUser = new Users({username,email,password,cart:{items:[]},saved:{items:[]},orders:[]})
+        let newUser = new Users({username,email,password,cart:{items:[],total:0},saved:{items:[]},orders:[]})
         
         const salt = await bcrypt.genSalt(10);
         newUser.password = await bcrypt.hash(newUser.password, salt);

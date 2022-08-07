@@ -4,6 +4,7 @@ import  jwt  from 'jsonwebtoken';
 
 import Products from "../models/productModel";
 import Users from '../models/userModal';
+import Discount from "../models/discountModel";
 
 import { IdecodedToken } from "../interfaces/decodedTokenInterface";
 
@@ -17,14 +18,35 @@ const cartHandler = async(req:NextApiRequest, res:NextApiResponse, apiRoute:stri
         const user = await Users.findById(decoded._id)
         if(apiRoute === "add"){
             await user.addToCart(product, size, color)
-            res.status(200).send("ok")  
+            res.status(200).send("increase")  
+        }else if(apiRoute === "remove"){
+            await user.deleteItemFromCart(id, size, color)
+            res.status(200).send("remove")  
+        }else if(apiRoute === "empty"){
+            await user.clearCart()
+            res.status(200).send("empty")  
         }else{
-            await user.decreaseCartItemQuantity(id,size, color)
-            res.status(200).send("ok hazf")
+            await user.decreaseCartItemQuantity(product,size, color)
+            res.status(200).send("ok decrease")
         }
        } catch (error) {
         res.status(400).send({error})
        }
 }
 
-export {cartHandler}
+const setDiscountCode = async(req:NextApiRequest, res:NextApiResponse) => {
+    try {
+        const token:string = <string>req.headers["x-auth-token"]
+        const { code } = req.body
+        const decoded:IdecodedToken = <IdecodedToken>jwt.verify(token, process.env.jwtPrivateKey!);
+        const discount = await Discount.findOne({code})
+        if(!discount)return res.status(400).send("invalid code")
+        const user = await Users.findById(decoded._id)
+        await user.setDiscount(discount.value)
+        res.status(200).send(discount.value)
+    } catch (error) {
+        res.status(400).send({error})
+    }
+}
+
+export {cartHandler, setDiscountCode}

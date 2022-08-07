@@ -1,5 +1,6 @@
 import React from 'react'
 import Button from '../src/components/Button'
+import CartCard from '../src/components/cart/CartCard'
 import Header from '../src/components/Header/index'
 import Input from '../src/components/Input'
 import ProductCart from '../src/components/ProductCard'
@@ -18,6 +19,7 @@ function Component() {
         <Button title='test' color='gray'/>
         <Button title='test' rounded='normal'/>
         <ProductMiniCard image='/images/dress-8.jpg' title='مانتو' price='270000'/>
+        {/* <CartCard/> */}
     </div>
   )
 }

@@ -37,10 +37,20 @@ const cartSlice = createSlice({
             }else{
                 state.items[productIndex].quantity = newQuantity
             }
+        },
+        removeFromCart:(state, action) => {
+            const {_id,color,size} = action.payload
+            const productIndex:number = state.items.findIndex((p)=>{
+                return p.product._id === _id && p.size === size && p.color === color
+            })
+            state.items.splice(productIndex,1)
+        },
+        emptyCart:(state)=>{
+            state.items = []
         }
     }
 })
 
-export const {setCart, addToCart, decreaseItemQuantity} = cartSlice.actions
+export const {setCart, addToCart, decreaseItemQuantity, removeFromCart, emptyCart} = cartSlice.actions
 
 export default cartSlice.reducer

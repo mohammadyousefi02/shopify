@@ -15,9 +15,9 @@ function LogInSignIn() {
   if(token)router.push('/')
   return (
     <MainLayout>
-        <div className='container mx-auto py-8'>
+        <div className='container mx-auto py-8 px-4'>
             <div className='bg-white py-4 rounded'>
-              <div className='flex justify-center gap-8'>
+              <div className='flex flex-col md:flex-row justify-center gap-8 px-4'>
                 <AuthForm/>
                 <AuthForm signUpForm={true}/>
               </div>

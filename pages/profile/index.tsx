@@ -18,7 +18,7 @@ function Profile() {
         }).catch(e=>console.log(e))
       }
   },[])
-  const [token, setToken] = useAuthUserToken()
+  const [ token ] = useAuthUserToken()
 
   return (
     <>

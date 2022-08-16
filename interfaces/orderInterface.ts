@@ -6,7 +6,9 @@ export interface Icustomer {
     name:string,
     province:string,
     city:string,
-    address:string
+    address:string,
+    zipcode:number,
+    number:number,
 }
 
 export interface Iorder extends Icart {
@@ -20,5 +22,6 @@ export interface Iorders {
     _id:string,
     customer:Icustomer,
     order:Iorder,
-    delivered:boolean
+    delivered:boolean,
+    deliveredAt:number,
 }

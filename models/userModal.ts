@@ -80,7 +80,8 @@ userSchema.methods.addToCart = function(product:Iproduct,size:string, color:stri
     }
     const updatedCart = {
         items:copyCartItems,
-        total: this.cart.total + Number(product.price)
+        total: this.cart.total + Number(product.price),
+        discount:0
     }
     this.cart = updatedCart
     return this.save()
@@ -97,7 +98,8 @@ userSchema.methods.decreaseCartItemQuantity = function(product:Iproduct,size:str
     }
     const updatedCart = {
         items:copyCartItems,
-        total: this.cart.total - Number(product.price)
+        total: this.cart.total - Number(product.price),
+        discount:0
     }
     this.cart = updatedCart
     return this.save()
@@ -109,7 +111,8 @@ userSchema.methods.deleteItemFromCart = function(productId:mongoose.Schema.Types
     copyCartItems.splice(productIndex,1)
     const updatedCart = {
         items:copyCartItems,
-        total: this.cart.total - (Number(this.cart.items[productIndex].product.price) * this.cart.items[productIndex].quantity)
+        total: this.cart.total - (Number(this.cart.items[productIndex].product.price) * this.cart.items[productIndex].quantity),
+        discount:0
     }
     this.cart = updatedCart
     return this.save()

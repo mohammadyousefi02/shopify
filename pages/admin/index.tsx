@@ -17,8 +17,10 @@ function Admin() {
         }
     },[token])
   return (
-    <div className='flex justify-center items-center bg-white h-full'>
-        <AuthForm endpoint='admins'/>
+    <div className='flex justify-center items-center bg-white h-full w-full'>
+        <div className="w-[500px]">
+          <AuthForm endpoint='admins'/>
+        </div>
     </div>
   )
 }

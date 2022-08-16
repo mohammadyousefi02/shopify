@@ -31,7 +31,7 @@ interface Props {
   star:string
 }
 
-function SmProductDetail({
+function ProductDetail({
   images,
   title,
   price,
@@ -54,7 +54,6 @@ function SmProductDetail({
   const [image, setImage] = useState("");
   const [quantity, setQuantity] = useState(0);
   const router = useRouter();
-
   const [size, setSize] = useState("");
   const [color, setColor] = useState("");
 
@@ -66,7 +65,7 @@ function SmProductDetail({
       copySizeOptions.push({ value: s.size, label: s.size });
     });
     setSizeOptions(copySizeOptions);
-  }, []);
+  }, [router.query.id]);
 
   useEffect(() => {
     const chosenSize = sizes.find((s) => s.size === size);
@@ -191,4 +190,4 @@ function SmProductDetail({
   );
 }
 
-export default SmProductDetail;
+export default ProductDetail;

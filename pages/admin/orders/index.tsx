@@ -4,7 +4,6 @@ import { server } from "../../../config/server";
 import useAuthUserToken from "../../../hooks/useAuthUserToken";
 import { Iorders } from "../../../interfaces/orderInterface";
 import OrderModal from "../../../src/components/adminPanel/OrderModal";
-import OrderSection from "../../../src/components/adminPanel/OrderSection";
 import OrderTable from "../../../src/components/adminPanel/OrderTable";
 import Button from "../../../src/components/Button";
 import AdminPanelLayout from "../../../src/layouts/AdminPanelLayout";

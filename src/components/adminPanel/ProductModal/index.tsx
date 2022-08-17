@@ -27,7 +27,7 @@ function ProductModal({closeProductModal}:Props) {
     const [name, setName] = useState('')
     const [price, setPrice] = useState('')
     const [code, setCode] = useState('')
-    const [images, setImages] = useState<{name:string, image:string}[]>([])
+    const [images, setImages] = useState<string[]>([])
     const [sizes, setSizes] = useState<Isize[]>([])
 
     const convertToBase64 = (file:File) => {
@@ -41,16 +41,20 @@ function ProductModal({closeProductModal}:Props) {
     }
 
     function readFile(e: React.ChangeEvent<HTMLInputElement>) {
-        const reader = new FileReader()
-        const images:{name:string, image:string}[] = []
+        const images:string[] = []
         for(let i = 0; i < e.target.files!.length; i++) {
-            convertToBase64(e.target.files![i]).then((base64) => {
-                images.push({name:e.target.files![i].name, image:base64 as string})
+            const url = URL.createObjectURL(e.target.files![i])
+            images.push(url)
                 if(i === e.target.files!.length - 1) {
                     setImages(images)
                 }
-           }).catch(err => console.log(err))
-           continue
+        //     convertToBase64(e.target.files![i]).then((base64) => {
+        //         images.push({name:e.target.files![i].name, image:base64 as string})
+        //         if(i === e.target.files!.length - 1) {
+        //             setImages(images)
+        //         }
+        //    }).catch(err => console.log(err))
+        //    continue
       }
     }
     useEffect(()=>{
@@ -105,7 +109,7 @@ function ProductModal({closeProductModal}:Props) {
             </div>
             <Button title='تایید' className='w-full' onClick={createProduct}/>
             </div>
-            <img src={images[0].image} alt="" />
+            <img src={images[0]} alt="" />
         </div>
     </div>
   )

@@ -22,11 +22,13 @@ const ordersSchema = new mongoose.Schema({
             createdAt:Number
         }
     },
-    delivered:Boolean
+    delivered:Boolean,
+    deliveredAt:Number,
 })
 
 ordersSchema.methods.changeDeliveryStatus = function(){
     this.delivered = true;
+    this.deliveredAt = new Date().getTime();
     return this.save()
 }
 

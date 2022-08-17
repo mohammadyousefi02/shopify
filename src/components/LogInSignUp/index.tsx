@@ -1,10 +1,6 @@
-import Link from 'next/link'
 import React from 'react'
 import MainLayout from '../../layouts/MainLayout'
-import Button from '../Button'
 
-import { BiUser, BiUserPlus } from "../../../icons"
-import Input from '../Input'
 import AuthForm from '../AuthForm'
 import useAuthUserToken from '../../../hooks/useAuthUserToken'
 import { useRouter } from 'next/router'

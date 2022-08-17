@@ -8,6 +8,8 @@ import { Icategory } from '../../../interfaces/categoryInterface'
 import { Iproduct } from '../../../interfaces/productInterface'
 import { setPage } from '../../../redux/slices/pagination'
 import CategoryModal from '../../../src/components/adminPanel/CategoryModal'
+import ProductDetailSection from '../../../src/components/adminPanel/ProductDetailSection'
+import ProductModal from '../../../src/components/adminPanel/ProductModal'
 import Section from '../../../src/components/adminPanel/Section'
 import AdminPanelLayout from '../../../src/layouts/AdminPanelLayout'
 
@@ -29,12 +31,12 @@ function Products() {
     data:products!,
     by:['name', 'category', 'price']
   }
-  const hideCategoryModal = () => {
+  const closeProductModal = () => {
     setShowProductModal(false);
     setInpValue('')
     setProductId('')
   }
-  const showCategoryModalHandler = () => setShowProductModal(true);
+  const showProductModalHandler = () => setShowProductModal(true);
   const onCreateNewCategory = () => {
     axios.post(`${server}/api/categories`, { name:inpValue }, {
       headers:{
@@ -42,7 +44,7 @@ function Products() {
       }
     })
     .then(res => {
-      hideCategoryModal()
+      closeProductModal()
       getProducts()
     }).catch(err => {
       console.log(err)
@@ -53,7 +55,7 @@ function Products() {
   const onEditIcon = (id:string, name:string) => {
     setProductId(id)
     setInpValue(name)
-    showCategoryModalHandler()
+    showProductModalHandler()
   }
 
   const onEditCategory = () => {
@@ -63,7 +65,7 @@ function Products() {
       }
     })
     .then(res => {
-      hideCategoryModal()
+      closeProductModal()
       getProducts()
     }).catch(err => {
       console.log(err)
@@ -87,8 +89,8 @@ function Products() {
   return (
     <div>
         <AdminPanelLayout>
-            {products &&  <Section onAdd={showCategoryModalHandler} onDelete={onDeleteIcon} onEdit={onEditIcon} th={ths} tbody={tbody} title='محصولات'/> }
-            {showProductModal && <CategoryModal value={inpValue} setter={setInpValue} onClose={hideCategoryModal} onAdd={onCreateNewCategory} onEdit={onEditCategory} categoryId={productId} /> }
+            {products &&  <Section onAdd={showProductModalHandler} onDelete={onDeleteIcon} onEdit={onEditIcon} th={ths} tbody={tbody} title='محصولات'/> }
+            {showProductModal && <ProductModal closeProductModal={closeProductModal}/>}
         </AdminPanelLayout>
     </div>
   )

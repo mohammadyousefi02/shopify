@@ -11,12 +11,10 @@ import persian_fa from "react-date-object/locales/persian_fa"
 
 interface Props {
     orders:Iorders[]
-    onDelete?:(id: string) => void,
-    onEdit?:(id: string, name: string) => void
+    showOrderModalHandler:(order:Iorders)=>void
 }
 
-function OrderTable({orders, onEdit, onDelete}:Props) {
-    const dispatch = useDispatch()
+function OrderTable({orders, showOrderModalHandler}:Props) {
     const { page } = useSelector((state:any) => state.pagination)
     const [data, paginationButtons] = usePagination(orders, 5, page)
     
@@ -39,7 +37,7 @@ function OrderTable({orders, onEdit, onDelete}:Props) {
                     <td>{new DateObject({date:d.order.createdAt,calendar:persian,locale: persian_fa}).format()}</td>
                     <td>
                         <div className='flex gap-1 text-base'>
-                            <div className='bg-primary cursor-pointer p-1 rounded'>
+                            <div className='bg-primary cursor-pointer p-1 rounded' onClick={()=>showOrderModalHandler(d)}>
                                 <MdVisibility color='#fff'/>
                             </div>
                         </div>

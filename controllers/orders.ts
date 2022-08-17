@@ -17,7 +17,8 @@ const sendOrders = async(req:NextApiRequest, res:NextApiResponse)=>{
         const token = <string>req.headers['x-auth-token']
         const decoded = <IdecodedToken>jwt.verify(token, process.env.jwtPrivateKey!)
         const user = await Users.findById(decoded._id).populate("cart.items.product")
-        user.cart.items.forEach(async(i:IcartItem)=>{
+        const items:IcartItem[] = user.cart.items.map((i:IcartItem)=>({...i, product:i.product}))
+         user.cart.items.forEach(async(i:IcartItem)=>{
             const product = await Products.findById(i.product._id)
             await product.decreaseQuantity(i.size, i.quantity)
         })
@@ -27,7 +28,7 @@ const sendOrders = async(req:NextApiRequest, res:NextApiResponse)=>{
                 name,province,city,address,zipCode,number
             },
             order:{
-                items: user.cart.items,
+                items,
                 createdAt:new Date(),
                 total:user.cart.total - user.cart.discount,
             },
@@ -61,6 +62,24 @@ const getAllOrders = async(req:NextApiRequest, res:NextApiResponse) => {
     }
 }
 
+const getDeliveredOrders = async(req:NextApiRequest, res:NextApiResponse) => {
+    try {
+        const orders = await Orders.find({delivered:true})
+        res.status(200).send(orders)
+    } catch (error) {
+        res.status(400).send({error})
+    }
+}
+
+const getUndeliveredOrders = async(req:NextApiRequest, res:NextApiResponse) => {
+    try {
+        const orders = await Orders.find({delivered:false})
+        res.status(200).send(orders)
+    } catch (error) {
+        res.status(400).send({error})
+    }
+}
+
 const changeDeliveryStatus = async(req:NextApiRequest, res:NextApiResponse) => {
     try {
         const token = <string>req.headers['x-auth-token']
@@ -78,4 +97,4 @@ const changeDeliveryStatus = async(req:NextApiRequest, res:NextApiResponse) => {
     }
 }
 
-export {sendOrders, getAllOrders, getOrder, changeDeliveryStatus}
+export {sendOrders, getAllOrders, getOrder, changeDeliveryStatus, getDeliveredOrders, getUndeliveredOrders}

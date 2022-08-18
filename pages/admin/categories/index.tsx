@@ -9,6 +9,7 @@ import Section from '../../../src/components/adminPanel/Section'
 import AdminPanelLayout from '../../../src/layouts/AdminPanelLayout'
 import { setPage } from '../../../redux/slices/pagination'
 import { useDispatch } from 'react-redux'
+import Confirm from '../../../src/components/Confirm'
 
 function Categories() {
   const dispatch = useDispatch()
@@ -17,6 +18,7 @@ function Categories() {
   const [categoryId , setCategoryId] = useState('')
   const [showCategoryModal, setShowCategoryModal] = useState(false)
   const [ inpValue, setInpValue ] = useState('')
+  const [confirmModal, setConfirmModal] = useState(false)
 
   useEffect(()=>{
     dispatch(setPage(1))
@@ -74,7 +76,17 @@ function Categories() {
   }
 
   const onDeleteIcon = (id:string) => {
-    axios.delete(`${server}/api/categories/${id}`, {
+    setCategoryId(id)
+    setConfirmModal(true)
+  }
+
+  const closeConfirmModal = () => {
+    setConfirmModal(false)
+    setCategoryId('')
+  }
+
+  const onDeleteCategory = () => {
+    axios.delete(`${server}/api/categories/${categoryId}`, {
       headers:{
         'x-auth-token':token
       }
@@ -85,12 +97,15 @@ function Categories() {
       console.log(err)
     }
     )
+    setConfirmModal(false)
+    setCategoryId('')
   }
   return (
     <div>
         <AdminPanelLayout>
             {categories &&  <Section onAdd={showCategoryModalHandler} onDelete={onDeleteIcon} onEdit={onEditIcon} th={ths} tbody={tbody} title='دسته بندی ها'/> }
             {showCategoryModal && <CategoryModal value={inpValue} setter={setInpValue} onClose={hideCategoryModal} onAdd={onCreateNewCategory} onEdit={onEditCategory} categoryId={categoryId} /> }
+            {confirmModal && <Confirm onClose={closeConfirmModal} onConfirm={onDeleteCategory}/>}
         </AdminPanelLayout>
     </div>
   )

@@ -13,9 +13,8 @@ interface Props {
 }
 
 function Table({th, tbody, onEdit, onDelete}:Props) {
-    const dispatch = useDispatch()
-    const { totalPage, page } = useSelector((state:any) => state.pagination)
-    const [data, paginationButtons] = usePagination(tbody.data, 5, page)
+    const { page } = useSelector((state:any) => state.pagination)
+    const [data, paginationButtons] = usePagination(tbody.data, 10, page)
   return (
     <div>
         <table className='w-full'>

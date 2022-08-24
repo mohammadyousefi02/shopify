@@ -70,13 +70,11 @@ function Products() {
     setProductId('')
   }
   return (
-    <div>
         <AdminPanelLayout>
             {products &&  <Section onAdd={showProductModalHandler} onDelete={onDeleteIcon} onEdit={onEditIcon} th={ths} tbody={tbody} title='محصولات'/> }
             {showProductModal && <ProductModal getProducts={getProducts} setProduct={setProduct} product={product} closeProductModal={closeProductModal}/>}
             {confirmModal && <Confirm onClose={closeConfirmModal} onConfirm={onDelete}/>}
         </AdminPanelLayout>
-    </div>
   )
 }
 

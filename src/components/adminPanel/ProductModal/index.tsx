@@ -32,7 +32,7 @@ function ProductModal({
   const [categoriesOptions, setCategoriesOptions] = useState<
     { value: string; label: string }[]
   >([]);
-  const [category, setCategory] = useState("");
+  const [category, setCategory] = useState(product ? product.category : "");
   const [sizeNumber, setSizeNumber] = useState(1);
   const [name, setName] = useState("");
   const [price, setPrice] = useState("");
@@ -138,11 +138,11 @@ function ProductModal({
   };
 
   return (
-    <div className="absolute top-0 bg-black bg-opacity-50 w-full min-h-full p-2">
-      <div className="bg-white rounded-lg p-2">
-        <div className="flex items-center justify-between mb-2">
-          <span>اضافه کردن محصول</span>
-          <MdClose onClick={closeModal} />
+    <div className="absolute top-0 bg-black bg-opacity-50 w-full min-h-full p-2 flex justify-center items-center">
+      <div className="bg-white rounded-lg p-4 w-full sm:min-w-[500px] sm:max-w-[500px]">
+        <div className="flex items-center justify-between mb-2 lg:mb-4">
+          <span className="lg:text-base">{product ? "ویرایش کردن محصول" : "اضافه کردن محصول"}</span>
+          <MdClose onClick={closeModal} className="lg:text-xl cursor-pointer"/>
         </div>
         <div className="flex flex-col gap-4">
           <Input
@@ -164,8 +164,8 @@ function ProductModal({
             onChange={(e) => setCode(e.target.value)}
           />
           <div className="flex flex-col gap-2">
-            <div className="relative flex items-center justify-between">
-              <span>تصاویر</span>
+            <div className="relative flex items-center justify-between pr-1">
+              <span className="text-base">تصاویر</span>
               <input
                 accept="image/*"
                 onChange={readFile}
@@ -176,7 +176,7 @@ function ProductModal({
               />
               <label
                 htmlFor="file"
-                className="bg-primary p-1 rounded text-white"
+                className="bg-primary p-1 sm:p-2 rounded text-white cursor-pointer"
               >
                 انتخاب تصاویر
               </label>
@@ -188,8 +188,9 @@ function ProductModal({
               دسته بندی
               <Select
                 options={categoriesOptions}
-                inputValue={category}
+                defaultValue={{label:category,value:category}}
                 onChange={(value) => setCategory(value!.value)}
+                className="cursor-pointer"
               />
             </label>
           </div>
@@ -205,7 +206,7 @@ function ProductModal({
             ))}
             <span
               onClick={() => setSizeNumber((prev) => prev + 1)}
-              className="text-primary"
+              className="text-primary cursor-pointer"
             >
               اضافه کردن سایز جدید
             </span>

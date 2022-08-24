@@ -10,7 +10,7 @@ interface Props {
 function AdminPanelLayout({children}:Props) {
   convertNumToPer()
   return (
-    <div>
+    <div className='flex h-full'>
         <Header/>
         {children}
     </div>

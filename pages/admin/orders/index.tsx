@@ -85,7 +85,7 @@ function Orders() {
     }
   };
   return (
-    <div>
+    <div className="h-full">
       <AdminPanelLayout>
         {deliveredOrders && undeliveredOrders && (
           <div className="container mx-auto px-4">

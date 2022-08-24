@@ -6,6 +6,7 @@ import Products from "../models/productModel"
 import Category from "../models/categoryModel"
 
 
+
 const getAllProduct = async(req: NextApiRequest,res: NextApiResponse) => {
     try{
         const products = await Products.find()
@@ -41,7 +42,13 @@ const editProduct = async(req:NextApiRequest, res:NextApiResponse) => {
         const { id } = req.query
         if(decoded.isAdmin){
             const {name,images,price,sizes,category,number} = req.body;
-            const product = await Products.findByIdAndUpdate(id,{name,images,price,sizes,category,number},{new:true})
+            const newProduct:any = {name,price,sizes,category,number}
+            if(images) newProduct.images = images
+            const categoryDoc = await Category.findOne({name:category})
+            const product = await Products.findByIdAndUpdate(id,{...newProduct})
+            const prevCateg = await Category.findOne({name:product.category})
+            await prevCateg.removeProduct(id)
+            await categoryDoc.addProduct(id)
             res.status(200).json(product)
         }else{
             res.status(403).send({error:'access denied'})

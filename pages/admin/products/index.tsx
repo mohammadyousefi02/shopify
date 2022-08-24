@@ -4,13 +4,11 @@ import React, { useLayoutEffect, useState } from 'react'
 import { useDispatch } from 'react-redux'
 import { server } from '../../../config/server'
 import useAuthUserToken from '../../../hooks/useAuthUserToken'
-import { Icategory } from '../../../interfaces/categoryInterface'
 import { Iproduct } from '../../../interfaces/productInterface'
 import { setPage } from '../../../redux/slices/pagination'
-import CategoryModal from '../../../src/components/adminPanel/CategoryModal'
-import ProductDetailSection from '../../../src/components/adminPanel/ProductDetailSection'
 import ProductModal from '../../../src/components/adminPanel/ProductModal'
 import Section from '../../../src/components/adminPanel/Section'
+import Confirm from '../../../src/components/Confirm'
 import AdminPanelLayout from '../../../src/layouts/AdminPanelLayout'
 
 function Products() {
@@ -18,14 +16,17 @@ function Products() {
   const [token] = useAuthUserToken()
   const [products, setProducts] = useState<Iproduct[]>()
   const [productId , setProductId] = useState('')
+  const [product, setProduct] = useState<Iproduct>()
   const [showProductModal, setShowProductModal] = useState(false)
-  const [ inpValue, setInpValue ] = useState('')
+  const [confirmModal, setConfirmModal] = useState(false)
   
   const getProducts = () => axios.get(`${server}/api/products`).then(e=>setProducts(e.data)).catch(e=>console.log(e))
+
   useLayoutEffect(() => {
     getProducts()
     dispatch(setPage(1))
   },[])
+
   const ths = ['نام', 'دسته بندی', 'قیمت', 'عملکردها']
   const tbody = {
     data:products!,
@@ -33,48 +34,28 @@ function Products() {
   }
   const closeProductModal = () => {
     setShowProductModal(false);
-    setInpValue('')
     setProductId('')
   }
   const showProductModalHandler = () => setShowProductModal(true);
-  const onCreateNewCategory = () => {
-    axios.post(`${server}/api/categories`, { name:inpValue }, {
-      headers:{
-        'x-auth-token':token
-      }
-    })
-    .then(res => {
-      closeProductModal()
-      getProducts()
-    }).catch(err => {
-      console.log(err)
-    }
-    )
-  }
   
   const onEditIcon = (id:string, name:string) => {
-    setProductId(id)
-    setInpValue(name)
+    const product = products!.find(e=>e._id === id)
+    setProduct(product)
     showProductModalHandler()
   }
 
-  const onEditCategory = () => {
-    axios.put(`${server}/api/categories/${productId}`, { name:inpValue }, {
-      headers:{
-        'x-auth-token':token
-      }
-    })
-    .then(res => {
-      closeProductModal()
-      getProducts()
-    }).catch(err => {
-      console.log(err)
-    }
-    )
+  const onDeleteIcon = (id:string) => {
+    setProductId(id)
+    setConfirmModal(true)
   }
 
-  const onDeleteIcon = (id:string) => {
-    axios.delete(`${server}/api/categories/${id}`, {
+  const closeConfirmModal = () => {
+    setConfirmModal(false)
+    setProductId('')
+  }
+
+  const onDelete = () => {
+    axios.delete(`${server}/api/products/${productId}`, {
       headers:{
         'x-auth-token':token
       }
@@ -85,14 +66,15 @@ function Products() {
       console.log(err)
     }
     )
+    setConfirmModal(false)
+    setProductId('')
   }
   return (
-    <div>
         <AdminPanelLayout>
             {products &&  <Section onAdd={showProductModalHandler} onDelete={onDeleteIcon} onEdit={onEditIcon} th={ths} tbody={tbody} title='محصولات'/> }
-            {showProductModal && <ProductModal closeProductModal={closeProductModal}/>}
+            {showProductModal && <ProductModal getProducts={getProducts} setProduct={setProduct} product={product} closeProductModal={closeProductModal}/>}
+            {confirmModal && <Confirm onClose={closeConfirmModal} onConfirm={onDelete}/>}
         </AdminPanelLayout>
-    </div>
   )
 }
 

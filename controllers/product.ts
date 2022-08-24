@@ -44,7 +44,11 @@ const editProduct = async(req:NextApiRequest, res:NextApiResponse) => {
             const {name,images,price,sizes,category,number} = req.body;
             const newProduct:any = {name,price,sizes,category,number}
             if(images) newProduct.images = images
-            const product = await Products.findByIdAndUpdate(id,{...newProduct},{new:true})
+            const categoryDoc = await Category.findOne({name:category})
+            const product = await Products.findByIdAndUpdate(id,{...newProduct})
+            const prevCateg = await Category.findOne({name:product.category})
+            await prevCateg.removeProduct(id)
+            await categoryDoc.addProduct(id)
             res.status(200).json(product)
         }else{
             res.status(403).send({error:'access denied'})

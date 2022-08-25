@@ -64,7 +64,6 @@ function ProductDetail({
     label: string;
   } | null>(null);
   const [token] = useAuthUserToken();
-  const sRef = React.useRef(null);
   useEffect(() => {
     setImage(images[0]);
     const copySizeOptions: Ioption[] = [];

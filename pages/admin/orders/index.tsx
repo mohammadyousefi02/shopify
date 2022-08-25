@@ -1,4 +1,5 @@
 import axios from "axios";
+import Head from "next/head";
 import React, { useEffect, useLayoutEffect, useState } from "react";
 import { server } from "../../../config/server";
 import useAuthUserToken from "../../../hooks/useAuthUserToken";
@@ -86,6 +87,9 @@ function Orders() {
   };
   return (
     <div className="h-full">
+      <Head>
+        <title>سفارش ها</title>
+      </Head>
       <AdminPanelLayout>
         {deliveredOrders && undeliveredOrders && (
           <div className="container mx-auto px-4">

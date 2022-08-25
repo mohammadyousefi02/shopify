@@ -1,3 +1,4 @@
+import Head from "next/head";
 import Link from "next/link";
 import React from "react";
 
@@ -6,6 +7,9 @@ import { IoCloseCircleSharp } from "../../icons";
 function FailedPayment() {
   return (
     <div className="h-full bg-white flex justify-center items-center">
+      <Head>
+        <title>خرید ناموفق</title>
+      </Head>
       <div className="flex flex-col items-center py-16">
         <h1 className="text-4xl">نتیجه پرداخت</h1>
         <div className="flex flex-col items-center">

@@ -1,5 +1,6 @@
 import axios from 'axios'
 import { GetServerSideProps } from 'next'
+import Head from 'next/head'
 import React, { useLayoutEffect, useState } from 'react'
 import { useDispatch } from 'react-redux'
 import { server } from '../../../config/server'
@@ -71,6 +72,9 @@ function Products() {
   }
   return (
         <AdminPanelLayout>
+            <Head>
+              <title>محصولات</title>
+            </Head>
             {products &&  <Section onAdd={showProductModalHandler} onDelete={onDeleteIcon} onEdit={onEditIcon} th={ths} tbody={tbody} title='محصولات'/> }
             {showProductModal && <ProductModal getProducts={getProducts} setProduct={setProduct} product={product} closeProductModal={closeProductModal}/>}
             {confirmModal && <Confirm onClose={closeConfirmModal} onConfirm={onDelete}/>}

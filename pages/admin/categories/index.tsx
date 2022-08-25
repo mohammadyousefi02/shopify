@@ -10,6 +10,7 @@ import AdminPanelLayout from "../../../src/layouts/AdminPanelLayout";
 import { setPage } from "../../../redux/slices/pagination";
 import { useDispatch } from "react-redux";
 import Confirm from "../../../src/components/Confirm";
+import Head from "next/head";
 
 function Categories() {
   const dispatch = useDispatch();
@@ -117,6 +118,9 @@ function Categories() {
   };
   return (
     <AdminPanelLayout>
+      <Head>
+        <title>دسته بندی ها</title>
+      </Head>
       {categories && (
         <Section
           onAdd={showCategoryModalHandler}

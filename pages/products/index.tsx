@@ -10,6 +10,7 @@ import ProductCart from '../../src/components/ProductCard'
 import { changeSortValue, filterSearchedProducts } from "../../redux/slices/productsReducer"
 import usePagination from '../../hooks/usePagination'
 import { setPage } from '../../redux/slices/pagination'
+import Head from 'next/head'
 
 function Products() {
     const [showFilterMenu, setShowFilterMenu] = useState(false)
@@ -27,6 +28,9 @@ function Products() {
     const [data, paginationButtons] = usePagination(filteredProducts, 18, page)
   return (
     <MainLayout>
+        <Head>
+            <title>محصولات جستجو شده</title>
+        </Head>
             <div className='container mx-auto px-4 py-4'>
                 <div className='flex flex-col gap-4 items-center mt-4'>
                   <div className='flex flex-col gap-2 sm:flex-row sm:justify-between sm:items-center py-2 bg-white  w-full rounded-lg px-3'>

@@ -8,6 +8,7 @@ import InfosFields from "../../src/components/payment-info/InfosFields";
 import MainLayout from "../../src/layouts/MainLayout";
 import { useDispatch } from "react-redux";
 import { emptyCart } from "../../redux/slices/cartReducer"
+import Head from "next/head";
 
 function Payment() {
   const dispatch = useDispatch()
@@ -41,6 +42,9 @@ function Payment() {
 
   return (
     <MainLayout>
+      <Head>
+        <title>خرید موفق</title>
+      </Head>
       <div className="container mx-auto pb-[90px] px-4">
         <div className="bg-white rounded-lg flex flex-col md:flex-row gap-8 mt-4 p-4">
           <InfosFields

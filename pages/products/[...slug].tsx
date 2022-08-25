@@ -18,10 +18,10 @@ interface Props {
 function SingleProduct({product}:Props) {
     const [relativeProducts, setRelativeProducts] = useState<Iproduct[]>([])
     const dispatch = useDispatch()
+    const {productsByCategory,products} = useSelector((store:any)=>store.products)
     useEffect(()=>{
         dispatch(setProductsByCategory(product.category))
-    },[])
-    const {productsByCategory} = useSelector((store:any)=>store.products)
+    },[products])
     useEffect(()=>{
         const relativeProducts:Iproduct[] = _.take(productsByCategory, 6)
         setRelativeProducts(relativeProducts)
@@ -40,8 +40,8 @@ function SingleProduct({product}:Props) {
 
 
 export const getServerSideProps:GetServerSideProps = async (context) => {
-    const {id} = context.query
-    const res = await axios.get(`${server}/api/products/${id}`)
+    const slug:string[] = context.query.slug as string[]
+    const res = await axios.get(`${server}/api/products/${slug[0]}`)
     const product = res.data
     return {
         props:{

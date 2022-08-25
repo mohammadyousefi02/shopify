@@ -6,6 +6,7 @@ import axios from 'axios'
 import { server } from '../../config/server'
 import { Iuser } from '../../interfaces/userInterface'
 import useGetUserId from '../../hooks/useGetUserId'
+import Head from 'next/head'
 
 
 function Profile() {
@@ -22,6 +23,9 @@ function Profile() {
 
   return (
     <>
+      <Head>
+        <title>{!token ? "ورود یا ثبت نام" : "پروفایل"}</title>
+      </Head>
        {!token ? <LogInSignUp/> : <UserProfile user={user!}/> }
     </>
   )

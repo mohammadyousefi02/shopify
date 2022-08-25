@@ -21,6 +21,7 @@ import FilterMenu from "../../src/components/FilterMenu";
 import { setPage } from "../../redux/slices/pagination";
 
 import usePagination from "../../hooks/usePagination";
+import Head from "next/head";
 
 function Category() {
   const [showFilterMenu, setShowFilterMenu] = useState(false);
@@ -46,6 +47,9 @@ function Category() {
   const [data, paginationButtons] = usePagination(productsByCategory, 18, page);
   return (
     <div>
+      <Head>
+        <title>دسته بندی : {router.query.name}</title>
+      </Head>
       <MainLayout>
         <div className="container mx-auto px-4 py-4">
           <div className="flex flex-col gap-4 items-center mt-4">

@@ -10,6 +10,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { setUser } from "../../redux/slices/userReducer";
 import { setCart } from "../../redux/slices/cartReducer";
 import { setSavedItems } from "../../redux/slices/savedItemsReducer";
+import Head from "next/head";
 
 function Saved() {
   const decodedToken = useGetUserId();
@@ -34,6 +35,9 @@ function Saved() {
   return (
     <>
       <MainLayout>
+      <Head>
+        <title>محصولات مورد علاقه</title>
+      </Head>
         <div className="container mx-auto px-4">
           <div className="w-full flex flex-col items-start gap-2 py-4">
             <h1 className="text-2xl sm:text-4xl mr-2">محصولات موردعلاقه</h1>

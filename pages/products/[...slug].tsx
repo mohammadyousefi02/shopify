@@ -11,6 +11,7 @@ import { setProductsByCategory } from '../../redux/slices/productsReducer'
 import _ from 'lodash'
 import Comments from '../../src/components/SingleProduct/Comments'
 import { useRouter } from 'next/router'
+import Head from 'next/head'
 
 interface Props {
     product:Iproduct
@@ -42,6 +43,9 @@ function SingleProduct({product}:Props) {
     },[router.query.slug])
   return (
     <MainLayout>
+        <Head>
+            <title>{router.query.slug![1]?.split("-").join(" ")}</title>
+        </Head>
         <div className='container mx-auto px-4 mt-9 pb-[90px]'>
             <ProductDetail _id={product._id} star={star} code={product.number} category={product.category} price={product.price} title={product.name} sizes={product.sizes} images={product.images}/>
             <RelativeProduct products={relativeProducts}/>

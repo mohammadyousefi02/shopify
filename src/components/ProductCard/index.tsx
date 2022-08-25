@@ -92,7 +92,8 @@ function ProductCart({images,title,price,_id,code}:Iprops) {
             {isSaved ? <FaHeart className='text-primary'/> : <FaRegHeart/>}
         </div>
     )}
-        <Link href={{pathname:`/products/[name]`,query:{id:_id}}} as={`/products/${title.split(" ").join("-")}`}>
+        {/* <Link href={{pathname:`/products/[name]`,query:{id:_id}}} as={`/products/${title.split(" ").join("-")}`}> */}
+        <Link href={`/products/${code}/${title.split(" ").join("-")}`}>
         {/* <Link href={{pathname:`/products/[...slug]`}} as={`/products/${code?.toString()}/${title.split(" ").join("-")}`}> */}
             <a>
                 <div ref={divElem} className=' md:h-[406px] h-[303px] shadow cursor-pointer flex flex-col justify-between items-center rounded-lg p-2 bg-white'>

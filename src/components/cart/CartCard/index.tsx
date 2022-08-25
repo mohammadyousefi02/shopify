@@ -1,4 +1,4 @@
-import axios from "axios";
+import axios, { AxiosError } from "axios";
 import Image from "next/image";
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -59,7 +59,13 @@ function CartCard({
         }
       );
     } catch (error) {
-      toast.error("خطایی در اضافه کردن پیش آمده");
+      const err = error as AxiosError;
+      const errText = err.response?.data as { error: string };
+      if (errText.error === "تعداد محصول وارد شده بیشتر از حد موجود است") {
+        toast.error(errText.error);
+      } else {
+        toast.error("خطایی در اضافه کردن پیش آمده");
+      }
       dispatch(setCart({ items: copyCartItems }));
     }
   };
@@ -113,7 +119,7 @@ function CartCard({
             width={75}
             height={75}
           />
-          <Link href={{pathname:`/products/[name]`,query:{id:_id}}} as={`/products/${name.split(" ").join("-")}`}>
+          <Link href={`/products/${code}/${name.split(" ").join("-")}`}>
             <a>
               <span className="text-primary">
                 {name} - {code} - {color} - {size}
@@ -146,7 +152,10 @@ function CartCard({
         {(Number(price) * quantity).toLocaleString("fa")}
       </td>
       <td className="align-middle">
-        <div className="bg-primary rounded p-1 inline-block cursor-pointer" onClick={removeFromCartHandler}>
+        <div
+          className="bg-primary rounded p-1 inline-block cursor-pointer"
+          onClick={removeFromCartHandler}
+        >
           <MdDelete fontSize={16} color="#fff" />
         </div>
       </td>

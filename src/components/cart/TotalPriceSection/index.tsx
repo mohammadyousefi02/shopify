@@ -88,19 +88,6 @@ function TotalPriceSection({ onClick = false, discountField = false }: Props) {
           </span>
         </div>
       </div>
-      {!onClick ? (
-        <Link href="/payment-info">
-          <a>
-            <Button className="mt-2 w-full" title="اقدام به پرداخت" />
-          </a>
-        </Link>
-      ) : (
-        <Button
-          className="mt-2 w-full"
-          title="پرداخت"
-          onClick={onClick as React.MouseEventHandler}
-        />
-      )}
       {discountField && (
         <h1
           className="text-sm my-2 cursor-pointer"
@@ -118,6 +105,19 @@ function TotalPriceSection({ onClick = false, discountField = false }: Props) {
           <Button title="تایید" className="mt-2" onClick={setDiscountHandler} />
         </div>
       )}
+      {!onClick ? (
+        <Link href="/payment-info">
+          <a>
+            <Button className="mt-2 w-full" title="اقدام به پرداخت" />
+          </a>
+        </Link>
+      ) : (
+        <Button
+          className="mt-2 w-full"
+          title="پرداخت"
+          onClick={onClick as React.MouseEventHandler}
+        />
+        )}
     </div>
   );
 }

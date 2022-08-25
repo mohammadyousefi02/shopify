@@ -3,12 +3,7 @@ import MainLayout from "../../src/layouts/MainLayout";
 
 import { useRouter } from "next/router";
 
-import {
-  BsSortUpAlt,
-  FiChevronDown,
-  BsCheck2,
-  GiSettingsKnobs,
-} from "../../icons";
+import { BsSortUpAlt, GiSettingsKnobs } from "../../icons";
 
 import { useSelector, useDispatch } from "react-redux";
 
@@ -17,24 +12,27 @@ import {
   sortProductsByCategory,
   changeCategorySortValue,
 } from "../../redux/slices/productsReducer";
+
 import { Iproduct } from "../../interfaces/productInterface";
+
 import ProductCart from "../../src/components/ProductCard";
-import Switch from "react-switch";
 import FilterMenu from "../../src/components/FilterMenu";
+
 import { setPage } from "../../redux/slices/pagination";
+
 import usePagination from "../../hooks/usePagination";
 
 function Category() {
   const [showFilterMenu, setShowFilterMenu] = useState(false);
   const router = useRouter();
   const dispatch = useDispatch();
-  useEffect(() => {
-    const name: string = router.query.name as string;
-    dispatch(setProductsByCategory(name.split("-").join(" ")));
-  }, [router.query.name]);
-  const { productsByCategory, categorySort } = useSelector(
+  const { productsByCategory, categorySort, products } = useSelector(
     (store: any) => store.products
   );
+  useEffect(() => {
+    const name: string = router.query.name as string;
+    dispatch(setProductsByCategory(name?.split("-").join(" ")));
+  }, [router.query.name, products]);
   const { page } = useSelector((store: any) => store.pagination);
   const sortOptions = ["جدید ترین", "ارزان ترین", "گران ترین"];
   const changeSortValueHandler = (value: string) => {
@@ -75,7 +73,13 @@ function Category() {
                   <span>فیلتر</span>
                 </div>
               </div>
-              <span>نمایش {((page - 1) * 18)+1}–{page*18 > productsByCategory.length ? productsByCategory.length : page*18} از {productsByCategory.length} نتیجه</span>
+              <span>
+                نمایش {(page - 1) * 18 + 1}–
+                {page * 18 > productsByCategory.length
+                  ? productsByCategory.length
+                  : page * 18}{" "}
+                از {productsByCategory.length} نتیجه
+              </span>
             </div>
             {showFilterMenu && (
               <FilterMenu

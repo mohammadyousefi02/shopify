@@ -1,3 +1,4 @@
+import { Iproduct } from './../interfaces/productInterface';
 import { NextApiRequest, NextApiResponse } from "next";
 
 import  jwt  from 'jsonwebtoken';
@@ -13,12 +14,17 @@ const cartHandler = async(req:NextApiRequest, res:NextApiResponse, apiRoute:stri
         const token:string = <string>req.headers["x-auth-token"]
         const { id } = req.query
         const { size, color } = req.body
-        const product = await Products.findById(id)
+        const product:Iproduct | null = await Products.findById(id)
         const decoded:IdecodedToken = <IdecodedToken>jwt.verify(token, process.env.jwtPrivateKey!);
         const user = await Users.findById(decoded._id)
         if(apiRoute === "add"){
-            await user.addToCart(product, size, color)
-            res.status(200).send("increase")  
+                const response = user.addToCart(product, size, color)
+                if(response){
+                    res.status(200).send("increase")  
+                }else{
+                    res.status(400).send({error:"تعداد محصول وارد شده بیشتر از حد موجود است"})
+                }
+           
         }else if(apiRoute === "remove"){
             await user.deleteItemFromCart(id, size, color)
             res.status(200).send("remove")  

@@ -42,7 +42,7 @@ function Payment() {
   return (
     <MainLayout>
       <div className="container mx-auto pb-[90px] px-4">
-        <div className="bg-white rounded-lg flex flex-col md:flex-row gap-8 items-center mt-4 p-4">
+        <div className="bg-white rounded-lg flex flex-col md:flex-row gap-8 mt-4 p-4">
           <InfosFields
             name={name}
             setName={setName}

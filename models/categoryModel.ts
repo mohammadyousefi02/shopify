@@ -22,7 +22,7 @@ categorySchema.methods.removeProduct = function(id:mongoose.Schema.Types.ObjectI
     const products = this.products
     const index = products.indexOf(id)
     if(index !== -1){
-        this.products = products.filter((i:mongoose.Schema.Types.ObjectId)=>i !== id)
+        this.product = products.splice(index, 1)
     }
     return this.save()
 }

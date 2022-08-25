@@ -27,7 +27,7 @@ interface Props {
   sizes: Isize[];
   code: number;
   category: string;
-  star:string
+  star: string;
 }
 
 function ProductDetail({
@@ -38,7 +38,7 @@ function ProductDetail({
   sizes,
   code,
   category,
-  star
+  star,
 }: Props) {
   const dispatch = useDispatch();
 
@@ -55,10 +55,16 @@ function ProductDetail({
   const router = useRouter();
   const [size, setSize] = useState("");
   const [color, setColor] = useState("");
-  const [sizeSelectInpValue, setSizeSelectInpValue] = useState<{value:string,label:string} | null>(null)
-  const [colorSelectInpValue, setColorSelectInpValue] = useState<{value:string,label:string} | null>(null)
+  const [sizeSelectInpValue, setSizeSelectInpValue] = useState<{
+    value: string;
+    label: string;
+  } | null>(null);
+  const [colorSelectInpValue, setColorSelectInpValue] = useState<{
+    value: string;
+    label: string;
+  } | null>(null);
   const [token] = useAuthUserToken();
-  const sRef = React.useRef(null)
+  const sRef = React.useRef(null);
   useEffect(() => {
     setImage(images[0]);
     const copySizeOptions: Ioption[] = [];
@@ -66,14 +72,12 @@ function ProductDetail({
       copySizeOptions.push({ value: s.size, label: s.size });
     });
     setSizeOptions(copySizeOptions);
-    setSize("")
-    setColor("")
-    setQuantity(0)
-    setSizeSelectInpValue(null)
-    setColorSelectInpValue(null)
+    setSize("");
+    setColor("");
+    setQuantity(0);
+    setSizeSelectInpValue(null);
+    setColorSelectInpValue(null);
   }, [router.query.slug]);
-
-  console.log(router)
 
   useEffect(() => {
     const chosenSize = sizes.find((s) => s.size === size);
@@ -110,13 +114,13 @@ function ProductDetail({
             }
           );
         } catch (error) {
-            const err = error as AxiosError;
-            const errText = err.response?.data as {error:string}
-            if(errText.error === "تعداد محصول وارد شده بیشتر از حد موجود است"){
-              toast.error(errText.error)
-            }else {
-              toast.error("خطایی در اضافه کردن پیش آمده");
-            }
+          const err = error as AxiosError;
+          const errText = err.response?.data as { error: string };
+          if (errText.error === "تعداد محصول وارد شده بیشتر از حد موجود است") {
+            toast.error(errText.error);
+          } else {
+            toast.error("خطایی در اضافه کردن پیش آمده");
+          }
           dispatch(setCart({ items: copyCartItems }));
         }
       } else toast.error("سایز و رنگ را انتخاب کنید");
@@ -168,7 +172,7 @@ function ProductDetail({
         <div className="flex items-center justify-between mt-4 text-primary text-[24px]">
           <h1>{Number(price).toLocaleString("fa")} تومان</h1>
           <div className="flex items-center gap-2 font-bold px-6">
-            <span>{(Number(star)).toLocaleString("fa")}</span>
+            <span>{Number(star).toLocaleString("fa")}</span>
             <BsStarFill className="text-yellow-400" />
           </div>
         </div>
@@ -177,8 +181,8 @@ function ProductDetail({
             <label htmlFor="">انتخاب سایز:</label>
             <Select
               onChange={(value) => {
-                setSize(value!.value)
-                setSizeSelectInpValue(value)
+                setSize(value!.value);
+                setSizeSelectInpValue(value);
               }}
               options={sizeOptions}
               value={sizeSelectInpValue}
@@ -188,8 +192,8 @@ function ProductDetail({
             <label htmlFor="">انتخاب رنگ:</label>
             <Select
               onChange={(value) => {
-                setColor(value!.value)
-                setColorSelectInpValue(value)
+                setColor(value!.value);
+                setColorSelectInpValue(value);
               }}
               options={colorOptions}
               value={colorSelectInpValue}

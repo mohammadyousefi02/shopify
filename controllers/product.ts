@@ -119,4 +119,18 @@ const getComments = async(req:NextApiRequest, res:NextApiResponse) => {
     }
 }
 
-export { getAllProduct, createProduct, getOneProduct, editProduct, deleteProduct, addComment, getComments }
+const getStars = async(req:NextApiRequest, res:NextApiResponse) => {
+    try{
+        const {id} = req.query
+        const product = await Products.findById(id)
+        if(product){
+            res.status(200).json(product.star)
+        }else{
+            res.status(404).send({error:"the entered id is not found"})
+        }
+    }catch(error){
+        res.status(400).send({error})
+    }
+}
+
+export { getAllProduct, createProduct, getOneProduct, editProduct, deleteProduct, addComment, getComments, getStars }

@@ -14,9 +14,10 @@ import { BsStarFill, BsStar } from "../../../../icons"
 
 interface Props {
   id: string;
+  getStar:()=>void
 }
 
-function Comments({ id }: Props) {
+function Comments({ id, getStar}: Props) {
   const [name, setName] = React.useState("");
   const [comment, setComment] = React.useState("");
   const [comments, setComments] = React.useState<Icomment[]>([]);
@@ -66,6 +67,7 @@ function Comments({ id }: Props) {
           setComment("");
           setName("");
           getComments();
+          getStar()
         } catch (error) {
           toast.error("خطایی رخ داده است");
         }

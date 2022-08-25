@@ -4,6 +4,7 @@ import jwt from "jsonwebtoken"
 import _ from "lodash";
 
 import { Iorder } from "../interfaces/orderInterface";
+import { Iproduct } from "../interfaces/productInterface";
 
 const userSchema = new mongoose.Schema({
     username:String,
@@ -43,13 +44,13 @@ userSchema.methods.generateAuthToken = function() {
     return token;
 }
 
-interface Iproduct{
-    _id:mongoose.Schema.Types.ObjectId,
-    name:string,
-    image:string,
-    price:string,
-    size:string[]
-}
+// interface Iproduct{
+//     _id:mongoose.Schema.Types.ObjectId,
+//     name:string,
+//     image:string,
+//     price:string,
+//     size:string[]
+// }
 
 
 
@@ -68,8 +69,14 @@ userSchema.methods.addToCart = function(product:Iproduct,size:string, color:stri
     let newQuantity = 1;
     const copyCartItems = [...this.cart.items]
     if(productIndex>=0){
+        const quantity = product.sizes.find(s=>s.size === size)?.quantity
         newQuantity = this.cart.items[productIndex].quantity + 1
-        copyCartItems[productIndex].quantity = newQuantity
+        if(!(newQuantity > quantity!)){
+            copyCartItems[productIndex].quantity = newQuantity
+        }else{
+            return false
+        }
+            
     }else{
         copyCartItems.push({
             product:product._id,

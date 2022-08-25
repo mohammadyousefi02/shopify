@@ -38,6 +38,7 @@ function Comments({ id }: Props) {
   useEffect(()=>{
     setStars(createStars(star))
   },[star])
+
   const getComments = async () => {
     const res = await axios.get(`${server}/api/products/${id}/comments`);
     setComments(res.data);
@@ -45,7 +46,7 @@ function Comments({ id }: Props) {
 
   useEffect(() => {
     getComments();
-  }, []);
+  }, [router.query.slug]);
 
   const addComment = async () => {
     if (token) {

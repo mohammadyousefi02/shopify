@@ -47,9 +47,9 @@ const editProduct = async(req:NextApiRequest, res:NextApiResponse) => {
             const categoryDoc = await Category.findOne({name:category})
             const product = await Products.findByIdAndUpdate(id,{...newProduct})
             const prevCateg = await Category.findOne({name:product.category})
-            await prevCateg.removeProduct(id)
             await categoryDoc.addProduct(id)
-            res.status(200).json(product)
+            await prevCateg.removeProduct(id)
+            res.status(200).send('done')
         }else{
             res.status(403).send({error:'access denied'})
         }
@@ -65,6 +65,8 @@ const deleteProduct = async(req:NextApiRequest, res:NextApiResponse) => {
         if(decoded.isAdmin){
             const {id} = req.query;
             const product = await Products.findByIdAndDelete(id)
+            const category = await Category.findOne({name:product.category})
+            await category.removeProduct(id)
             res.status(200).json(product)
         }else{
             res.status(403).send({error:'access denied'})
@@ -77,7 +79,7 @@ const deleteProduct = async(req:NextApiRequest, res:NextApiResponse) => {
 const getOneProduct = async (req:NextApiRequest, res:NextApiResponse) => {
     try{
         const {id} = req.query
-        const product = await Products.findById(id)
+        const product = await Products.findOne({number:id})
         if(product) res.status(200).json(product)
         else res.status(404).send({error:"the entered id is not found"})
     }catch(error){

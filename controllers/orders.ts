@@ -18,10 +18,7 @@ const sendOrders = async(req:NextApiRequest, res:NextApiResponse)=>{
         const decoded = <IdecodedToken>jwt.verify(token, process.env.jwtPrivateKey!)
         const user = await Users.findById(decoded._id).populate("cart.items.product")
         const items:IcartItem[] = user.cart.items.map((i:IcartItem)=>({...i, product:i.product}))
-         user.cart.items.forEach(async(i:IcartItem)=>{
-            const product = await Products.findById(i.product._id)
-            await product.decreaseQuantity(i.size, i.quantity)
-        })
+
         const newOrders = new Orders({
             customer:{
                 user:user._id,
@@ -37,6 +34,10 @@ const sendOrders = async(req:NextApiRequest, res:NextApiResponse)=>{
         await newOrders.save()
         await user.clearCart()
         await user.addOrder(newOrders.order)
+        user.cart.items.forEach(async(i:IcartItem)=>{
+            const product = await Products.findById(i.product._id)
+            await product.decreaseQuantity(i.size, i.quantity)
+        })
         res.status(200).send(newOrders)
     }catch(error){
         res.status(400).send({error})

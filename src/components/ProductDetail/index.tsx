@@ -1,4 +1,4 @@
-import axios from "axios";
+import axios, { AxiosError } from "axios";
 import Image from "next/image";
 import React, { useEffect, useState } from "react";
 import { server } from "../../../config/server";
@@ -18,7 +18,6 @@ import {
 } from "../../../icons";
 
 import { toast } from "react-toastify";
-import Link from "next/link";
 
 interface Props {
   images: string[];
@@ -56,8 +55,10 @@ function ProductDetail({
   const router = useRouter();
   const [size, setSize] = useState("");
   const [color, setColor] = useState("");
-
+  const [sizeSelectInpValue, setSizeSelectInpValue] = useState<{value:string,label:string} | null>(null)
+  const [colorSelectInpValue, setColorSelectInpValue] = useState<{value:string,label:string} | null>(null)
   const [token] = useAuthUserToken();
+  const sRef = React.useRef(null)
   useEffect(() => {
     setImage(images[0]);
     const copySizeOptions: Ioption[] = [];
@@ -65,7 +66,14 @@ function ProductDetail({
       copySizeOptions.push({ value: s.size, label: s.size });
     });
     setSizeOptions(copySizeOptions);
-  }, [router.query.id]);
+    setSize("")
+    setColor("")
+    setQuantity(0)
+    setSizeSelectInpValue(null)
+    setColorSelectInpValue(null)
+  }, [router.query.slug]);
+
+  console.log(router)
 
   useEffect(() => {
     const chosenSize = sizes.find((s) => s.size === size);
@@ -102,8 +110,14 @@ function ProductDetail({
             }
           );
         } catch (error) {
+            const err = error as AxiosError;
+            const errText = err.response?.data as {error:string}
+            if(errText.error === "تعداد محصول وارد شده بیشتر از حد موجود است"){
+              toast.error(errText.error)
+            }else {
+              toast.error("خطایی در اضافه کردن پیش آمده");
+            }
           dispatch(setCart({ items: copyCartItems }));
-          toast.error("خطایی رخ داده است");
         }
       } else toast.error("سایز و رنگ را انتخاب کنید");
     } else {
@@ -162,15 +176,23 @@ function ProductDetail({
           <div className="max-w-[300px] flex flex-col gap-2">
             <label htmlFor="">انتخاب سایز:</label>
             <Select
-              onChange={(value) => setSize(value!.value)}
+              onChange={(value) => {
+                setSize(value!.value)
+                setSizeSelectInpValue(value)
+              }}
               options={sizeOptions}
+              value={sizeSelectInpValue}
             />
           </div>
           <div className="max-w-[300px] flex flex-col gap-2">
             <label htmlFor="">انتخاب رنگ:</label>
             <Select
-              onChange={(value) => setColor(value!.value)}
+              onChange={(value) => {
+                setColor(value!.value)
+                setColorSelectInpValue(value)
+              }}
               options={colorOptions}
+              value={colorSelectInpValue}
             />
           </div>
           {size ? <p>{quantity} در انبار</p> : <p>یک سایز را انتخاب کنید</p>}

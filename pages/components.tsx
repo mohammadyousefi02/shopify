@@ -18,7 +18,7 @@ function Component() {
         <Button title='test' color="red"/>
         <Button title='test' color='gray'/>
         <Button title='test' rounded='normal'/>
-        <ProductMiniCard image='/images/dress-8.jpg' title='مانتو' price='270000'/>
+        <ProductMiniCard image='/images/dress-8.jpg' title='مانتو' price='270000' code={3}/>
         {/* <CartCard/> */}
     </div>
   )

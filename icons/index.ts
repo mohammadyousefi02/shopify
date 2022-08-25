@@ -69,3 +69,6 @@ export { FaCheckCircle } from "react-icons/fa"
 
 //X
 export { IoCloseCircleSharp } from "react-icons/io5"
+
+//logout
+export { BiLogOutCircle } from "react-icons/Bi"

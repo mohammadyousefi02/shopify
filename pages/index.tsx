@@ -1,37 +1,13 @@
 import Head from 'next/head'
 import MainLayout from '../src/layouts/MainLayout'
-import { TiFilter } from "../icons"
 import MySwiper from '../src/components/MySwiper'
-import axios from 'axios'
-import ProductCart from '../src/components/ProductCard'
-import useGetUserId from '../hooks/useGetUserId'
-import { useDispatch, useSelector } from 'react-redux'
-import { ChangeEvent, useEffect } from 'react'
-import { server } from '../config/server'
-import { Iproduct } from '../interfaces/productInterface'
-import { setProducts } from "../redux/slices/productsReducer"
-import { setCategories } from "../redux/slices/category"
-import Header from '../src/components/Header/index'
+import { useSelector } from 'react-redux'
 import { Icategory } from '../interfaces/categoryInterface'
 import CategoryCard from '../src/components/CategoryCard'
 import Image from 'next/image'
 
-interface Props {
-  products: Iproduct[],
-  categories: Icategory[]
-}
-
-const Home = ({products, categories}:Props) => {
-  const decodedToken = useGetUserId()
-
-  const dispatch = useDispatch()
-  useEffect(()=>{
-    dispatch(setProducts({ products }))
-    dispatch(setCategories(categories))
-  },[])
-  
-
-  const {user} = useSelector((store:any)=>store.user)
+const Home = () => {
+  const { categories } = useSelector((store:any)=>store.category)
   
   return (
     <>
@@ -48,7 +24,7 @@ const Home = ({products, categories}:Props) => {
         <div className='pb-[90px]'>
           <div className='flex justify-center mt-4'>
             <div className='container mx-auto flex flex-col gap-8'>
-              {categories.map(c=>(
+              {categories.map((c:Icategory)=>(
                 <CategoryCard key={c._id} id={c._id} title={c.name} products={c.products}/>
               ))}
             </div>
@@ -60,16 +36,3 @@ const Home = ({products, categories}:Props) => {
 }
 
 export default Home
-
-export async function getServerSideProps(){
-  const res = await axios.get(`${server}/api/products`)
-  const products:Iproduct[] = res.data
-  const categoryRes = await axios.get(`${server}/api/categories`)
-  const categories:Icategory[] = categoryRes.data
-  return {
-    props:{
-      products,
-      categories
-    }
-  }
-}
